@@ -39,14 +39,6 @@ const lessons = [
     isOpen: false,
     totalTabs: 4,
     completedTabs: 0
-  },
-  {
-    id: 4,
-    title: "الدرس الرابع",
-    isCompleted: false,
-    isOpen: false,
-    totalTabs: 4,
-    completedTabs: 0
   }
 ];
 
@@ -100,17 +92,28 @@ const CircularProgress = ({ total, completed, isCompleted }) => {
   );
 };
 
-const SubItem = ({ item }) => {
-  const isCurrent = item.isCurrent;
-  
+const SubItem = ({ item, onClick, isCurrent }) => {
   return (
-    <div className={`
-      relative flex items-center justify-between p-3 rounded-2xl mb-3 shadow-sm border cursor-pointer w-full z-10
-      ${isCurrent ? 'bg-[#34D399] text-white border-[#34D399]' : 'bg-white text-gray-700 border-gray-200 hover:bg-gray-50'}
-    `}>
+    <div 
+      onClick={onClick}
+      className={`
+        relative flex items-center justify-between mb-3 cursor-pointer w-full z-10
+        ${isCurrent ? 'bg-[#34D399] text-white' : 'bg-white text-gray-700 hover:bg-gray-50'}
+      `}
+      style={{
+        borderRadius: '60px',
+        border: isCurrent ? '2px solid #34D399' : '2px solid #CECECE', // Updated border logic
+        paddingTop: '12px',
+        paddingRight: '11px',
+        paddingBottom: '12px',
+        paddingLeft: '11px',
+        gap: '8px',
+        boxShadow: '0px 0px 11px 0px #00000029, -10px 5px 0px 0px #00000024 inset'
+      }}
+    >
       
       {/* Right Side: Icon & Title */}
-      <div className="flex items-center gap-3 flex-grow">
+      <div className="flex items-center gap-[8px] flex-grow">
          
          {/* The Icon/Circle - On the RIGHT */}
          {item.type === 'check' && (
@@ -130,7 +133,7 @@ const SubItem = ({ item }) => {
       </div>
 
       {/* Left Side: Info */}
-      <div className="text-xs font-medium flex-shrink-0">
+      <div className="text-xs font-medium flex-shrink-0 pl-2">
          {item.type === 'video' && item.duration}
          {item.count && <span>{item.count}</span>}
       </div>
@@ -138,7 +141,7 @@ const SubItem = ({ item }) => {
   );
 }
 
-function Sidebar() {
+function Sidebar({ activeTab, onTabSelect }) {
   return (
     <div className="bg-transparent w-full h-full p-4 pl-0 flex flex-col gap-[20px] font-sans" dir="rtl">
       
@@ -167,20 +170,28 @@ function Sidebar() {
              <div className="relative w-full flex justify-center pb-2">
                 
                 {/* Double Vertical Solid Lines */}
-                {/* Inset by 50px from each side */}
+                {/* Inset was 50px, increasing inset makes lines closer to center, decreasing makes them wider. 
+                    User said "make distance between tab edge and line SMALLER by 20px".
+                    If previous was 50px (distance from edge), smaller distance means 30px.
+                */}
                 <div 
                   className="absolute top-[26px] bottom-[26px] border-x-2 border-solid border-[#9bbb59] z-0 pointer-events-none"
                   style={{ 
-                    left: '50px', 
-                    right: '50px', 
+                    left: '30px', // Changed from 50px to 30px (smaller distance from edge)
+                    right: '30px', // Changed from 50px to 30px
                     width: 'auto'
                   }}
                 ></div>
 
                 {/* Sub Items List */}
-                <div className="relative z-10 flex flex-col gap-2 w-[85%] max-w-[338px]">
+                <div className="relative z-10 flex flex-col gap-2 w-full max-w-[338px]">
                    {lesson.subItems.map(subItem => (
-                     <SubItem key={subItem.id} item={subItem} />
+                     <SubItem 
+                        key={subItem.id} 
+                        item={subItem} 
+                        onClick={() => onTabSelect && onTabSelect(subItem.title)}
+                        isCurrent={activeTab === subItem.title}
+                     />
                    ))}
                 </div>
              </div>
@@ -191,7 +202,14 @@ function Sidebar() {
 
       {/* Completion Certificate Button */}
       <div className="mt-4">
-         <button className="w-full bg-[#4F46E5] text-white rounded-full py-3 font-bold shadow-lg flex items-center justify-center gap-2 hover:bg-[#4338ca] transition-colors text-lg">
+         <button 
+            className="w-full text-white font-bold flex items-center justify-center gap-2 hover:opacity-90 transition-opacity text-lg"
+            style={{
+              backgroundColor: '#4F67BD',
+              borderRadius: '48px',
+              padding: '18px'
+            }}
+         >
             <img src={certificateIcon} alt="Certificate" className="w-6 h-6 brightness-0 invert" />
             شهادة اتمام
          </button>
