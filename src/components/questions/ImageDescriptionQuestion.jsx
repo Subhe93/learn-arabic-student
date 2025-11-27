@@ -36,7 +36,6 @@ const CustomDropdown = ({ options, selectedOptionId, onSelect, placeholder }) =>
                 {/* Text (Right) */}
                 <span 
                     style={{
-                        fontFamily: '"IBM Plex Sans Arabic", sans-serif',
                         fontWeight: 500,
                         fontSize: '14px',
                         lineHeight: '100%',
@@ -101,7 +100,6 @@ const ImageDescriptionQuestion = ({ questionText, imageSrc, options, correctAnsw
                 
                 <span
                     style={{
-                        fontFamily: '"IBM Plex Sans Arabic", sans-serif',
                         fontWeight: 600,
                         fontSize: '14px',
                         color: '#848484',

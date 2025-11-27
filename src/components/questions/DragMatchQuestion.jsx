@@ -4,31 +4,50 @@ import arrowIcon from '../../assets/images/arow.png';
 
 const MatchCard = ({ item, arrowIcon, isDraggable, onDragStart, onDrop, onDragOver }) => (
   <div 
-    className={`flex items-center justify-center relative w-[180px] h-[160px] ${isDraggable ? 'cursor-move' : ''}`}
+    className={`flex items-center justify-center relative ${isDraggable ? 'cursor-move' : ''}`}
+    style={{ width: '200px' }} // Adjusted width to fit content nicely
     draggable={isDraggable}
     onDragStart={onDragStart}
     onDrop={onDrop}
     onDragOver={onDragOver}
   >
-    {/* Content: Image or Text Button based on type */}
-    {item.type === 'image' ? (
-      <img src={item.content} alt="Match Item" className="w-full h-full object-contain pointer-events-none" />
-    ) : (
-      <div className="w-full h-full flex items-center justify-center bg-gray-100 rounded-lg border-2 border-gray-300 pointer-events-none p-4">
-         <span className="text-lg font-bold text-gray-800 text-center">{item.content}</span>
-      </div>
-    )}
+    {/* Card Container */}
+    <div className="bg-white border-2 border-[#5f5b5c] rounded-[12px] overflow-hidden w-full shadow-sm flex flex-col">
+        
+        {/* Image Section */}
+        <div className="w-full h-[140px] flex items-center justify-center p-4 bg-white">
+             {/* Use item.content as image source. Assuming item.type is 'image' or mixed, but here specifically for the drag question */}
+             <img 
+                src={item.content} 
+                alt="Match Item" 
+                className="max-w-full max-h-full object-contain pointer-events-none" 
+             />
+        </div>
 
-    {/* Arrow Icon - To the Right */}
-    <div className="absolute -right-12 top-1/2 transform -translate-y-1/2 z-10">
+        {/* Separator Line */}
+        <div className="w-full h-[1px] bg-[#5f5b5c]"></div>
+
+        {/* Text Section */}
+        <div className="w-full py-3 text-center bg-white">
+            <span 
+                className="font-bold text-[16px] text-[#000000] pointer-events-none"
+                style={{ fontFamily: '"IBM Plex Sans Arabic", sans-serif' }}
+            >
+                {item.text}
+            </span>
+        </div>
+    </div>
+
+    {/* Arrow Icon - To the Right (outside the card) */}
+    <div className="absolute -right-10 top-1/2 transform -translate-y-1/2 z-10">
        <img src={arrowIcon} alt="arrow" className="h-6 w-auto" />
     </div>
   </div>
 );
 
 const MatchRow = ({ rightItem, leftItem, index, isLast, onDragStart, onDrop, onDragOver }) => (
-  <div className="flex flex-col w-full max-w-3xl mx-auto">
-    <div className="flex items-center justify-between w-full mb-6 px-10">
+  <div className="flex flex-col w-full max-w-4xl mx-auto">
+    <div className="flex items-center justify-between w-full mb-8 px-4 lg:px-16">
       {/* Right Item (Draggable) */}
       <div className="relative">
          <MatchCard 
@@ -74,6 +93,7 @@ const DragMatchQuestion = ({ rightItems, leftItems, onUpdateLeftItems, onUpdateR
 
   const handleDragStart = (e, index, side) => {
     setDraggedItem({ index, side });
+    // Set drag image to the card element if needed, but default usually works
     e.dataTransfer.effectAllowed = "move";
   };
 
@@ -162,4 +182,3 @@ const DragMatchQuestion = ({ rightItems, leftItems, onUpdateLeftItems, onUpdateR
 };
 
 export default DragMatchQuestion;
-

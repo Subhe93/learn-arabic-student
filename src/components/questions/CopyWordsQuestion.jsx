@@ -12,7 +12,6 @@ const CopyWordsQuestion = ({ questionText, words }) => {
                 </div>
                 <span
                     style={{
-                        fontFamily: '"IBM Plex Sans Arabic", sans-serif',
                         fontWeight: 600,
                         fontSize: '14px',
                         color: '#848484',
@@ -66,4 +65,3 @@ const CopyWordsQuestion = ({ questionText, words }) => {
 };
 
 export default CopyWordsQuestion;
-

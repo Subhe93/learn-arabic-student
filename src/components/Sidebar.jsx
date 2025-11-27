@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 // Import Icons
 import gamepadIcon from '../assets/icons/gamepad.svg';
@@ -7,13 +7,13 @@ import bookIcon from '../assets/icons/book-open.svg';
 import penIcon from '../assets/icons/pen-line.svg';
 import certificateIcon from '../assets/icons/certificate.svg';
 
-// Mock Data based on the image
-const lessons = [
+// Mock Data
+const initialLessons = [
   {
     id: 1,
     title: "الدرس الاول",
-    isOpen: true, // Made open
-    isCompleted: false, // Changed to false to show the segmented circle like Lesson 2
+    isOpen: true,
+    isCompleted: false,
     totalTabs: 5,
     completedTabs: 1,
     subItems: [
@@ -28,7 +28,7 @@ const lessons = [
     id: 2,
     title: "الدرس الثاني",
     isCompleted: false,
-    isOpen: false, // Closed
+    isOpen: false,
     totalTabs: 5,
     completedTabs: 0
   },
@@ -42,8 +42,10 @@ const lessons = [
   }
 ];
 
-const CircularProgress = ({ total, completed, isCompleted }) => {
-  if (isCompleted) {
+const CircularProgress = ({ total, completed, isCompleted, forceSegments }) => {
+  // If forceSegments is true (for certificate mode), we skip the "complete checkmark circle"
+  // and render the segmented circle but fully green.
+  if (isCompleted && !forceSegments) {
     return (
       <div className="w-10 h-10 rounded-full border-2 border-[#A7F3D0] flex items-center justify-center bg-[#ECFDF5]">
         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-[#10B981]" viewBox="0 0 20 20" fill="currentColor">
@@ -102,7 +104,7 @@ const SubItem = ({ item, onClick, isCurrent }) => {
       `}
       style={{
         borderRadius: '60px',
-        border: isCurrent ? '2px solid #34D399' : '2px solid #CECECE', // Updated border logic
+        border: isCurrent ? '2px solid #34D399' : '2px solid #CECECE', 
         paddingTop: '12px',
         paddingRight: '11px',
         paddingBottom: '12px',
@@ -111,18 +113,13 @@ const SubItem = ({ item, onClick, isCurrent }) => {
         boxShadow: '0px 0px 11px 0px #00000029, -10px 5px 0px 0px #00000024 inset'
       }}
     >
-      
-      {/* Right Side: Icon & Title */}
       <div className="flex items-center gap-[8px] flex-grow">
-         
-         {/* The Icon/Circle - On the RIGHT */}
          {item.type === 'check' && (
             <div className={`w-6 h-6 rounded-full border flex items-center justify-center flex-shrink-0 ${isCurrent ? 'border-white' : 'border-gray-400'}`}>
                {item.isCompleted && <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>}
             </div>
          )}
          
-         {/* Image Icons for other types */}
          {item.icon && (
             <div className={`w-6 h-6 flex items-center justify-center flex-shrink-0`}>
                <img src={item.icon} alt={item.title} className={`w-full h-full object-contain ${isCurrent ? 'brightness-0 invert' : ''}`} />
@@ -132,7 +129,6 @@ const SubItem = ({ item, onClick, isCurrent }) => {
          <span className="font-bold text-sm">{item.title}</span>
       </div>
 
-      {/* Left Side: Info */}
       <div className="text-xs font-medium flex-shrink-0 pl-2">
          {item.type === 'video' && item.duration}
          {item.count && <span>{item.count}</span>}
@@ -142,14 +138,40 @@ const SubItem = ({ item, onClick, isCurrent }) => {
 }
 
 function Sidebar({ activeTab, onTabSelect }) {
+  const [lessons, setLessons] = useState(initialLessons);
+
+  // Determine if we are in Certificate Mode
+  const isCertificateMode = activeTab === 'certificate';
+
+  const toggleLesson = (id) => {
+    setLessons(prevLessons => prevLessons.map(lesson => 
+        lesson.id === id ? { ...lesson, isOpen: !lesson.isOpen } : lesson
+    ));
+  };
+
+  // Transform lessons based on mode
+  const displayLessons = lessons.map(lesson => {
+    if (isCertificateMode) {
+      return {
+        ...lesson,
+        // isOpen: false, // Allow dropdown behavior in certificate mode
+        isCompleted: true, // Logic will be handled in CircularProgress
+        completedTabs: lesson.totalTabs // Fill all segments
+      };
+    }
+    return lesson;
+  });
+
   return (
     <div className="bg-transparent w-full h-full p-4 pl-0 flex flex-col gap-[20px] font-sans" dir="rtl">
       
-      {lessons.map((lesson, index) => (
+      {displayLessons.map((lesson, index) => (
         <div key={lesson.id} className="relative flex flex-col items-center w-full">
            
            {/* Lesson Header */}
-           <div className={`
+           <div 
+             onClick={() => toggleLesson(lesson.id)}
+             className={`
              relative z-20 bg-white rounded-[2rem] p-3 px-4 flex items-center justify-between shadow-sm mb-0 cursor-pointer w-full
              ${lesson.isOpen ? 'mb-[20px]' : ''}
            `}>
@@ -160,6 +182,7 @@ function Sidebar({ activeTab, onTabSelect }) {
                       total={lesson.totalTabs} 
                       completed={lesson.completedTabs} 
                       isCompleted={lesson.isCompleted} 
+                      forceSegments={isCertificateMode} // Force segmented view for certificate mode
                     />
                  </div>
               </div>
@@ -169,16 +192,11 @@ function Sidebar({ activeTab, onTabSelect }) {
            {lesson.isOpen && lesson.subItems && (
              <div className="relative w-full flex justify-center pb-2">
                 
-                {/* Double Vertical Solid Lines */}
-                {/* Inset was 50px, increasing inset makes lines closer to center, decreasing makes them wider. 
-                    User said "make distance between tab edge and line SMALLER by 20px".
-                    If previous was 50px (distance from edge), smaller distance means 30px.
-                */}
                 <div 
-                  className="absolute top-[26px] bottom-[26px] border-x-2 border-solid border-[#9bbb59] z-0 pointer-events-none"
+                  className="absolute top-[-20px] bottom-[26px] border-x-2 border-solid border-[#9bbb59] z-0 pointer-events-none"
                   style={{ 
-                    left: '30px', // Changed from 50px to 30px (smaller distance from edge)
-                    right: '30px', // Changed from 50px to 30px
+                    left: '30px', 
+                    right: '30px', 
                     width: 'auto'
                   }}
                 ></div>
@@ -203,6 +221,7 @@ function Sidebar({ activeTab, onTabSelect }) {
       {/* Completion Certificate Button */}
       <div className="mt-4">
          <button 
+            onClick={() => onTabSelect && onTabSelect('certificate')}
             className="w-full text-white font-bold flex items-center justify-center gap-2 hover:opacity-90 transition-opacity text-lg"
             style={{
               backgroundColor: '#4F67BD',

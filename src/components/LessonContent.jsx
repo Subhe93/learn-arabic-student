@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import levelOneImg from '../assets/images/levelone1.png';
 import bookImg from '../assets/images/book.png';
+
 import MultipleChoiceQuestion from './questions/MultipleChoiceQuestion';
 import DragMatchQuestion from './questions/DragMatchQuestion';
 import SentenceBuilderQuestion from './questions/SentenceBuilderQuestion';
@@ -10,7 +11,9 @@ import LetterBuilderQuestion from './questions/LetterBuilderQuestion';
 import FillBlankQuestion from './questions/FillBlankQuestion';
 import ImageDescriptionQuestion from './questions/ImageDescriptionQuestion';
 import WritingQuestion from './questions/WritingQuestion';
-import ReadingWritingQuestion from './questions/ReadingWritingQuestion'; // Import new component
+import ReadingWritingQuestion from './questions/ReadingWritingQuestion';
+import CertificateDisplay from './content/CertificateDisplay';
+import VideoPlayer from './content/VideoPlayer';
 
 // Images for Matching
 import img3 from '../assets/images/image 3.png';
@@ -21,9 +24,9 @@ import img7 from '../assets/images/image 7.png';
 import img8 from '../assets/images/image 8.png';
 import img10 from '../assets/images/image 10.png';
 import game4Img from '../assets/images/game4.png';
+
 import penIcon from '../assets/icons/pen-line.svg';
 import playIcon from '../assets/icons/Play.svg';
-import sendIcon from '../assets/icons/send.svg';
 
 const LessonContent = ({ activeTab }) => {
     const [q1Answer, setQ1Answer] = useState(null);
@@ -34,16 +37,17 @@ const LessonContent = ({ activeTab }) => {
     const [currentGame, setCurrentGame] = useState(1);
 
     // State for Drag and Drop (Exercise 1)
+    // Updated with text based on user image and new mapping
     const [rightItems, setRightItems] = useState([
-        { id: 'r1', type: 'image', content: img6 },
-        { id: 'r2', type: 'image', content: img7 },
-        { id: 'r3', type: 'image', content: img4 },
+        { id: 'r1', type: 'image', content: img6, text: 'عن الماء' },
+        { id: 'r2', type: 'image', content: img7, text: 'الغذاء' },
+        { id: 'r3', type: 'image', content: img8, text: 'يبحث الغراب' },
     ]);
 
     const [leftItems, setLeftItems] = useState([
-        { id: 'l1', type: 'image', content: img5 },
-        { id: 'l2', type: 'image', content: img3 },
-        { id: 'l3', type: 'image', content: img8 },
+        { id: 'l1', type: 'image', content: img5, text: 'مفيد للجسم' },
+        { id: 'l2', type: 'image', content: img4, text: 'يقلد الببغاء' },
+        { id: 'l3', type: 'image', content: img3, text: 'صوت الانسان' },
     ]);
 
     // Data for Sentence Builder (Exercise 2)
@@ -52,6 +56,11 @@ const LessonContent = ({ activeTab }) => {
         { id: 'word2', text: 'يحب' },
         { id: 'word3', text: 'الفأر' },
     ];
+
+    // Handle Certificate View
+    if (activeTab === 'certificate') {
+        return <CertificateDisplay />;
+    }
 
     if (activeTab === 'حرف الجيم') {
         return (
@@ -85,54 +94,12 @@ const LessonContent = ({ activeTab }) => {
     }
 
     if (activeTab === 'فيديو تدريبي') {
-        return (
-            <div className="w-full max-w-4xl mx-auto bg-black rounded-lg overflow-hidden shadow-lg relative group">
-                {/* Video Placeholder */}
-                <div className="relative w-full aspect-video bg-gray-800 flex items-center justify-center">
-                    <img src={levelOneImg} alt="Video Thumbnail" className="w-full h-full object-cover opacity-80" />
-                    <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm cursor-pointer hover:scale-110 transition-transform">
-                            <svg className="w-8 h-8 text-white ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Video Controls Bar */}
-                <div className="bg-white px-4 py-3 flex items-center gap-4" dir="ltr">
-                    {/* ... (Controls kept same) ... */}
-                    <button className="text-gray-600 hover:text-gray-900">
-                        <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
-                    </button>
-                    <button className="text-gray-600 hover:text-gray-900">
-                        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
-                        </svg>
-                    </button>
-                    <div className="flex-1 mx-2 relative h-1.5 bg-gray-200 rounded-full cursor-pointer group-hover:h-2 transition-all">
-                        <div className="absolute left-0 top-0 bottom-0 w-[30%] bg-[#10B981] rounded-full relative">
-                            <div className="absolute right-0 top-1/2 transform -translate-y-1/2 w-3 h-3 bg-[#059669] rounded-full shadow"></div>
-                        </div>
-                    </div>
-                    <span className="text-sm font-medium text-gray-600">7:24</span>
-                    <button className="text-gray-600 hover:text-gray-900">
-                        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                        </svg>
-                    </button>
-                    <button className="text-gray-600 hover:text-gray-900">
-                        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
-                        </svg>
-                    </button>
-                </div>
-            </div>
-        );
+        return <VideoPlayer />;
     }
 
     if (activeTab === 'الكتاب') {
         return (
-            <div className="w-full h-full flex items-center justify-center">
+            <div className="w-full h-full flex items-center justify-center p-0">
                 <img
                     src={bookImg}
                     alt="الكتاب"
@@ -211,15 +178,19 @@ const LessonContent = ({ activeTab }) => {
                     </div>
                     <div className="w-full">
                         <SentenceBuilderQuestion
-                            questionText="اين هوا حرف (الجيم) من بين الحروف التالية:"
+                            questionText="اين هو حرف (الجيم) من بين الحروف التالية:"
                             initialWords={sentenceWords}
                         />
+                    </div>
+                    <div className="w-full">
                         <SentenceBuilderQuestion
-                            questionText="اين هوا حرف (الجيم) من بين الحروف التالية:"
+                            questionText="اين هو حرف (الجيم) من بين الحروف التالية:"
                             initialWords={sentenceWords}
                         />
+                    </div>
+                    <div className="w-full">
                         <SentenceBuilderQuestion
-                            questionText="اين هوا حرف (الجيم) من بين الحروف التالية:"
+                            questionText="اين هو حرف (الجيم) من بين الحروف التالية:"
                             initialWords={sentenceWords}
                         />
                     </div>

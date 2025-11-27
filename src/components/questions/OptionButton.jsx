@@ -1,11 +1,12 @@
 import React from 'react';
 import rightIcon from '../../assets/icons/right.svg';
+import rightWhiteIcon from '../../assets/icons/rightwhite.svg';
 
 const OptionButton = ({ label, status = 'default', onClick, withIcon = false, customStyles = {} }) => {
   // Base styles
   const baseStyles = {
-    width: '144px', 
-    height: withIcon ? '45px' : '48px', 
+    width: withIcon ? '155px' : '144px', 
+    height: withIcon ? '55px' : '48px', 
     borderRadius: '60px',
     borderWidth: '2px',
     paddingTop: '12px',
@@ -27,7 +28,8 @@ const OptionButton = ({ label, status = 'default', onClick, withIcon = false, cu
     default: {
       backgroundColor: 'white',
       color: '#374151', 
-      borderColor: '#363636', 
+      // If withIcon is true (Exercise 1), use #CECECE border. Otherwise use #363636.
+      borderColor: withIcon ? '#CECECE' : '#363636', 
       boxShadow: '0px 0px 11px 0px #00000029, -10px 5px 0px 0px #00000024 inset',
     },
     blue: {
@@ -50,50 +52,31 @@ const OptionButton = ({ label, status = 'default', onClick, withIcon = false, cu
     },
   };
 
-  // Merge logic:
-  // 1. Base styles
-  // 2. Status styles
-  // 3. Custom styles (override everything)
-  // If customStyles has 'color', it should override status color unless status is strict (like correct/wrong usually white)
-  // But user asked to set text color to #4F67BD specifically for FillBlankQuestion.
-  // We'll let customStyles override stateStyles.
-  
   const currentStyle = { ...baseStyles, ...stateStyles[status], ...customStyles };
   
-  // Special case: If status is correct/wrong/blue, usually text is white.
-  // If customStyles.color is passed, it will override.
-  // User said "اجعل اللون للنص بالزر بصفحة FillBlankQuestion فقط لونه #4F67BD"
-  // Assuming this is for the DEFAULT state, or ALL states? 
-  // Usually selected/correct/wrong buttons have white text.
-  // If user means the default text color should be blueish, we apply it.
-  // If user means ALL states, we apply it.
-  // Let's assume for 'default' state mainly, but customStyles overrides all.
-  // We should be careful if correct/wrong needs to be white.
-  // However, CSS cascading in JS object: last one wins.
-  
+  // Logic to determine which icon to show
+  const iconSrc = status === 'default' ? rightIcon : rightWhiteIcon;
+
   return (
     <div style={currentStyle} onClick={onClick} className="select-none" dir="rtl">
       {withIcon && (
           <div 
-            className={`w-6 h-6 rounded-full border-2 flex items-center justify-center flex-shrink-0`}
-            style={{
-                borderColor: status === 'default' ? '#000000' : 'white'
-            }}
+            className={`w-6 h-6 rounded-full  flex items-center justify-center flex-shrink-0`}
+            
           >
              <img 
-                src={rightIcon} 
+                src={iconSrc} 
                 alt="Check" 
-                className="w-3.5 h-3.5"
+                className="w-full h-full"
                 style={{ 
-                    opacity: status === 'default' ? 0 : 1,
-                    filter: 'brightness(0) invert(1)' 
+                    opacity: 1,
+                    filter: 'none'
                 }} 
              />
           </div>
       )}
       
-      {/* Text Label */}
-      <span className={`flex-grow text-center ${withIcon ? '' : ''}`}>{label}</span>
+      <span className={`flex-grow  ${withIcon ? 'text-right' : 'text-center'}`}>{label}</span>
     </div>
   );
 };

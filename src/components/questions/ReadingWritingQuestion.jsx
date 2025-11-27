@@ -13,11 +13,10 @@ const ReadingWritingQuestion = ({ questionText, readingText, placeholder }) => {
         <div className="w-full mb-12" dir="rtl">
             {/* Question Text & Score */}
             <div className="flex items-center justify-between w-full mb-6">
-                 <h3 className="text-xl font-bold text-gray-800 text-right flex-1" style={{ fontFamily: '"IBM Plex Sans Arabic", sans-serif' }}>{questionText}</h3>
+                 <h3 className="text-xl font-bold text-gray-800 text-right flex-1">{questionText}</h3>
                 
                 <span
                     style={{
-                        fontFamily: '"IBM Plex Sans Arabic", sans-serif',
                         fontWeight: 600,
                         fontSize: '14px',
                         color: '#848484',
@@ -33,7 +32,6 @@ const ReadingWritingQuestion = ({ questionText, readingText, placeholder }) => {
                 <div 
                     className="text-right leading-relaxed"
                     style={{
-                        fontFamily: '"IBM Plex Sans Arabic", sans-serif',
                         fontWeight: 600, 
                         fontSize: '16px',
                         lineHeight: '1.8',
@@ -68,7 +66,6 @@ const ReadingWritingQuestion = ({ questionText, readingText, placeholder }) => {
                         paddingRight: '20px',
                         paddingBottom: '12px',
                         paddingLeft: '30px',
-                        fontFamily: '"IBM Plex Sans Arabic", sans-serif',
                         fontWeight: 500,
                         fontStyle: 'normal',
                         fontSize: '16px',

@@ -47,7 +47,7 @@ const FillBlankQuestion = ({ questionText, options, correctAnswerId }) => {
                 width: '260px',
                 // Only apply custom blue color if status is default
                 // If status is correct/wrong, let OptionButton's default style (white) take over
-                color: status === 'default' ? '#4F67BD' : undefined
+                color: status === 'default' ? '#4F67BD' : 'white'
             };
 
             return (

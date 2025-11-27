@@ -17,7 +17,6 @@ const WritingQuestion = ({ questionText, placeholder }) => {
                 
                 <span
                     style={{
-                        fontFamily: '"IBM Plex Sans Arabic", sans-serif',
                         fontWeight: 600,
                         fontSize: '14px',
                         color: '#848484',
@@ -48,7 +47,6 @@ const WritingQuestion = ({ questionText, placeholder }) => {
                         // Re-reading prompt: "الايريا تيكست الموجودة باللعبة الخامسة هذه تنسيقاتها ... [list of props]". No shadow mentioned.
                         
                         // Text Styles
-                        fontFamily: '"IBM Plex Sans Arabic", sans-serif',
                         fontWeight: 500,
                         fontStyle: 'normal', // 'Medium' is usually 500 weight
                         fontSize: '16px',
@@ -61,7 +59,7 @@ const WritingQuestion = ({ questionText, placeholder }) => {
 
             {/* Submit Button */}
             <div className="w-full flex justify-start"> {/* justify-start in RTL puts it on the Right */}
-                <button
+            <button
                     onClick={handleSubmit}
                     className="flex items-center justify-center gap-2 bg-[#4F67BD] text-white rounded-[60px] px-8 py-3 hover:bg-[#3e54a3] transition-colors shadow-md"
                     style={{
