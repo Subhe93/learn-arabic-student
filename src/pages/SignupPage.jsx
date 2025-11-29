@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import bgPattern from '../assets/images/bg.png';
+import animal3 from '../assets/images/animal3.png';
+import animal4 from '../assets/images/animal4.png';
 
 function SignupPage() {
   return (
@@ -24,8 +26,21 @@ function SignupPage() {
 
       {/* Content Container */}
       <div className="relative z-10 w-full max-w-md px-4">
+        
+        {/* Decorative Animals */}
+        <img 
+            src={animal3} 
+            alt="Decoration" 
+            className="absolute -top-20 -left-24 w-40 h-auto z-20 pointer-events-none transform -rotate-12"
+        />
+        <img 
+            src={animal4} 
+            alt="Decoration" 
+            className="absolute -bottom-12 -right-20 w-36 h-auto z-20 pointer-events-none transform rotate-6"
+        />
+
         {/* Outer Card */}
-        <div className="bg-white rounded-[8px] shadow-lg border-2 border-[#dc3d3c] p-2">
+        <div className="bg-white rounded-[8px] shadow-lg border-2 border-[#dc3d3c] p-2 relative z-10">
           {/* Inner Border */}
           <div className="border-2 border-[#555555] rounded-[8px] p-6 md:p-8 flex flex-col items-center">
             
