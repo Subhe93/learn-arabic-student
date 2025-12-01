@@ -56,9 +56,9 @@ function LearningContainerPage() {
         />
       </div>
 
-      {/* Mobile Menu Button */}
+      {/* Mobile Menu Button - Moved to Top Right */}
       <button 
-        className="lg:hidden fixed bottom-6 left-6 z-50 bg-[#4F67BD] text-white p-4 rounded-full shadow-xl hover:bg-[#3e539a] transition-colors"
+        className="lg:hidden fixed top-48 right-4 z-[60] bg-[#4F67BD] text-white p-3 rounded-full shadow-xl hover:bg-[#3e539a] transition-colors"
         onClick={() => setIsSidebarOpen(true)}
       >
         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -67,29 +67,30 @@ function LearningContainerPage() {
       </button>
 
       {/* Mobile Sidebar Overlay */}
-      {isSidebarOpen && (
-          <div className="fixed inset-0 z-[60] lg:hidden flex justify-end">
-              {/* Backdrop */}
-              <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setIsSidebarOpen(false)}></div>
+      <div className={`fixed inset-0 z-[60] lg:hidden flex justify-start transition-visibility duration-300 ${isSidebarOpen ? 'visible' : 'invisible delay-300'}`}>
+          {/* Backdrop */}
+          <div 
+            className={`absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity duration-300 ease-in-out ${isSidebarOpen ? 'opacity-100' : 'opacity-0'}`} 
+            onClick={() => setIsSidebarOpen(false)}
+          ></div>
+          
+          {/* Sidebar Content - Appears from Right (justify-start in RTL) */}
+          <div className={`relative w-[85%] max-w-[360px] h-full bg-[#DDF0EB] shadow-2xl overflow-y-auto p-4 transition-transform duration-300 ease-in-out transform ${isSidebarOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+              {/* Close Button */}
+              <button 
+                className="absolute top-4 left-4 p-2 bg-white rounded-full shadow-sm text-gray-600 hover:text-red-500 transition-colors z-20" 
+                onClick={() => setIsSidebarOpen(false)}
+              >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+              </button>
               
-              {/* Sidebar Content */}
-              <div className="relative w-[85%] max-w-[360px] h-full bg-[#DDF0EB] shadow-2xl overflow-y-auto p-4 animate-slide-in-right">
-                  {/* Close Button */}
-                  <button 
-                    className="absolute top-4 left-4 p-2 bg-white rounded-full shadow-sm text-gray-600 hover:text-red-500 transition-colors z-20" 
-                    onClick={() => setIsSidebarOpen(false)}
-                  >
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                      </svg>
-                  </button>
-                  
-                  <div className="mt-8">
-                    <Sidebar activeTab={activeTab} onTabSelect={(tab) => { setActiveTab(tab); setIsSidebarOpen(false); }} />
-                  </div>
+              <div className="mt-8">
+                <Sidebar activeTab={activeTab} onTabSelect={(tab) => { setActiveTab(tab); setIsSidebarOpen(false); }} />
               </div>
           </div>
-      )}
+      </div>
 
       {/* Main Layout Container */}
       <div className="flex flex-1 relative z-20 h-[calc(100vh-140px)] overflow-hidden w-full max-w-[1440px] mx-auto pt-[20px] lg:pt-[50px]">
@@ -100,13 +101,13 @@ function LearningContainerPage() {
         </div>
 
         {/* Main Content Area (Left Side in RTL) */}
-        <div className="flex-1 h-full overflow-y-auto p-4 lg:p-6 lg:pl-[44px]">
+        <div className="flex-1 h-full overflow-y-auto p-4 pt-12 lg:p-6 lg:pl-[44px]">
            
            {/* Outer Container */}
            <div className="bg-white rounded-[8px] shadow-sm border-2 border-[#dc3d3c] p-2 min-h-[600px] relative h-full">
               
               {/* Inner Border Container */}
-              <div className={`border-2 border-[#555555] rounded-[8px] h-full w-full flex flex-col items-center justify-center relative ${isBookTab ? 'p-0' : 'p-4 md:p-12'}`}>
+              <div className={`border-2 border-[#555555] rounded-[8px] h-full w-full flex flex-col items-center justify-center relative ${isBookTab ? 'p-0' : 'lg:p-4 md:p-12 py-4 px-0'}`}>
                  
                  <LessonContent activeTab={activeTab} />
                  

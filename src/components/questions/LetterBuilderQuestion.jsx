@@ -53,6 +53,7 @@ const LetterBuilderQuestion = ({ questionText, initialLetters, correctSentence }
            <h3 className="text-xl font-bold text-gray-800">{questionText}</h3>
         </div>
         <span 
+            className="whitespace-nowrap w-[30%] sm:w-auto text-center sm:text-right inline-block"
             style={{
                 fontFamily: '"IBM Plex Sans Arabic", sans-serif',
                 fontWeight: 600,
@@ -67,7 +68,7 @@ const LetterBuilderQuestion = ({ questionText, initialLetters, correctSentence }
       {/* Source Area (Letters Pool) */}
       <div className="flex flex-wrap gap-4 justify-start mb-6" style={{ marginRight: 'auto' }}>
         {availableLetters.map((letter) => (
-            <div key={letter.id} onClick={() => handleLetterClick(letter)}>
+            <div key={letter.id} onClick={() => handleLetterClick(letter)} className="w-[calc(50%-0.5rem)] sm:w-auto">
                 <OptionButton 
                     label={letter.text} 
                     status="default" // White background for available letters

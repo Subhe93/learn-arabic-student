@@ -24,6 +24,7 @@ const FillBlankQuestion = ({ questionText, options, correctAnswerId }) => {
            <h3 className="text-xl font-bold text-gray-800">{questionText}</h3>
         </div>
         <span 
+            className="w-[30%] sm:w-auto text-center sm:text-right inline-block"
             style={{
                 fontFamily: '"IBM Plex Sans Arabic", sans-serif',
                 fontWeight: 600,

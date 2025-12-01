@@ -1,10 +1,15 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import bgPattern from '../assets/images/bg.png';
-import animal3 from '../assets/images/animal3.png';
-import animal4 from '../assets/images/animal4.png';
+import animal3 from '../assets/images/animal3.svg';
+import animal4 from '../assets/images/animal4.svg';
 
 function SignupPage() {
+  const navigate = useNavigate();
+
+  const handleSignup = () => {
+    navigate('/courses');
+  };
   return (
     <div 
       className="min-h-screen flex flex-col items-center justify-center font-sans relative overflow-hidden"
@@ -90,6 +95,7 @@ function SignupPage() {
 
               <button 
                 type="submit"
+                onClick={handleSignup}
                 className="mt-4 w-full bg-[#4F67BD] text-white font-bold py-3 px-6 rounded-full shadow-md hover:bg-[#3e539a] transition-transform active:scale-95"
               >
                 تسجيل

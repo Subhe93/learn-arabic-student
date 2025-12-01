@@ -14,13 +14,13 @@ const MultipleChoiceQuestion = ({ questionText, options, selectedOptionId, onOpt
 
         {/* Left Side: Score */}
         <span 
+            className="w-[30%] sm:w-auto text-center sm:text-left inline-block"
             style={{
                 fontFamily: '"IBM Plex Sans Arabic", sans-serif',
                 fontWeight: 600,
                 fontSize: '14px',
                 lineHeight: '100%',
                 color: '#848484',
-                textAlign: 'left'
             }}
          >
             5 درجات

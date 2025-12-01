@@ -1,22 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import penIcon from '../../assets/icons/pen-line.svg';
 import arrowIcon from '../../assets/images/arow.png';
 
-const MatchCard = ({ item, arrowIcon, isDraggable, onDragStart, onDrop, onDragOver }) => (
+const MatchCard = ({ item, arrowIcon, isDraggable, onDragStart, onDrop, onDragOver, onTouchStart, onTouchMove, onTouchEnd, index, side, isDragging }) => (
   <div 
     className={`flex items-center justify-center relative ${isDraggable ? 'cursor-move' : ''}`}
-    style={{ width: '200px' }} // Adjusted width to fit content nicely
+    style={{ width: '100%', maxWidth: '200px' }} 
     draggable={isDraggable}
     onDragStart={onDragStart}
     onDrop={onDrop}
     onDragOver={onDragOver}
+    onTouchStart={onTouchStart}
+    onTouchMove={onTouchMove}
+    onTouchEnd={onTouchEnd}
+    data-index={index}
+    data-side={side}
+    data-match-card="true"
   >
     {/* Card Container */}
-    <div className="bg-white border-2 border-[#5f5b5c] rounded-[12px] overflow-hidden w-full shadow-sm flex flex-col">
+    <div 
+        className={`bg-white border-2 border-[#5f5b5c] rounded-[12px] overflow-hidden w-full shadow-sm flex flex-col 
+        ${item.type === 'image' || item.content ? 'sm:scale-100 scale-[0.95]' : ''}
+        ${isDragging ? 'opacity-50 scale-105 ring-4 ring-[#4F67BD] z-50' : ''}
+        transition-all duration-200
+        `}
+    >
         
         {/* Image Section */}
         <div className="w-full h-[140px] flex items-center justify-center p-4 bg-white">
-             {/* Use item.content as image source. Assuming item.type is 'image' or mixed, but here specifically for the drag question */}
              <img 
                 src={item.content} 
                 alt="Match Item" 
@@ -38,17 +49,21 @@ const MatchCard = ({ item, arrowIcon, isDraggable, onDragStart, onDrop, onDragOv
         </div>
     </div>
 
-    {/* Arrow Icon - To the Right (outside the card) */}
-    <div className="absolute -right-10 top-1/2 transform -translate-y-1/2 z-10">
+    {/* Arrow Icon */}
+    <div className={`absolute top-1/2 transform -translate-y-1/2 z-10 -right-4 sm:-right-10`}>
        <img src={arrowIcon} alt="arrow" className="h-6 w-auto" />
     </div>
   </div>
 );
 
-const MatchRow = ({ rightItem, leftItem, index, isLast, onDragStart, onDrop, onDragOver }) => (
+const MatchRow = ({ rightItem, leftItem, index, isLast, onDragStart, onDrop, onDragOver, onTouchStart, onTouchMove, onTouchEnd, draggedItem }) => {
+    const isRightDragging = draggedItem && draggedItem.index === index && draggedItem.side === 'right';
+    const isLeftDragging = draggedItem && draggedItem.index === index && draggedItem.side === 'left';
+
+    return (
   <div className="flex flex-col w-full max-w-4xl mx-auto">
     <div className="flex items-center justify-between w-full mb-8 px-4 lg:px-16">
-      {/* Right Item (Draggable) */}
+      {/* Right Item */}
       <div className="relative">
          <MatchCard 
             item={rightItem} 
@@ -57,10 +72,16 @@ const MatchRow = ({ rightItem, leftItem, index, isLast, onDragStart, onDrop, onD
             onDragStart={(e) => onDragStart(e, index, 'right')}
             onDrop={(e) => onDrop(e, index, 'right')}
             onDragOver={onDragOver}
+            onTouchStart={(e) => onTouchStart(e, index, 'right')}
+            onTouchMove={onTouchMove}
+            onTouchEnd={onTouchEnd}
+            index={index}
+            side="right"
+            isDragging={isRightDragging}
          />
       </div>
 
-      {/* Left Item (Draggable) */}
+      {/* Left Item */}
       <div className="relative">
          <MatchCard 
             item={leftItem} 
@@ -69,11 +90,17 @@ const MatchRow = ({ rightItem, leftItem, index, isLast, onDragStart, onDrop, onD
             onDragStart={(e) => onDragStart(e, index, 'left')}
             onDrop={(e) => onDrop(e, index, 'left')}
             onDragOver={onDragOver}
+            onTouchStart={(e) => onTouchStart(e, index, 'left')}
+            onTouchMove={onTouchMove}
+            onTouchEnd={onTouchEnd}
+            index={index}
+            side="left"
+            isDragging={isLeftDragging}
          />
       </div>
     </div>
 
-    {/* Separator Line - Only if not the last item */}
+    {/* Separator Line */}
     {!isLast && (
       <div 
         className="mx-auto my-4 bg-[#CECECE]"
@@ -86,14 +113,15 @@ const MatchRow = ({ rightItem, leftItem, index, isLast, onDragStart, onDrop, onD
       ></div>
     )}
   </div>
-);
+)};
 
 const DragMatchQuestion = ({ rightItems, leftItems, onUpdateLeftItems, onUpdateRightItems }) => {
   const [draggedItem, setDraggedItem] = useState(null);
+  const longPressTimer = useRef(null);
+  const isLongPress = useRef(false);
 
   const handleDragStart = (e, index, side) => {
     setDraggedItem({ index, side });
-    // Set drag image to the card element if needed, but default usually works
     e.dataTransfer.effectAllowed = "move";
   };
 
@@ -103,15 +131,17 @@ const DragMatchQuestion = ({ rightItems, leftItems, onUpdateLeftItems, onUpdateR
   };
 
   const handleDrop = (e, targetIndex, targetSide) => {
-    e.preventDefault();
+    if (e && e.preventDefault) e.preventDefault();
     if (!draggedItem) return;
 
     const sourceIndex = draggedItem.index;
     const sourceSide = draggedItem.side;
 
-    // 1. Swap within the same side (Left <-> Left or Right <-> Right)
     if (sourceSide === targetSide) {
-       if (sourceIndex === targetIndex) return;
+       if (sourceIndex === targetIndex) {
+           setDraggedItem(null);
+           return;
+       }
 
        const items = sourceSide === 'left' ? [...leftItems] : [...rightItems];
        const updateFn = sourceSide === 'left' ? onUpdateLeftItems : onUpdateRightItems;
@@ -122,16 +152,13 @@ const DragMatchQuestion = ({ rightItems, leftItems, onUpdateLeftItems, onUpdateR
 
        updateFn(items);
     } 
-    // 2. Swap between sides (Left <-> Right)
     else {
        const newLeftItems = [...leftItems];
        const newRightItems = [...rightItems];
        
-       // Get items to swap
        const sourceItem = sourceSide === 'left' ? newLeftItems[sourceIndex] : newRightItems[sourceIndex];
        const targetItem = targetSide === 'left' ? newLeftItems[targetIndex] : newRightItems[targetIndex];
 
-       // Swap logic
        if (sourceSide === 'left') {
           newLeftItems[sourceIndex] = targetItem;
           newRightItems[targetIndex] = sourceItem;
@@ -145,6 +172,60 @@ const DragMatchQuestion = ({ rightItems, leftItems, onUpdateLeftItems, onUpdateR
     }
     
     setDraggedItem(null);
+  };
+
+  // Touch Handlers for Mobile (Long Press)
+  const handleTouchStart = (e, index, side) => {
+      // Clear any existing timer
+      if (longPressTimer.current) clearTimeout(longPressTimer.current);
+      isLongPress.current = false;
+
+      longPressTimer.current = setTimeout(() => {
+          isLongPress.current = true;
+          setDraggedItem({ index, side });
+          // Haptic feedback if supported
+          if (navigator.vibrate) navigator.vibrate(50);
+      }, 600); // 600ms hold to pick up
+  };
+
+  const handleTouchMove = (e) => {
+      if (isLongPress.current && draggedItem) {
+         e.preventDefault(); // Prevent scrolling only if we are effectively dragging
+      } else {
+          // If user moves before long press triggers, cancel the timer (it's a scroll)
+          if (longPressTimer.current) {
+              clearTimeout(longPressTimer.current);
+              longPressTimer.current = null;
+          }
+      }
+  };
+
+  const handleTouchEnd = (e) => {
+      if (longPressTimer.current) {
+          clearTimeout(longPressTimer.current);
+          longPressTimer.current = null;
+      }
+
+      if (!isLongPress.current || !draggedItem) {
+          isLongPress.current = false;
+          return;
+      }
+      
+      const touch = e.changedTouches[0];
+      const targetElement = document.elementFromPoint(touch.clientX, touch.clientY);
+      
+      if (targetElement) {
+          const cardWrapper = targetElement.closest('[data-match-card="true"]');
+          
+          if (cardWrapper) {
+              const targetIndex = parseInt(cardWrapper.getAttribute('data-index'), 10);
+              const targetSide = cardWrapper.getAttribute('data-side');
+              handleDrop(null, targetIndex, targetSide);
+          }
+      }
+      
+      setDraggedItem(null);
+      isLongPress.current = false;
   };
 
   return (
@@ -174,6 +255,10 @@ const DragMatchQuestion = ({ rightItems, leftItems, onUpdateLeftItems, onUpdateR
             onDragStart={handleDragStart}
             onDrop={handleDrop}
             onDragOver={handleDragOver}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+            draggedItem={draggedItem}
           />
         ))}
       </div>

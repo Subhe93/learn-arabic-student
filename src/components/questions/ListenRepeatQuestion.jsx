@@ -47,6 +47,7 @@ const ListenRepeatQuestion = ({ questionText, content, contentType = 'text' }) =
            <h3 className="text-xl font-bold text-gray-800">{questionText}</h3>
         </div>
         <span 
+            className="whitespace-nowrap w-[30%] sm:w-auto text-center sm:text-right inline-block"
             style={{
                 fontFamily: '"IBM Plex Sans Arabic", sans-serif',
                 fontWeight: 600,
@@ -98,7 +99,7 @@ const ListenRepeatQuestion = ({ questionText, content, contentType = 'text' }) =
 
             {contentType === 'image' && (
                 <div className="flex flex-col items-center gap-4 w-full border-2 border-[#CECECE] rounded-[60px] p-4 shadow-[0px_0px_11px_0px_#00000029,_-10px_5px_0px_0px_#00000024_inset] bg-white">
-                    <img src={content} alt="Question Content" className="max-w-md h-auto object-contain" />
+                    <img src={content} alt="Question Content" className="w-full max-w-md h-auto object-contain" />
                     <div className="w-[144px]">
                         <AudioButton type="listen" text="تشغيل" icon={play2Icon} onClick={() => {}} />
                     </div>

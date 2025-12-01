@@ -11,8 +11,8 @@ const CustomDropdown = ({ options, selectedOptionId, onSelect, placeholder }) =>
         <div className="relative w-full max-w-[338px]">
             <button
                 onClick={() => setIsOpen(!isOpen)}
+                className="w-full"
                 style={{
-                    width: '338px',
                     height: '48px',
                     gap: '8px',
                     borderRadius: '60px',
@@ -98,21 +98,22 @@ const ImageDescriptionQuestion = ({ questionText, imageSrc, options, correctAnsw
                 {/* Empty div or spacer if needed, but justified between pushes items to edges */}
                  <h3 className="text-lg font-bold text-gray-800 text-right flex-1">{questionText}</h3>
                 
-                <span
-                    style={{
-                        fontWeight: 600,
-                        fontSize: '14px',
-                        color: '#848484',
-                        marginLeft: '10px'
-                    }}
-                >
-                    5 درجات
-                </span>
+                       <span
+                           className="w-[30%] sm:w-auto text-center sm:text-right inline-block"
+                           style={{
+                               fontWeight: 600,
+                               fontSize: '14px',
+                               color: '#848484',
+                               marginLeft: '10px'
+                           }}
+                       >
+                           5 درجات
+                       </span>
             </div>
 
             {/* Content Row: Dropdown (Left) + Image (Right) */}
             {/* In RTL: First item is Right, Second is Left. We want Image on Right, Dropdown on Left. */}
-            <div className="flex items-center justify-between gap-8 mb-6">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-8 mb-6">
                 
                 {/* Image Container (Right Side in RTL) */}
                 <div className="flex-shrink-0">
@@ -124,7 +125,7 @@ const ImageDescriptionQuestion = ({ questionText, imageSrc, options, correctAnsw
                 </div>
 
                 {/* Dropdown Container (Left Side in RTL) */}
-                <div className="flex-1 flex justify-end"> {/* justify-end pushes to left in RTL? No, justify-end pushes to LEFT in RTL flex-row */}
+                <div className="flex-1 flex justify-center md:justify-end w-full md:w-auto">
                    <CustomDropdown 
                         options={options}
                         selectedOptionId={selectedOptionId}

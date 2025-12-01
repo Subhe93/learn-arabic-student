@@ -61,11 +61,11 @@ const CircularProgress = ({ total, completed, isCompleted, forceSegments }) => {
   const segmentLength = (circumference / total) - gap;
   
   return (
-    <div className="w-12 h-12 relative">
+    <div className="w-[44px] h-12 relative">
        <svg width="44" height="44" viewBox="0 0 44 44" className="transform -rotate-90">
           {Array.from({ length: total }).map((_, i) => {
              const isSegmentCompleted = i < completed;
-             const color = isSegmentCompleted ? "#6EE7B7" : "#D1D5DB";
+             const color = isSegmentCompleted ? "#6EE7B7" : "#B4B4B4";
              const strokeDasharray = `${segmentLength} ${circumference - segmentLength}`;
              const rotateAngle = (i * 360) / total;
              
@@ -74,7 +74,7 @@ const CircularProgress = ({ total, completed, isCompleted, forceSegments }) => {
                  key={i}
                  cx="22"
                  cy="22"
-                 r={radius}
+                 r={18}
                  fill="none"
                  stroke={color}
                  strokeWidth="3" 
@@ -86,7 +86,7 @@ const CircularProgress = ({ total, completed, isCompleted, forceSegments }) => {
           })}
        </svg>
        <div className="absolute inset-0 flex items-center justify-center">
-          <svg xmlns="http://www.w3.org/2000/svg" className={`h-5 w-5 ${completed > 0 ? 'text-[#6EE7B7]' : 'text-gray-300'}`} viewBox="0 0 20 20" fill="currentColor">
+          <svg xmlns="http://www.w3.org/2000/svg" className={`h-5 w-5 ${completed > 0 ? 'text-[#6EE7B7]' : 'text-[#B4B4B4]'}`} viewBox="0 0 20 20" fill="currentColor">
             <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
           </svg>
        </div>

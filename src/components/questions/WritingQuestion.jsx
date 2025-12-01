@@ -16,6 +16,7 @@ const WritingQuestion = ({ questionText, placeholder }) => {
                  <h3 className="text-lg font-bold text-gray-800 text-right flex-1">{questionText}</h3>
                 
                 <span
+                    className="w-[30%] sm:w-auto text-center sm:text-right inline-block"
                     style={{
                         fontWeight: 600,
                         fontSize: '14px',

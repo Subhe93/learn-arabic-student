@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import bgPattern from '../assets/images/bg.png';
-import animal1 from '../assets/images/animal1.png';
-import animal2 from '../assets/images/animal2.png';
+import animal1 from '../assets/images/animal1.svg';
+import animal2 from '../assets/images/animal2.svg';
 
 function LoginPage() {
   const [isForgotPassword, setIsForgotPassword] = useState(false);
+  const navigate = useNavigate();
+
+  const handleLogin = () => {
+    navigate('/courses');
+  };
 
   return (
     <div 
@@ -84,6 +89,7 @@ function LoginPage() {
 
                   <button 
                     type="submit"
+                    onClick={handleLogin}
                     className="mt-4 w-full bg-[#4F67BD] text-white font-bold py-3 px-6 rounded-full shadow-md hover:bg-[#3e539a] transition-transform active:scale-95"
                   >
                     دخول

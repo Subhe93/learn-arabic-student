@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 function TopNavBar({ 
   levelName = "المستوى الأول", 
@@ -114,33 +115,33 @@ function TopNavBarFinal({
     <div className="bg-white w-full flex flex-col font-sans shadow-sm" dir="rtl">
       
       {/* Top Section */}
-      <div className="flex justify-between items-center px-6 py-4">
+      <div className="flex justify-between items-center px-6 py-4 gap-2">
         
         {/* Right: User Capsule */}
-        <div className="bg-[#F3F4F6] rounded-full p-1 pl-6 pr-1 flex items-center gap-3">
+        <Link to="/profile" className="bg-[#F3F4F6] rounded-full p-1 pl-2 sm:pl-6 pr-1 flex items-center gap-2 sm:gap-3 hover:bg-gray-200 transition-colors cursor-pointer decoration-transparent max-w-[60%] sm:max-w-none overflow-hidden">
              {/* Points (Rightmost) */}
-             <div className="bg-[#C07749] text-white px-6 py-2 rounded-full font-bold text-sm shadow-sm">
+             <div className="bg-[#C07749] text-white px-3 sm:px-6 py-2 rounded-full font-bold text-xs sm:text-sm shadow-sm whitespace-nowrap">
                 500 نقطة
              </div>
              
              {/* User Info */}
-             <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-white">
+             <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full overflow-hidden border-2 border-white flex-shrink-0">
                    <img src="https://i.pravatar.cc/150?img=12" alt="Avatar" className="w-full h-full object-cover" />
                 </div>
-                <span className="font-bold text-gray-800 text-sm">أحمد محمود</span>
+                <span className="font-bold text-gray-800 text-xs sm:text-sm truncate hidden sm:inline">أحمد محمود</span>
              </div>
-        </div>
+        </Link>
 
         {/* Left: Back Button */}
-        <button className="flex items-center gap-3 text-gray-600 hover:text-gray-800 transition-colors group">
-           <span className="text-sm font-bold pt-1">العودة للرئيسية</span>
-           <div className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center bg-white group-hover:bg-gray-50 shadow-sm">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <Link to="/courses" className="flex items-center gap-2 sm:gap-3 text-gray-600 hover:text-gray-800 transition-colors group">
+           <span className="text-xs sm:text-sm font-bold pt-1 whitespace-nowrap">العودة للرئيسية</span>
+           <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border border-gray-200 flex items-center justify-center bg-white group-hover:bg-gray-50 shadow-sm flex-shrink-0">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 sm:h-5 sm:w-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
               </svg>
            </div>
-        </button>
+        </Link>
 
       </div>
 

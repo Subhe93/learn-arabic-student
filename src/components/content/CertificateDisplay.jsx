@@ -10,13 +10,15 @@ const CertificateDisplay = () => {
 
             {/* Success Text */}
             <h2 
-                className="mb-8"
+                className="mb-8 text-[40px] md:text-[46px]"
                 style={{
                     fontWeight: 600,
-                    fontSize: '46px',
+                    // fontSize handled by tailwind classes above for responsiveness
                     lineHeight: '100%',
                     textAlign: 'center',
-                    color: '#49BD8C'
+                    color: '#49BD8C',
+                    paddingLeft: '5px',
+                    paddingRight: '5px',
                 }}
             >
                 لقد انجزت المستوى الاولى بنجاح
@@ -28,15 +30,14 @@ const CertificateDisplay = () => {
                     src={certificateImg} 
                     alt="Certificate" 
                     className="w-full h-auto object-contain rounded-lg"
-                    style={{ maxHeight: '500px' }} 
+                    style={{ padding: '0px 10px',maxHeight: '500px' }} 
                 />
             </div>
 
             {/* Download Button */}
             <button
-                className="flex items-center justify-center gap-[10px] text-white transition-opacity hover:opacity-90"
+                className="flex items-center justify-center gap-[10px] text-white transition-opacity hover:opacity-90 w-[322px] md:w-[521px]"
                 style={{
-                    width: '521px',
                     height: '53px',
                     borderRadius: '60px',
                     padding: '12px 30px',

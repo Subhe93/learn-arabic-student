@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import TopNavBar from '../components/TopNavBar'; 
+import NavigationSidebar from '../components/NavigationSidebar';
 
 // Icons
 import userIcon from '../assets/icons/user.svg';
@@ -37,6 +38,7 @@ function ProfilePage() {
     const [editInfoData, setEditInfoData] = useState({ ...userData });
     const [editPasswordData, setEditPasswordData] = useState({ password: userData.password });
     const [editPlanData, setEditPlanData] = useState({ planType: userData.planType, planEndDate: userData.planEndDate });
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
     // Handlers for Personal Info
     const handleEditInfoClick = () => {
@@ -140,12 +142,17 @@ function ProfilePage() {
                          </div>
                      </div>
 
-                     <button className="bg-white w-12 h-12 rounded-full shadow-md flex items-center justify-center text-gray-700 hover:bg-gray-50 transition-colors">
+                     <button 
+                        onClick={() => setIsSidebarOpen(true)}
+                        className="bg-white w-12 h-12 rounded-full shadow-md flex items-center justify-center text-gray-700 hover:bg-gray-50 transition-colors"
+                     >
                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
                        </svg>
                      </button>
                 </div>
+                
+                <NavigationSidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
 
                 <div className="absolute -bottom-24 left-1/2 transform -translate-x-1/2 flex flex-col items-center z-30">
                     <div className="w-32 h-32 rounded-full border-4 border-white shadow-lg overflow-hidden bg-white">
