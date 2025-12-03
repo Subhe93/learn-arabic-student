@@ -41,6 +41,15 @@ const animals = [animal1, animal2, animal3, animal4, animal5, animal6, animal7, 
 const MapSection = () => {
   const navigate = useNavigate();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  React.useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const handleNodeClick = (index) => {
     if (index === 0 || index === 1) {
@@ -48,17 +57,16 @@ const MapSection = () => {
     }
   };
 
-  // Coordinates based on the zigzag image provided (Reversed for RTL)
   const nodes = [
-    { x: 95, y: 45, img: animal1 }, // Slightly lower than 40
-    { x: 81, y: 65, img: animal2 }, // Higher than 65
-    { x: 70, y: 40, img: grayanimal3 }, // Slightly lower than 30
-    { x: 59, y: 65, img: grayanimal4 }, // Higher than 65
-    { x: 48, y: 40, img: grayanimal5 }, // Slightly lower than 30
-    { x: 37, y: 65, img: grayanimal8 }, // Higher than 65
-    { x: 26, y: 40, img: grayanimal7 }, // Slightly lower than 30
-    { x: 15, y: 65, img: grayanimal6 }, // Higher than 65
-    { x: 4,  y: 40, img: grayanimal9 }, // Slightly lower than 30
+    { x: 95, y: isMobile ? 45 : 45, img: animal1 }, 
+    { x: 81, y: isMobile ? 58 : 65, img: animal2 },
+    { x: 70, y: isMobile ? 40 : 40, img: grayanimal3 },
+    { x: 59, y: isMobile ? 58 : 65, img: grayanimal4 },
+    { x: 48, y: isMobile ? 40 : 40, img: grayanimal5 },
+    { x: 37, y: isMobile ? 58 : 65, img: grayanimal8 },
+    { x: 26, y: isMobile ? 40 : 40, img: grayanimal7 },
+    { x: 15, y: isMobile ? 58 : 65, img: grayanimal6 },
+    { x: 4,  y: isMobile ? 40 : 40, img: grayanimal9 },
   ];
 
   const pathData = nodes.map((n, i) => `${i === 0 ? 'M' : 'L'} ${n.x} ${n.y}`).join(' ');
@@ -106,7 +114,7 @@ const MapSection = () => {
 
 
       {/* Map Container - Aligned to Right side */}
-      <div className="absolute inset-0 flex items-center justify-start pointer-events-none pr-4 md:pr-16 lg:pr-24">
+      <div className="absolute inset-0 flex items-center justify-start pointer-events-none px-5 md:pr-16 lg:pr-24">
          <div className="relative w-full max-w-5xl h-full">
             
             {/* Map Path SVG Layer */}

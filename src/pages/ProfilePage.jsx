@@ -155,7 +155,7 @@ function ProfilePage() {
                 <NavigationSidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
 
                 <div className="absolute -bottom-24 left-1/2 transform -translate-x-1/2 flex flex-col items-center z-30">
-                    <div className="w-32 h-32 rounded-full border-4 border-white shadow-lg overflow-hidden bg-white">
+                    <div className="w-32 h-32 rounded-full border-3 border-white shadow-lg overflow-hidden bg-white">
                         <img src={profileImg} alt="Profile" className="w-full h-full object-cover" />
                     </div>
                     <h2 className="mt-3 text-xl font-bold text-gray-800">احمد محمود</h2>
@@ -351,11 +351,10 @@ function ProfilePage() {
                                     }}
                                 >
                                     <span 
-                                        className="truncate dir-ltr text-xs"
+                                        className="truncate dir-ltr text-[12px] md:text-xs"
                                         style={{
                                             fontFamily: '"IBM Plex Sans Arabic", sans-serif',
                                             fontWeight: 500,
-                                            fontSize: '14px',
                                             lineHeight: '100%',
                                             textAlign: 'right',
                                             color: '#222222',

@@ -4,8 +4,7 @@ import arrowIcon from '../../assets/images/arow.png';
 
 const MatchCard = ({ item, arrowIcon, isDraggable, onDragStart, onDrop, onDragOver, onTouchStart, onTouchMove, onTouchEnd, index, side, isDragging }) => (
   <div 
-    className={`flex items-center justify-center relative ${isDraggable ? 'cursor-move' : ''}`}
-    style={{ width: '100%', maxWidth: '200px' }} 
+    className={`flex items-center justify-center relative ${isDraggable ? 'cursor-move' : ''} w-[130px] md:w-full md:max-w-[200px]`}
     draggable={isDraggable}
     onDragStart={onDragStart}
     onDrop={onDrop}
