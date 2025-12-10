@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import levelOneImg from '../assets/images/levelone1.png';
-import bookImg from '../assets/images/book.png';
+import bookImg from '../assets/images/1.png';
 
 import MultipleChoiceQuestion from './questions/MultipleChoiceQuestion';
 import DragMatchQuestion from './questions/DragMatchQuestion';
