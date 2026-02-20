@@ -1,15 +1,74 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 import bgPattern from '../assets/images/bg.png';
 import animal1 from '../assets/images/animal1.svg';
 import animal2 from '../assets/images/animal2.svg';
 
 function LoginPage() {
   const [isForgotPassword, setIsForgotPassword] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [resetEmail, setResetEmail] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
+  
   const navigate = useNavigate();
+  const { login, forgotPassword } = useAuth();
 
-  const handleLogin = () => {
-    navigate('/courses');
+  const handleLogin = async (e) => {
+    e?.preventDefault();
+    
+    // Validation
+    if (!email || !password) {
+      setError('يرجى إدخال البريد الإلكتروني وكلمة المرور');
+      return;
+    }
+
+    setIsLoading(true);
+    setError('');
+    
+    const result = await login(email, password);
+    
+    setIsLoading(false);
+    
+    if (result.success) {
+      // Check if email is confirmed
+      if (result.isConfirmed === false) {
+        navigate('/email-confirmation');
+      } else {
+        // Navigate to courses page
+        // SubscriptionGuard will check subscription status and show modal if needed
+        navigate('/courses');
+      }
+    } else {
+      setError(result.error || 'فشل تسجيل الدخول');
+    }
+  };
+
+  const handleForgotPassword = async (e) => {
+    e?.preventDefault();
+    
+    if (!resetEmail) {
+      setError('يرجى إدخال البريد الإلكتروني');
+      return;
+    }
+
+    setIsLoading(true);
+    setError('');
+    setSuccessMessage('');
+    
+    const result = await forgotPassword(resetEmail);
+    
+    setIsLoading(false);
+    
+    if (result.success) {
+      setSuccessMessage('تم إرسال رابط استعادة كلمة المرور إلى بريدك الإلكتروني');
+      setResetEmail('');
+    } else {
+      setError(result.error || 'فشل إرسال رابط استعادة كلمة المرور');
+    }
   };
 
   return (
@@ -56,15 +115,25 @@ function LoginPage() {
               <>
                 <h1 className="text-3xl font-extrabold text-gray-800 mb-8">تسجيل الدخول</h1>
 
-                <form className="w-full flex flex-col gap-5" onSubmit={(e) => e.preventDefault()}>
+                {error && (
+                  <div className="w-full mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded-lg text-sm text-center">
+                    {error}
+                  </div>
+                )}
+
+                <form className="w-full flex flex-col gap-5" onSubmit={handleLogin}>
                   
                   <div className="flex flex-col gap-2">
                     <label className="font-bold text-gray-700" htmlFor="email">البريد الإلكتروني</label>
                     <input 
                       id="email"
                       type="email" 
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
                       placeholder="example@domain.com"
                       className="w-full p-3 rounded-xl border-2 border-gray-200 focus:border-[#4F67BD] focus:outline-none transition-colors bg-gray-50"
+                      required
+                      disabled={isLoading}
                     />
                   </div>
 
@@ -73,8 +142,12 @@ function LoginPage() {
                         <label className="font-bold text-gray-700" htmlFor="password">كلمة المرور</label>
                         <button 
                             type="button"
-                            onClick={() => setIsForgotPassword(true)}
+                            onClick={() => {
+                              setIsForgotPassword(true);
+                              setError('');
+                            }}
                             className="text-sm text-[#4F67BD] font-bold hover:underline"
+                            disabled={isLoading}
                         >
                             نسيت كلمة المرور؟
                         </button>
@@ -82,17 +155,28 @@ function LoginPage() {
                     <input 
                       id="password"
                       type="password" 
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
                       placeholder="********"
                       className="w-full p-3 rounded-xl border-2 border-gray-200 focus:border-[#4F67BD] focus:outline-none transition-colors bg-gray-50"
+                      required
+                      disabled={isLoading}
                     />
                   </div>
 
                   <button 
                     type="submit"
-                    onClick={handleLogin}
-                    className="mt-4 w-full bg-[#4F67BD] text-white font-bold py-3 px-6 rounded-full shadow-md hover:bg-[#3e539a] transition-transform active:scale-95"
+                    disabled={isLoading}
+                    className="mt-4 w-full bg-[#4F67BD] text-white font-bold py-3 px-6 rounded-full shadow-md hover:bg-[#3e539a] transition-transform active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                   >
-                    دخول
+                    {isLoading ? (
+                      <>
+                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                        <span>جاري تسجيل الدخول...</span>
+                      </>
+                    ) : (
+                      'دخول'
+                    )}
                   </button>
 
                 </form>
@@ -112,29 +196,59 @@ function LoginPage() {
                     أدخل بريدك الإلكتروني وسنرسل لك رابطاً لاستعادة كلمة المرور.
                 </p>
 
-                <form className="w-full flex flex-col gap-5" onSubmit={(e) => e.preventDefault()}>
+                {error && (
+                  <div className="w-full mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded-lg text-sm text-center">
+                    {error}
+                  </div>
+                )}
+
+                {successMessage && (
+                  <div className="w-full mb-4 p-3 bg-green-100 border border-green-400 text-green-700 rounded-lg text-sm text-center">
+                    {successMessage}
+                  </div>
+                )}
+
+                <form className="w-full flex flex-col gap-5" onSubmit={handleForgotPassword}>
                   
                   <div className="flex flex-col gap-2">
                     <label className="font-bold text-gray-700" htmlFor="reset-email">البريد الإلكتروني</label>
                     <input 
                       id="reset-email"
                       type="email" 
+                      value={resetEmail}
+                      onChange={(e) => setResetEmail(e.target.value)}
                       placeholder="example@domain.com"
                       className="w-full p-3 rounded-xl border-2 border-gray-200 focus:border-[#4F67BD] focus:outline-none transition-colors bg-gray-50"
+                      required
+                      disabled={isLoading}
                     />
                   </div>
 
                   <button 
                     type="submit"
-                    className="mt-2 w-full bg-[#4F67BD] text-white font-bold py-3 px-6 rounded-full shadow-md hover:bg-[#3e539a] transition-transform active:scale-95"
+                    disabled={isLoading}
+                    className="mt-2 w-full bg-[#4F67BD] text-white font-bold py-3 px-6 rounded-full shadow-md hover:bg-[#3e539a] transition-transform active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                   >
-                    إرسال الرابط
+                    {isLoading ? (
+                      <>
+                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                        <span>جاري الإرسال...</span>
+                      </>
+                    ) : (
+                      'إرسال الرابط'
+                    )}
                   </button>
 
                   <button 
                     type="button"
-                    onClick={() => setIsForgotPassword(false)}
-                    className="mt-2 w-full bg-transparent text-gray-600 font-bold py-2 px-6 rounded-full hover:bg-gray-100 transition-colors border-2 border-transparent hover:border-gray-200"
+                    onClick={() => {
+                      setIsForgotPassword(false);
+                      setError('');
+                      setSuccessMessage('');
+                      setResetEmail('');
+                    }}
+                    disabled={isLoading}
+                    className="mt-2 w-full bg-transparent text-gray-600 font-bold py-2 px-6 rounded-full hover:bg-gray-100 transition-colors border-2 border-transparent hover:border-gray-200 disabled:opacity-50"
                   >
                     العودة لتسجيل الدخول
                   </button>

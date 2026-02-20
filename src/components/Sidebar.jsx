@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 // Import Icons
 import gamepadIcon from '../assets/icons/gamepad.svg';
@@ -137,8 +137,22 @@ const SubItem = ({ item, onClick, isCurrent }) => {
   );
 }
 
-function Sidebar({ activeTab, onTabSelect }) {
-  const [lessons, setLessons] = useState(initialLessons);
+function Sidebar({ activeTab, onTabSelect, lessons: externalLessons, onLessonChange }) {
+  const [lessons, setLessons] = useState(externalLessons || initialLessons);
+  
+  // Update lessons when externalLessons prop changes
+  useEffect(() => {
+    if (externalLessons) {
+      setLessons(externalLessons);
+    }
+  }, [externalLessons]);
+  
+  // Handle tab selection and notify parent about lesson change
+  const handleTabSelect = (tab, lesson) => {
+    if (onTabSelect) {
+      onTabSelect(tab, lesson);
+    }
+  };
 
   // Determine if we are in Certificate Mode
   const isCertificateMode = activeTab === 'certificate';
@@ -207,7 +221,7 @@ function Sidebar({ activeTab, onTabSelect }) {
                      <SubItem 
                         key={subItem.id} 
                         item={subItem} 
-                        onClick={() => onTabSelect && onTabSelect(subItem.title)}
+                        onClick={() => handleTabSelect(subItem.title, lesson)}
                         isCurrent={activeTab === subItem.title}
                      />
                    ))}

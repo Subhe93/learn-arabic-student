@@ -1,0 +1,5830 @@
+{
+  "info": {
+    "_postman_id": "d6a84f8d-c935-42b2-8265-16ee8cf4508a",
+    "name": "Learn Arabic",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "19232702"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "firstName",
+                  "value": "ahama",
+                  "type": "text",
+                  "uuid": "5f52f03d-ccba-4a7a-8550-21344ddf187f"
+                },
+                {
+                  "key": "lastName",
+                  "value": "jaber",
+                  "type": "text",
+                  "uuid": "5a909378-6dc1-45cf-8ef3-da84ca1648e7"
+                },
+                {
+                  "key": "email",
+                  "value": "ahamadd@gmail.com",
+                  "type": "text",
+                  "uuid": "772edab0-cff7-41a0-8209-16b96b8ddcd8"
+                },
+                {
+                  "key": "password",
+                  "value": "123456789",
+                  "type": "text",
+                  "uuid": "689d2299-0b5f-4227-8f21-0f2878c1b3ed"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{server_url}}/auth/register",
+              "host": [
+                "{{server_url}}"
+              ],
+              "path": [
+                "auth",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "email",
+                  "value": "ahamad@gmail.com",
+                  "type": "text",
+                  "uuid": "772edab0-cff7-41a0-8209-16b96b8ddcd8"
+                },
+                {
+                  "key": "password",
+                  "value": "123456789",
+                  "type": "text",
+                  "uuid": "689d2299-0b5f-4227-8f21-0f2878c1b3ed"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{server_url}}/auth/login",
+              "host": [
+                "{{server_url}}"
+              ],
+              "path": [
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": []
+            },
+            "url": {
+              "raw": "{{server_url}}/auth/logout",
+              "host": [
+                "{{server_url}}"
+              ],
+              "path": [
+                "auth",
+                "logout"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get user info",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": []
+            },
+            "url": {
+              "raw": "{{server_url}}/auth/info",
+              "host": [
+                "{{server_url}}"
+              ],
+              "path": [
+                "auth",
+                "info"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Resend email confirmation",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "email",
+                  "value": "hossien991@gmail.com",
+                  "type": "text",
+                  "uuid": "772edab0-cff7-41a0-8209-16b96b8ddcd8"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{server_url}}/auth/resend-confirmation",
+              "host": [
+                "{{server_url}}"
+              ],
+              "path": [
+                "auth",
+                "resend-confirmation"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Confirm account",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "email",
+                  "value": "hossien991@gmail.com",
+                  "type": "text",
+                  "uuid": "772edab0-cff7-41a0-8209-16b96b8ddcd8"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{server_url}}/auth/confirm?token=218719f2e7838536d066434c3e75deedc558075c3150af088565526299270c6f",
+              "host": [
+                "{{server_url}}"
+              ],
+              "path": [
+                "auth",
+                "confirm"
+              ],
+              "query": [
+                {
+                  "key": "token",
+                  "value": "218719f2e7838536d066434c3e75deedc558075c3150af088565526299270c6f"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Send Forgot Password Email",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "email",
+                  "value": "hossien991@gmail.com",
+                  "type": "text",
+                  "uuid": "772edab0-cff7-41a0-8209-16b96b8ddcd8"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{server_url}}/auth/forgot-password",
+              "host": [
+                "{{server_url}}"
+              ],
+              "path": [
+                "auth",
+                "forgot-password"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update password via reset link",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "password",
+                  "value": "123456789",
+                  "type": "text",
+                  "uuid": "772edab0-cff7-41a0-8209-16b96b8ddcd8"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{server_url}}/auth/reset-password/b6dad9364732a9b2e9f721766edbe065055b638b37845d629b0849a78591c0f5",
+              "host": [
+                "{{server_url}}"
+              ],
+              "path": [
+                "auth",
+                "reset-password",
+                "b6dad9364732a9b2e9f721766edbe065055b638b37845d629b0849a78591c0f5"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Admin",
+      "item": [
+        {
+          "name": "Upload",
+          "item": [
+            {
+              "name": "Upload image ",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "file",
+                      "type": "file",
+                      "uuid": "ea22e44d-8525-4a6a-95d1-e60bd6bd4b6a",
+                      "src": "/C:/Users/Lenovo/Desktop/dw6MbW8Qy0s94zxu06cZd.jpg"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{server_url}}/upload/image",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "upload",
+                    "image"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Upload file",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "file",
+                      "type": "file",
+                      "uuid": "ea22e44d-8525-4a6a-95d1-e60bd6bd4b6a",
+                      "src": "/C:/Users/Lenovo/Desktop/racknerd servers.pdf"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{server_url}}/upload/file",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "upload",
+                    "file"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Upload video",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiYWhhbWFkQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc2NTI3MTUxMywiZXhwIjoxNzY2MTcxNTEzfQ.iIFpkh9wEPcTsmDTbdPuZKwtWip3YRFZOV8",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "file",
+                      "type": "file",
+                      "uuid": "ea22e44d-8525-4a6a-95d1-e60bd6bd4b6a",
+                      "src": "/C:/Users/Lenovo/Downloads/Video/file_example_MP4_480_1_5MG.mp4"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{server_url}}/upload/video",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "upload",
+                    "video"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Upload audio",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiYWhhbWFkQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc2NTI3MTUxMywiZXhwIjoxNzY2MTcxNTEzfQ.iIFpkh9wEPcTsmDTbdPuZKwtWip3YRFZOV8",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "file",
+                      "type": "file",
+                      "uuid": "ea22e44d-8525-4a6a-95d1-e60bd6bd4b6a",
+                      "src": "/C:/Users/Lenovo/Downloads/Music/file_example_MP3_700KB.mp3"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{server_url}}/upload/audio",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "upload",
+                    "audio"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Admin accounts",
+          "item": [
+            {
+              "name": "Add new Admin",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "firstName",
+                      "value": "admin",
+                      "type": "text",
+                      "uuid": "a698f0f1-5c9f-4070-bb30-8eea46acd355"
+                    },
+                    {
+                      "key": "lastName",
+                      "value": "admin",
+                      "type": "text",
+                      "uuid": "c3c49150-0ead-4ec6-a70b-1d0dda174763"
+                    },
+                    {
+                      "key": "email",
+                      "value": "ad@gmail.com",
+                      "type": "text",
+                      "uuid": "9feff097-f1e2-44bc-afd1-aac4c0c1be86"
+                    },
+                    {
+                      "key": "password",
+                      "value": "123456789",
+                      "type": "text",
+                      "uuid": "b52a0747-f912-48a3-a593-3427354b8ce1"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{server_url}}/admin/admin-accounts",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "admin-accounts"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get all Admins",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{server_url}}/admin/admin-accounts",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "admin-accounts"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get custom Admin",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{server_url}}/admin/admin-accounts/8",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "admin-accounts",
+                    "8"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update custom Admin",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "firstName",
+                      "value": "admin",
+                      "type": "text",
+                      "uuid": "44927fd3-c47b-4d04-836a-a788adba077a"
+                    },
+                    {
+                      "key": "lastName",
+                      "value": "ad",
+                      "type": "text",
+                      "uuid": "d9454662-3e8d-4148-af5a-9e1bf894c4c7"
+                    },
+                    {
+                      "key": "email",
+                      "value": "q@gmail.com",
+                      "type": "text",
+                      "uuid": "a474bdb0-3d20-4faf-a37e-e3652ebbac28"
+                    },
+                    {
+                      "key": "password",
+                      "value": "1234567896",
+                      "type": "text",
+                      "uuid": "e4a819b5-f334-481e-9330-fdc97b74c44a"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{server_url}}/admin/admin-accounts/8",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "admin-accounts",
+                    "8"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete custom admin",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{server_url}}/admin/admin-accounts/9",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "admin-accounts",
+                    "9"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Levels",
+          "item": [
+            {
+              "name": "Add new Level",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\":\"test\",\r\n    \"description\":\"some data \",\r\n    \"image\":\"/images/1.jpg\",\r\n    \"color\":\"#000000\",\r\n    \"sortOrder\":3\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{server_url}}/admin/levels",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "levels"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get all Level",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{server_url}}/admin/levels",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "levels"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get custom Level",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{server_url}}/admin/levels/2",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "levels",
+                    "2"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update custom Level",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\": \"test updated\",\r\n    \"description\": \"some data updated \",\r\n    \"image\": \"/images/1.jpg\",\r\n     \"color\":\"#000000\",\r\n    \"sortOrder\": 2\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{server_url}}/admin/levels/2",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "levels",
+                    "2"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete custom Level",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{server_url}}/admin/levels/2",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "levels",
+                    "2"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Teacher Space",
+          "item": [
+            {
+              "name": "Add new Item",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\":\"test\",\r\n    \"countryId\":2,\r\n    \"order\":1,\r\n    \"type\":\"file\",// file , image , text\r\n    \"content\":\"/files/1.pdf\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{server_url}}/admin/teacher-spaces",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "teacher-spaces"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get all Items",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{server_url}}/admin/teacher-spaces",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "teacher-spaces"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get custom Item",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{server_url}}/admin/teacher-spaces/1",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "teacher-spaces",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update custom Item",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\":\"test\",\r\n    \"countryId\":2,\r\n    \"order\":1,\r\n    \"type\":\"file\",// file , image , text\r\n    \"content\":\"/files/1.pdf\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{server_url}}/admin/teacher-spaces/1",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "teacher-spaces",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete custom Level",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{server_url}}/admin/teacher-spaces/2",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "teacher-spaces",
+                    "2"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Countries",
+          "item": [
+            {
+              "name": "Add new country",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\":\"test\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{server_url}}/admin/countries",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "countries"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get all countries",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{server_url}}/admin/countries",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "countries"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get custom Country",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{server_url}}/admin/countries/1",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "countries",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update custom Country",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\": \"test updated\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{server_url}}/admin/countries/1",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "countries",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete custom Country",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{server_url}}/admin/countries/1",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "countries",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Lessons",
+          "item": [
+            {
+              "name": "Add new Lesson",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"levelId\":1,\r\n    \"lessons\":[\r\n        {\r\n            \"name\":\"the name\",\r\n            \"description\":\"some data\",\r\n            \"sortOrder\":2,\r\n            \"videoUrl\":\"video/1.mp4\",\r\n            \"imageUrl\":\"imges/1.jpg\",\r\n            \"pdfUrl\":\"files/1.pdf\",\r\n            \"audioUrl\":\"files/1.mp3\",\r\n            \"game\":\"some embed code\"\r\n        }\r\n    ]\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{server_url}}/admin/lessons",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "lessons"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get all Lessons",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{server_url}}/admin/lessons/level/1",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "lessons",
+                    "level",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get all Lessons for custom level",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{server_url}}/admin/lessons/level/1",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "lessons",
+                    "level",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get custom Lesson",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{server_url}}/admin/lessons/1",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "lessons",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update custom Lesson",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"lessons\":[\r\n        {\r\n            \"name\":\"the name updated\",\r\n            \"description\":\"some data\",\r\n            \"sortOrder\":2,\r\n            \"videoUrl\":\"video/1.mp4\",\r\n            \"imageUrl\":\"imges/1.jpg\",\r\n            \"pdfUrl\":\"files/1.pdf\",\r\n            \"audioUrl\":\"files/1.mp3\",\r\n            \"game\":\"some embed code\"\r\n        }\r\n    ]\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{server_url}}/admin/lessons/1",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "lessons",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete custom Lesson",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{server_url}}/admin/levels/2",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "levels",
+                    "2"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Admin Files",
+          "item": [
+            {
+              "name": "Create new file",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "file",
+                      "value": "/files/1.pdf",
+                      "type": "text",
+                      "uuid": "8547bdf5-e4bc-4ba9-ba1c-dc5b73409f8f"
+                    },
+                    {
+                      "key": "name",
+                      "value": "lesson 1 extra",
+                      "type": "text",
+                      "uuid": "9155b322-5201-4f5a-bb32-110b719555e6"
+                    },
+                    {
+                      "key": "levelId",
+                      "value": "1",
+                      "type": "text",
+                      "uuid": "3beadf26-3ddb-4699-8aef-ba2d8212e838"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{server_url}}/admin/files",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "files"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get all admin files",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": []
+                },
+                "url": {
+                  "raw": "{{server_url}}/admin/files",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "files"
+                  ],
+                  "query": [
+                    {
+                      "key": "level_id",
+                      "value": "3",
+                      "description": "optional",
+                      "type": "text",
+                      "disabled": true
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete custom file",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": []
+                },
+                "url": {
+                  "raw": "{{server_url}}/admin/files/1",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "files",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Teachers",
+          "item": [
+            {
+              "name": "Create new teacher",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "firstName",
+                      "value": "joan",
+                      "type": "text",
+                      "uuid": "8547bdf5-e4bc-4ba9-ba1c-dc5b73409f8f"
+                    },
+                    {
+                      "key": "lastName",
+                      "value": "doe",
+                      "type": "text",
+                      "uuid": "e29eef76-14e0-44b4-bf00-d8eb2cb733c7"
+                    },
+                    {
+                      "key": "email",
+                      "value": "jonsee@gmail.com",
+                      "type": "text",
+                      "uuid": "cb9ab420-93ee-43ed-801e-525681f89b1d"
+                    },
+                    {
+                      "key": "password",
+                      "value": "123456789",
+                      "type": "text",
+                      "uuid": "a8e4bff7-bb9c-49a5-8bb5-1f0499bee507"
+                    },
+                    {
+                      "key": "countryId",
+                      "value": "2",
+                      "type": "text",
+                      "uuid": "39146531-0092-489d-b034-883fef309a9f"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{server_url}}/admin/teachers",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "teachers"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get all teachers",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": []
+                },
+                "url": {
+                  "raw": "{{server_url}}/admin/teachers",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "teachers"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get custom teacher info",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": []
+                },
+                "url": {
+                  "raw": "{{server_url}}/admin/teachers/2",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "teachers",
+                    "2"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update custom  teacher",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "firstName",
+                      "value": "joan updated",
+                      "type": "text",
+                      "uuid": "8547bdf5-e4bc-4ba9-ba1c-dc5b73409f8f"
+                    },
+                    {
+                      "key": "lastName",
+                      "value": "doe",
+                      "type": "text",
+                      "uuid": "e29eef76-14e0-44b4-bf00-d8eb2cb733c7"
+                    },
+                    {
+                      "key": "email",
+                      "value": "jons@gmail.com",
+                      "type": "text",
+                      "uuid": "cb9ab420-93ee-43ed-801e-525681f89b1d"
+                    },
+                    {
+                      "key": "password",
+                      "value": "123456789",
+                      "type": "text",
+                      "uuid": "a8e4bff7-bb9c-49a5-8bb5-1f0499bee507",
+                      "disabled": true
+                    },
+                    {
+                      "key": "countryId",
+                      "value": "2",
+                      "type": "text",
+                      "uuid": "17ba698a-c4ea-459e-964d-56a385cfe650",
+                      "disabled": true
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{server_url}}/admin/teachers/6",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "teachers",
+                    "6"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete custom teacher",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": []
+                },
+                "url": {
+                  "raw": "{{server_url}}/admin/teachers/7",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "teachers",
+                    "7"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Teacher classess",
+          "item": [
+            {
+              "name": "Create new teacher class",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "name",
+                      "value": "class12",
+                      "type": "text",
+                      "uuid": "8547bdf5-e4bc-4ba9-ba1c-dc5b73409f8f"
+                    },
+                    {
+                      "key": "description",
+                      "value": "some text",
+                      "type": "text",
+                      "uuid": "e29eef76-14e0-44b4-bf00-d8eb2cb733c7"
+                    },
+                    {
+                      "key": "sortOrder",
+                      "value": "2",
+                      "type": "text",
+                      "uuid": "cb9ab420-93ee-43ed-801e-525681f89b1d"
+                    },
+                    {
+                      "key": "userId",
+                      "value": "2",
+                      "type": "text",
+                      "uuid": "a8e4bff7-bb9c-49a5-8bb5-1f0499bee507"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{server_url}}/admin/teacher-classes",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "teacher-classes"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get all teachers classess",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": []
+                },
+                "url": {
+                  "raw": "{{server_url}}/admin/teacher-classes",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "teacher-classes"
+                  ],
+                  "query": [
+                    {
+                      "key": "userId",
+                      "value": "21",
+                      "description": "optional",
+                      "type": "text",
+                      "disabled": true
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get custom teacher class info",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": []
+                },
+                "url": {
+                  "raw": "{{server_url}}/admin/teacher-classes/1",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "teacher-classes",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update custom teacher class",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "name",
+                      "value": "class22",
+                      "type": "text",
+                      "uuid": "8547bdf5-e4bc-4ba9-ba1c-dc5b73409f8f"
+                    },
+                    {
+                      "key": "description",
+                      "value": "some text",
+                      "type": "text",
+                      "uuid": "e29eef76-14e0-44b4-bf00-d8eb2cb733c7"
+                    },
+                    {
+                      "key": "sortOrder",
+                      "value": "2",
+                      "type": "text",
+                      "uuid": "cb9ab420-93ee-43ed-801e-525681f89b1d"
+                    },
+                    {
+                      "key": "userId",
+                      "value": "2",
+                      "type": "text",
+                      "uuid": "a8e4bff7-bb9c-49a5-8bb5-1f0499bee507"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{server_url}}/admin/teacher-classes/2",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "teacher-classes",
+                    "2"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete custom teacher class",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": []
+                },
+                "url": {
+                  "raw": "{{server_url}}/admin/teacher-classes/2",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "teacher-classes",
+                    "2"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Teacher class students",
+          "item": [
+            {
+              "name": "Add student to teacher class",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "studentId",
+                      "value": "1",
+                      "type": "text",
+                      "uuid": "e29eef76-14e0-44b4-bf00-d8eb2cb733c7"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{server_url}}/admin/teacher-classes/1/students",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "teacher-classes",
+                    "1",
+                    "students"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get all teacher class students",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": []
+                },
+                "url": {
+                  "raw": "{{server_url}}/admin/teacher-classes/1/students",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "teacher-classes",
+                    "1",
+                    "students"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete custom student from teacher class",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": []
+                },
+                "url": {
+                  "raw": "{{server_url}}/admin/teacher-classes/1/students/4",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "teacher-classes",
+                    "1",
+                    "students",
+                    "4"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Teacher class sessions",
+          "item": [
+            {
+              "name": "Create new teacher class session",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "name",
+                      "value": "class12",
+                      "type": "text",
+                      "uuid": "8547bdf5-e4bc-4ba9-ba1c-dc5b73409f8f"
+                    },
+                    {
+                      "key": "description",
+                      "value": "some text",
+                      "type": "text",
+                      "uuid": "e29eef76-14e0-44b4-bf00-d8eb2cb733c7"
+                    },
+                    {
+                      "key": "duration",
+                      "value": "23",
+                      "type": "text",
+                      "uuid": "cb9ab420-93ee-43ed-801e-525681f89b1d"
+                    },
+                    {
+                      "key": "dateTimeStart",
+                      "value": "2024-07-01T10:00:00Z",
+                      "type": "text",
+                      "uuid": "fb2deda2-3adf-4883-8adf-ad89d07cd8f2"
+                    },
+                    {
+                      "key": "url",
+                      "value": "https://example.com/class-session",
+                      "type": "text",
+                      "uuid": "8ec1ffe6-a548-4324-a457-53c4f3a053de"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{server_url}}/admin/teacher-classes/1/sessions",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "teacher-classes",
+                    "1",
+                    "sessions"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get all teacher class sessions",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": []
+                },
+                "url": {
+                  "raw": "{{server_url}}/admin/teacher-classes/1/sessions",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "teacher-classes",
+                    "1",
+                    "sessions"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get custom teacher class session info",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": []
+                },
+                "url": {
+                  "raw": "{{server_url}}/admin/teacher-classes/1/sessions/3",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "teacher-classes",
+                    "1",
+                    "sessions",
+                    "3"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update custom teacher class session",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "name",
+                      "value": "updated",
+                      "type": "text",
+                      "uuid": "8547bdf5-e4bc-4ba9-ba1c-dc5b73409f8f"
+                    },
+                    {
+                      "key": "description",
+                      "value": "some text updated",
+                      "type": "text",
+                      "uuid": "e29eef76-14e0-44b4-bf00-d8eb2cb733c7"
+                    },
+                    {
+                      "key": "duration",
+                      "value": "50",
+                      "type": "text",
+                      "uuid": "cb9ab420-93ee-43ed-801e-525681f89b1d"
+                    },
+                    {
+                      "key": "dateTimeStart",
+                      "value": "2025-07-01T10:00:00Z",
+                      "type": "text",
+                      "uuid": "fb2deda2-3adf-4883-8adf-ad89d07cd8f2"
+                    },
+                    {
+                      "key": "url",
+                      "value": "https://example.com/class-session1",
+                      "type": "text",
+                      "uuid": "8ec1ffe6-a548-4324-a457-53c4f3a053de"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{server_url}}/admin/teacher-classes/1/sessions/1",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "teacher-classes",
+                    "1",
+                    "sessions",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete custom teacher class",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": []
+                },
+                "url": {
+                  "raw": "{{server_url}}/admin/teacher-classes/1/sessions/2",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "teacher-classes",
+                    "1",
+                    "sessions",
+                    "2"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Teacher class files",
+          "item": [
+            {
+              "name": "Create new teacher class file",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "fileId",
+                      "value": "2",
+                      "type": "text",
+                      "uuid": "59348852-86b1-4e76-a135-2312f2eb8867"
+                    },
+                    {
+                      "key": "name",
+                      "value": "version one",
+                      "type": "text",
+                      "uuid": "e29eef76-14e0-44b4-bf00-d8eb2cb733c7"
+                    },
+                    {
+                      "key": "description",
+                      "value": "description for file",
+                      "type": "text",
+                      "uuid": "cb9ab420-93ee-43ed-801e-525681f89b1d"
+                    },
+                    {
+                      "key": "order",
+                      "value": "33",
+                      "type": "text",
+                      "uuid": "fb2deda2-3adf-4883-8adf-ad89d07cd8f2"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{server_url}}/admin/teacher-classes/1/files",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "teacher-classes",
+                    "1",
+                    "files"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get all teacher class file",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": []
+                },
+                "url": {
+                  "raw": "{{server_url}}/admin/teacher-classes/1/files",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "teacher-classes",
+                    "1",
+                    "files"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get custom teacher class file info",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": []
+                },
+                "url": {
+                  "raw": "{{server_url}}/admin/teacher-classes/1/files/1",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "teacher-classes",
+                    "1",
+                    "files",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update teacher class file",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "name",
+                      "value": "version one updated",
+                      "type": "text",
+                      "uuid": "e29eef76-14e0-44b4-bf00-d8eb2cb733c7"
+                    },
+                    {
+                      "key": "description",
+                      "value": "description for file",
+                      "type": "text",
+                      "uuid": "cb9ab420-93ee-43ed-801e-525681f89b1d"
+                    },
+                    {
+                      "key": "order",
+                      "value": "12",
+                      "type": "text",
+                      "uuid": "fb2deda2-3adf-4883-8adf-ad89d07cd8f2"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{server_url}}/admin/teacher-classes/1/files/2",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "teacher-classes",
+                    "1",
+                    "files",
+                    "2"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete custom teacher class file",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": []
+                },
+                "url": {
+                  "raw": "{{server_url}}/admin/teacher-classes/1/files/3",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "teacher-classes",
+                    "1",
+                    "files",
+                    "3"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Assignments",
+          "item": [
+            {
+              "name": "Add new Assignemnt",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"targetType\":\"Lesson\",\r\n    \"targetId\":1,\r\n    \"title\":\"the title of quiz\",\r\n    \"totalPoints\":3,\r\n    \"successPoints\":3,\r\n    \"description\":\"some description \",\r\n    \"image\":\"/images/1.jpg\",\r\n    \"date\":\"2025-12-31T23:59:59.999Z\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{server_url}}/admin/assignments",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "assignments"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get all Assignments",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{server_url}}/admin/assignments",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "assignments"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get custom Assignment",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{server_url}}/admin/assignments/1",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "assignments",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update custom Assignment",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"targetType\":\"Lesson\",\r\n    \"targetId\":1,\r\n    \"title\":\"the title of quiz updated\",\r\n    \"totalPoints\":3,\r\n    \"successPoints\":3,\r\n    \"description\":\"some description \",\r\n    \"image\":\"/images/1.jpg\",\r\n    \"date\":\"2025-12-31T23:59:59.999Z\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{server_url}}/admin/assignments/2",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "assignments",
+                    "2"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete custom Assignment",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{server_url}}/admin/assignments/2",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "assignments",
+                    "2"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get assignment for custom type",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{server_url}}/admin/assignments/target?targetType=Level&targetId=1",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "assignments",
+                    "target"
+                  ],
+                  "query": [
+                    {
+                      "key": "targetType",
+                      "value": "Level"
+                    },
+                    {
+                      "key": "targetId",
+                      "value": "1"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Assignment Blocks",
+          "item": [
+            {
+              "name": "Add new Assignment Block",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"assignmentId\":1,\r\n    \"orderIndex\":1,\r\n    \"textContentType\":\"text\",\r\n    \"textContent\":{\r\n        \"somedata\":\"dsfd\"\r\n    }\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{server_url}}/admin/assignment-blocks",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "assignment-blocks"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get all Assignment Blocks",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{server_url}}/admin/assignment-blocks?assignmentId=1",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "assignment-blocks"
+                  ],
+                  "query": [
+                    {
+                      "key": "assignmentId",
+                      "value": "1",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get custom Assignment Block",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{server_url}}/admin/assignment-blocks/2",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "assignment-blocks",
+                    "2"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update custom Assignment Block",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"assignmentId\":1,\r\n    \"orderIndex\":3,\r\n    \"textContentType\":\"text\",\r\n    \"textContent\":{\r\n        \"somedata\":\"updated\"\r\n    }\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{server_url}}/admin/assignment-blocks/2",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "assignment-blocks",
+                    "2"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete custom Assignment Block",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{server_url}}/admin/assignment-blocks/3",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "assignment-blocks",
+                    "3"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Questions",
+          "item": [
+            {
+              "name": "Add New Question",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "// {\r\n//     \"assignmentBlockId\":4,\r\n//     \"type\":\"mcq_single\",\r\n//     \"content\":{\r\n//         \"text\": \"What is 5+5?\",\r\n//         \"options\": [\r\n//             {\"text\": \"8\", \"is_correct\": false},\r\n//             {\"text\": \"10\", \"is_correct\": true},\r\n//             {\"text\": \"12\", \"is_correct\": false}\r\n//         ]\r\n//     },\r\n//     \"points\":15,\r\n//    \"requiresTeacherReview\":false\r\n// }\r\n\r\n{\r\n    \"assignmentBlockId\":4,\r\n    \"type\":\"text\",\r\n    \"content\":{\r\n        \"text\": \"What is 5+5?\",\r\n        \"image_url\":\"/images/1.jpg\"\r\n    },\r\n    \"points\":15,\r\n    \"requiresTeacherReview\":false\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{server_url}}/admin/questions",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "questions"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get questions for custom assignment block",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{server_url}}/admin/questions?assignmentBlockId=4",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "questions"
+                  ],
+                  "query": [
+                    {
+                      "key": "assignmentBlockId",
+                      "value": "4",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get Custom Question info",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{server_url}}/admin/questions/4",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "questions",
+                    "4"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update Custom Question",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "// {\r\n//     \"assignmentBlockId\":4,\r\n//     \"type\":\"mcq_single\",\r\n//     \"content\":{\r\n//         \"text\": \"What is 5+5?\",\r\n//         \"options\": [\r\n//             {\"text\": \"8\", \"is_correct\": false},\r\n//             {\"text\": \"10\", \"is_correct\": true},\r\n//             {\"text\": \"12\", \"is_correct\": false}\r\n//         ]\r\n//     },\r\n//     \"points\":15\r\n//     \"requiresTeacherReview\":false\r\n// }\r\n\r\n{\r\n    \"assignmentBlockId\":4,\r\n    \"type\":\"text\",\r\n    \"content\":{\r\n        \"text\": \"What is 5+5?1\",\r\n        \"image_url\":\"/images/1.jpg\"\r\n    },\r\n    \"points\":15,\r\n    \"requiresTeacherReview\":false\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{server_url}}/admin/questions/2",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "questions",
+                    "2"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete Custom Question",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{server_url}}/admin/questions/3",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "questions",
+                    "3"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Students",
+          "item": [
+            {
+              "name": "Create new student",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "firstName",
+                      "value": "std first name",
+                      "type": "text",
+                      "uuid": "8547bdf5-e4bc-4ba9-ba1c-dc5b73409f8f"
+                    },
+                    {
+                      "key": "lastName",
+                      "value": "std last name",
+                      "type": "text",
+                      "uuid": "e29eef76-14e0-44b4-bf00-d8eb2cb733c7"
+                    },
+                    {
+                      "key": "email",
+                      "value": "student11@gmail.com",
+                      "type": "text",
+                      "uuid": "cb9ab420-93ee-43ed-801e-525681f89b1d"
+                    },
+                    {
+                      "key": "password",
+                      "value": "123456789",
+                      "type": "text",
+                      "uuid": "a8e4bff7-bb9c-49a5-8bb5-1f0499bee507"
+                    },
+                    {
+                      "key": "birthdate",
+                      "value": "2000-01-01",
+                      "type": "text",
+                      "uuid": "95ed08c9-21ba-42c7-895a-4cb586b319e0"
+                    },
+                    {
+                      "key": "gender",
+                      "value": "male",
+                      "description": "male / female",
+                      "type": "text",
+                      "uuid": "f2a3600e-8534-4e3d-93bc-773987030cd3"
+                    },
+                    {
+                      "key": "address",
+                      "value": "123 Main Street, Cairo, Egypt",
+                      "type": "text",
+                      "uuid": "af382a5b-c7cb-41f5-92ff-617c961f3d52"
+                    },
+                    {
+                      "key": "mobile",
+                      "value": "+201234567890",
+                      "type": "text",
+                      "uuid": "dc961230-1a80-4aab-b834-a69fda4055eb"
+                    },
+                    {
+                      "key": "avatarUrl",
+                      "value": "avatar.jpg",
+                      "type": "text",
+                      "uuid": "d2e4be60-8f99-44d0-a803-c2db924d524c"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{server_url}}/admin/students",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "students"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get all students",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": []
+                },
+                "url": {
+                  "raw": "{{server_url}}/admin/students",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "students"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get custom student",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": []
+                },
+                "url": {
+                  "raw": "{{server_url}}/admin/students/1",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "students",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update custom  student",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "firstName",
+                      "value": "std first name updated",
+                      "type": "text",
+                      "uuid": "8547bdf5-e4bc-4ba9-ba1c-dc5b73409f8f"
+                    },
+                    {
+                      "key": "lastName",
+                      "value": "std last name updated",
+                      "type": "text",
+                      "uuid": "e29eef76-14e0-44b4-bf00-d8eb2cb733c7"
+                    },
+                    {
+                      "key": "email",
+                      "value": "student11@gmail.com",
+                      "type": "text",
+                      "uuid": "cb9ab420-93ee-43ed-801e-525681f89b1d",
+                      "disabled": true
+                    },
+                    {
+                      "key": "password",
+                      "value": "123456789",
+                      "type": "text",
+                      "uuid": "a8e4bff7-bb9c-49a5-8bb5-1f0499bee507",
+                      "disabled": true
+                    },
+                    {
+                      "key": "birthdate",
+                      "value": "2000-01-01",
+                      "type": "text",
+                      "uuid": "95ed08c9-21ba-42c7-895a-4cb586b319e0",
+                      "disabled": true
+                    },
+                    {
+                      "key": "gender",
+                      "value": "male",
+                      "description": "male / female",
+                      "type": "text",
+                      "uuid": "f2a3600e-8534-4e3d-93bc-773987030cd3",
+                      "disabled": true
+                    },
+                    {
+                      "key": "address",
+                      "value": "123 Main Street, Cairo, Egypt",
+                      "type": "text",
+                      "uuid": "af382a5b-c7cb-41f5-92ff-617c961f3d52",
+                      "disabled": true
+                    },
+                    {
+                      "key": "mobile",
+                      "value": "+201234567890",
+                      "type": "text",
+                      "uuid": "dc961230-1a80-4aab-b834-a69fda4055eb"
+                    },
+                    {
+                      "key": "avatarUrl",
+                      "value": "avatar.jpg",
+                      "type": "text",
+                      "uuid": "d2e4be60-8f99-44d0-a803-c2db924d524c",
+                      "disabled": true
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{server_url}}/admin/students/2",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "students",
+                    "2"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete custom student",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": []
+                },
+                "url": {
+                  "raw": "{{server_url}}/admin/students/2",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "students",
+                    "2"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get pending students need add to teacher class",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": []
+                },
+                "url": {
+                  "raw": "{{server_url}}/admin/pending-class-students",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "pending-class-students"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Students Level",
+          "item": [
+            {
+              "name": "Add level to student",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "levelId",
+                      "value": "3",
+                      "type": "text",
+                      "uuid": "8547bdf5-e4bc-4ba9-ba1c-dc5b73409f8f"
+                    },
+                    {
+                      "key": "status",
+                      "value": "enrolled",
+                      "description": "optional",
+                      "type": "text",
+                      "uuid": "7bdda387-8459-423b-9869-e2ba2209706b",
+                      "disabled": true
+                    },
+                    {
+                      "key": "enrollDate",
+                      "value": "2024-01-01",
+                      "description": "optional",
+                      "type": "text",
+                      "uuid": "f1840cfd-15af-40a9-aa11-cb7d10dfc19d",
+                      "disabled": true
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{server_url}}/admin/students/1/levels",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "students",
+                    "1",
+                    "levels"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get all levels for custom student",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": []
+                },
+                "url": {
+                  "raw": "{{server_url}}/admin/students/1/levels",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "students",
+                    "1",
+                    "levels"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete custom student level",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": []
+                },
+                "url": {
+                  "raw": "{{server_url}}/admin/students/1/levels/2",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "students",
+                    "1",
+                    "levels",
+                    "2"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Students Lesson",
+          "item": [
+            {
+              "name": "Add lesson to student",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "lessonId",
+                      "value": "5",
+                      "type": "text",
+                      "uuid": "8547bdf5-e4bc-4ba9-ba1c-dc5b73409f8f"
+                    },
+                    {
+                      "key": "status",
+                      "value": "enrolled",
+                      "description": "optional",
+                      "type": "text",
+                      "uuid": "7bdda387-8459-423b-9869-e2ba2209706b",
+                      "disabled": true
+                    },
+                    {
+                      "key": "enrollDate",
+                      "value": "2024-01-01",
+                      "description": "optional",
+                      "type": "text",
+                      "uuid": "f1840cfd-15af-40a9-aa11-cb7d10dfc19d",
+                      "disabled": true
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{server_url}}/admin/students/1/lessons",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "students",
+                    "1",
+                    "lessons"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get all lessons for custom student",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": []
+                },
+                "url": {
+                  "raw": "{{server_url}}/admin/students/1/lessons",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "students",
+                    "1",
+                    "lessons"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete custom student lesson",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": []
+                },
+                "url": {
+                  "raw": "{{server_url}}/admin/students/1/lessons/5",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "students",
+                    "1",
+                    "lessons",
+                    "5"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Students Balance",
+          "item": [
+            {
+              "name": "Add balance to student",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"amount\":15\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{server_url}}/admin/students/2/transactions/add-balance",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "students",
+                    "2",
+                    "transactions",
+                    "add-balance"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get all transaction for custom student",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": []
+                },
+                "url": {
+                  "raw": "{{server_url}}/admin/students/1/transactions",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "students",
+                    "1",
+                    "transactions"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Certificates",
+          "item": [
+            {
+              "name": "Generate certificate for custom student",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "studentId",
+                      "value": "1",
+                      "type": "text",
+                      "uuid": "826bc241-0f26-42b8-830f-7e9832204043"
+                    },
+                    {
+                      "key": "levelId",
+                      "value": "3",
+                      "type": "text",
+                      "uuid": "de5fa097-97a5-4586-9a1a-e0582883cc0b"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{server_url}}/admin/certificates/generate",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "certificates",
+                    "generate"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get all certificates with student and level data",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": []
+                },
+                "url": {
+                  "raw": "{{server_url}}/admin/certificates",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "certificates"
+                  ],
+                  "query": [
+                    {
+                      "key": "studentId",
+                      "value": "2",
+                      "description": "optional",
+                      "type": "text",
+                      "disabled": true
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Plans",
+          "item": [
+            {
+              "name": "Add new Plan",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\":\"monthly Follow with teacher\",\r\n    \"type\":\"monthly\",\r\n    \"description\":\"some text data\",\r\n    \"price\":60,\r\n    \"teacherFollowUp\":false,\r\n    \"sortOrder\":2,\r\n    \"active\":true\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{server_url}}/admin/plans",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "plans"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get all Plans",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{server_url}}/admin/plans",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "plans"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get custom Plan",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{server_url}}/admin/plans/2",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "plans",
+                    "2"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update custom  Plan",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\":\"Yearly Follow with teacher\",\r\n    \"type\":\"monthly\",\r\n    \"description\":\"some text data\",\r\n    \"price\":60,\r\n    \"teacherFollowUp\":false,\r\n    \"sortOrder\":2,\r\n    \"active\":true\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{server_url}}/admin/plans/4",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "plans",
+                    "4"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete custom Plan",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{server_url}}/admin/plans/4",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "plans",
+                    "4"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Students Subscribe",
+          "item": [
+            {
+              "name": "Get student subscribes with filter and pagination",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{server_url}}/admin/student-plans?page=2&limit=2",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "student-plans"
+                  ],
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "PAID",
+                      "description": "PENDING,PAID,FAILED,CANCELLED",
+                      "type": "text",
+                      "disabled": true
+                    },
+                    {
+                      "key": "studentId",
+                      "value": "1",
+                      "type": "text",
+                      "disabled": true
+                    },
+                    {
+                      "key": "subscriptionStatus",
+                      "value": "active",
+                      "description": "active,expired",
+                      "type": "text",
+                      "disabled": true
+                    },
+                    {
+                      "key": "page",
+                      "value": "2",
+                      "type": "text"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "2",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get Custom student subscribe info",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{server_url}}/admin/student-plans/2",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "student-plans",
+                    "2"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Add plan student ",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "studentId",
+                      "value": "2",
+                      "type": "text",
+                      "uuid": "d7590102-ceaa-480a-ba9c-6151b44ee474"
+                    },
+                    {
+                      "key": "planId",
+                      "value": "2",
+                      "type": "text",
+                      "uuid": "e43972d6-d731-48ca-9a1e-09c87c346b11"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{server_url}}/admin/student-plans",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "student-plans"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Student Transactions",
+          "item": [
+            {
+              "name": "Get students transaction with filter and pagination",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{server_url}}/admin/student-transactions?page=1&limit=2",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "student-transactions"
+                  ],
+                  "query": [
+                    {
+                      "key": "studentId",
+                      "value": "1",
+                      "type": "text",
+                      "disabled": true
+                    },
+                    {
+                      "key": "status",
+                      "value": "FAILED",
+                      "description": "PENDING,SUCCESS,FAILED",
+                      "type": "text",
+                      "disabled": true
+                    },
+                    {
+                      "key": "page",
+                      "value": "1",
+                      "type": "text"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "2",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Answer reviews",
+          "item": [
+            {
+              "name": "Get student answers to review it ",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{server_url}}/admin/answer-reviews?reviewStatus=all&page=1&limit=1",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "answer-reviews"
+                  ],
+                  "query": [
+                    {
+                      "key": "studentId",
+                      "value": "11",
+                      "type": "text",
+                      "disabled": true
+                    },
+                    {
+                      "key": "assignmentId",
+                      "value": "2",
+                      "type": "text",
+                      "disabled": true
+                    },
+                    {
+                      "key": "reviewStatus",
+                      "value": "all",
+                      "description": "'pending' | 'reviewed' | 'all'",
+                      "type": "text"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1",
+                      "type": "text"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "1",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Review student answers",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"studentAnswerId\":31,\r\n    \"isCorrect\":true,\r\n    \"points\":14\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{server_url}}/admin/answer-reviews/review",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "answer-reviews",
+                    "review"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Student",
+      "item": [
+        {
+          "name": "Levels",
+          "item": [
+            {
+              "name": "Get levels with student status",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{student_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": []
+                },
+                "url": {
+                  "raw": "{{server_url}}/student/levels",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "student",
+                    "levels"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Lessons",
+          "item": [
+            {
+              "name": "Get lessons with student lesson status for custom level",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{student_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": []
+                },
+                "url": {
+                  "raw": "{{server_url}}/student/lessons?levelId=1",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "student",
+                    "lessons"
+                  ],
+                  "query": [
+                    {
+                      "key": "levelId",
+                      "value": "1",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Certificates",
+          "item": [
+            {
+              "name": "Get  student certificates",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{student_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": []
+                },
+                "url": {
+                  "raw": "{{server_url}}/student/certificates",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "student",
+                    "certificates"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Affiliate",
+          "item": [
+            {
+              "name": "Get register users via affiliate code",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{student_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": []
+                },
+                "url": {
+                  "raw": "{{server_url}}/student/affiliate/referrals",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "student",
+                    "affiliate",
+                    "referrals"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Sessions",
+          "item": [
+            {
+              "name": "Get upcoming class sessions",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{student_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": []
+                },
+                "url": {
+                  "raw": "{{server_url}}/student/sessions/upcoming",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "student",
+                    "sessions",
+                    "upcoming"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Plans",
+          "item": [
+            {
+              "name": "Get plans",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{student_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": []
+                },
+                "url": {
+                  "raw": "{{server_url}}/subscription/plans",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "subscription",
+                    "plans"
+                  ],
+                  "query": [
+                    {
+                      "key": "type",
+                      "value": "monthly",
+                      "description": "yearly,monthly",
+                      "type": "text",
+                      "disabled": true
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Subscribe with custom plan",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{student_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "planId",
+                      "value": "1",
+                      "type": "text",
+                      "uuid": "c3ffd191-c80e-49f1-be84-cbfeac0a79b7"
+                    },
+                    {
+                      "key": "paymentMethodId",
+                      "value": "pm_1ScmfOHuHxSe9yWlivGGG7eF",
+                      "type": "text",
+                      "uuid": "69ab3170-1663-45e2-a37b-c45cdf966bd7"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{server_url}}/subscription/subscribe",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "subscription",
+                    "subscribe"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get current subscribed plan",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{student_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": []
+                },
+                "url": {
+                  "raw": "{{server_url}}/subscription/current",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "subscription",
+                    "current"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Assignement",
+          "item": [
+            {
+              "name": "Get assignment questions",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{student_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{server_url}}/student/assignments/lesson/4/questions",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "student",
+                    "assignments",
+                    "lesson",
+                    "4",
+                    "questions"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Submit answers for assignment ",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{student_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"assignmentId\":1,\r\n    \"answers\":[\r\n        {\r\n            \"questionId\":2,\r\n            \"answer\":{ \"selectedOptions\": [\"10\"] }\r\n        },\r\n\r\n        {\r\n            \"questionId\":3,\r\n            \"answer\":{ \"selectedOptions\": [\"12\",\"10\"] }\r\n        },\r\n\r\n        {\r\n            \"questionId\":4,\r\n            \"answer\": { \r\n                \"matches\": [\r\n                    {\"image\":\"/images/dog.jpg\",\"text\":\"dog\"},\r\n                    {\"image\":\"/images/cat.jpg\",\"text\":\"cat\"},\r\n                    {\"image\":\"/images/bird.jpg\",\"text\":\"bird\"}\r\n                ]}\r\n        },\r\n\r\n        {\r\n            \"questionId\":6,\r\n            \"answer\":{ \"selectedOptions\": [\"أ\"] }\r\n        },\r\n\r\n        {\r\n            \"questionId\":7,\r\n            \"answer\":{ \"selectedOptions\": [\"أ\",\"ب\"] }\r\n        },\r\n\r\n        {\r\n            \"questionId\":8,\r\n            \"answer\":{\"audioUrl\": \"string\" }\r\n        },\r\n\r\n        {\r\n            \"questionId\":9,\r\n            \"answer\":{ \"letters\": [\"ك\",\"ت\",\"ا\",\"ب\"] }\r\n        },\r\n\r\n        {\r\n            \"questionId\":10,\r\n            \"answer\":{ \"word\": \"BIRD\" }\r\n        },\r\n\r\n        {\r\n            \"questionId\":13,\r\n            \"answer\":{ \"imageUrl\": \"dsfdsf\" }\r\n        },\r\n\r\n        {\r\n            \"questionId\":14,\r\n            \"answer\": { \"selectedOptions\": [\"School\"] }\r\n        },\r\n\r\n        {\r\n            \"questionId\":15,\r\n            \"answer\": { \"orderedWords\": [\"Students\",\"go\",\"to\",\"school\"] }\r\n        },\r\n\r\n        {\r\n            \"questionId\":16,\r\n            \"answer\": { \"selections\": [\"قطة\", \"كلب\", \"طائر\"] }\r\n        },\r\n\r\n        {\r\n            \"questionId\":17,\r\n            \"answer\": null\r\n        },\r\n\r\n        {\r\n            \"questionId\":18,\r\n            \"answer\": { \"text\": \"إجابتي الحرة هنا...\" }\r\n        },\r\n         \r\n        {\r\n            \"questionId\":19,\r\n            \"answer\":{ \"imageUrl\": \"fdsfdsfd\"}\r\n        }\r\n\r\n    ]\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{server_url}}/student/assignments/submit",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "student",
+                    "assignments",
+                    "submit"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get custom assignment status for  student ",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{student_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{server_url}}/student/assignments/lesson/4/status",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "student",
+                    "assignments",
+                    "lesson",
+                    "4",
+                    "status"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Upload",
+          "item": [
+            {
+              "name": "Upload image",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{student_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "file",
+                      "type": "file",
+                      "uuid": "57edac71-f36c-4873-b3c6-cf873cc98534",
+                      "src": "/C:/Users/Lenovo/Downloads/ChatGPT Image May 15, 2025, 02_16_28 PM.png"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{server_url}}/student/upload/image",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "student",
+                    "upload",
+                    "image"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Upload Audio",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{student_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "file",
+                      "type": "file",
+                      "uuid": "57edac71-f36c-4873-b3c6-cf873cc98534",
+                      "src": "/C:/Users/Lenovo/Downloads/Music/file_example_MP3_700KB.mp3"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{server_url}}/student/upload/audio",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "student",
+                    "upload",
+                    "audio"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Teacher",
+      "item": [
+        {
+          "name": "Teacher classess",
+          "item": [
+            {
+              "name": "Get all teachers classess",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{teacher_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": []
+                },
+                "url": {
+                  "raw": "{{server_url}}/admin/teacher-classes",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "teacher-classes"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get custom teacher class info",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{teacher_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": []
+                },
+                "url": {
+                  "raw": "{{server_url}}/teacher/teacher-classes/2",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "teacher",
+                    "teacher-classes",
+                    "2"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Teacher class students",
+          "item": [
+            {
+              "name": "Get all teacher class students",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{teacher_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": []
+                },
+                "url": {
+                  "raw": "{{server_url}}/teacher/teacher-classes/1/students",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "teacher",
+                    "teacher-classes",
+                    "1",
+                    "students"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Teacher class sessions",
+          "item": [
+            {
+              "name": "Create new teacher class session",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{teacher_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "name",
+                      "value": "session 1",
+                      "type": "text",
+                      "uuid": "8547bdf5-e4bc-4ba9-ba1c-dc5b73409f8f"
+                    },
+                    {
+                      "key": "description",
+                      "value": "describe the session",
+                      "type": "text",
+                      "uuid": "e29eef76-14e0-44b4-bf00-d8eb2cb733c7"
+                    },
+                    {
+                      "key": "duration",
+                      "value": "55",
+                      "type": "text",
+                      "uuid": "cb9ab420-93ee-43ed-801e-525681f89b1d"
+                    },
+                    {
+                      "key": "dateTimeStart",
+                      "value": "2025-12-22T10:00:00Z",
+                      "type": "text",
+                      "uuid": "fb2deda2-3adf-4883-8adf-ad89d07cd8f2"
+                    },
+                    {
+                      "key": "url",
+                      "value": "https://example.com/class-session",
+                      "type": "text",
+                      "uuid": "8ec1ffe6-a548-4324-a457-53c4f3a053de"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{server_url}}/teacher/teacher-classes/1/sessions",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "teacher",
+                    "teacher-classes",
+                    "1",
+                    "sessions"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get all teacher class sessions",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{teacher_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": []
+                },
+                "url": {
+                  "raw": "{{server_url}}/teacher/teacher-classes/1/sessions",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "teacher",
+                    "teacher-classes",
+                    "1",
+                    "sessions"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get custom teacher class session info",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{teacher_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": []
+                },
+                "url": {
+                  "raw": "{{server_url}}/teacher/teacher-classes/1/sessions/2",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "teacher",
+                    "teacher-classes",
+                    "1",
+                    "sessions",
+                    "2"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update custom teacher class session",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{teacher_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "name",
+                      "value": "updated",
+                      "type": "text",
+                      "uuid": "8547bdf5-e4bc-4ba9-ba1c-dc5b73409f8f"
+                    },
+                    {
+                      "key": "description",
+                      "value": "some text updated",
+                      "type": "text",
+                      "uuid": "e29eef76-14e0-44b4-bf00-d8eb2cb733c7"
+                    },
+                    {
+                      "key": "duration",
+                      "value": "50",
+                      "type": "text",
+                      "uuid": "cb9ab420-93ee-43ed-801e-525681f89b1d"
+                    },
+                    {
+                      "key": "dateTimeStart",
+                      "value": "2025-12-28T10:00:00Z",
+                      "type": "text",
+                      "uuid": "fb2deda2-3adf-4883-8adf-ad89d07cd8f2"
+                    },
+                    {
+                      "key": "url",
+                      "value": "https://example.com/class-session1",
+                      "type": "text",
+                      "uuid": "8ec1ffe6-a548-4324-a457-53c4f3a053de"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{server_url}}/teacher/teacher-classes/1/sessions/1",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "teacher",
+                    "teacher-classes",
+                    "1",
+                    "sessions",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete custom teacher class",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{teacher_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": []
+                },
+                "url": {
+                  "raw": "{{server_url}}/teacher/teacher-classes/1/sessions/2",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "teacher",
+                    "teacher-classes",
+                    "1",
+                    "sessions",
+                    "2"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Teacher class files",
+          "item": [
+            {
+              "name": "Create new teacher class file",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{teacher_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "fileId",
+                      "value": "1",
+                      "type": "text",
+                      "uuid": "59348852-86b1-4e76-a135-2312f2eb8867"
+                    },
+                    {
+                      "key": "name",
+                      "value": "version one",
+                      "type": "text",
+                      "uuid": "e29eef76-14e0-44b4-bf00-d8eb2cb733c7"
+                    },
+                    {
+                      "key": "description",
+                      "value": "description for file",
+                      "type": "text",
+                      "uuid": "cb9ab420-93ee-43ed-801e-525681f89b1d"
+                    },
+                    {
+                      "key": "order",
+                      "value": "33",
+                      "type": "text",
+                      "uuid": "fb2deda2-3adf-4883-8adf-ad89d07cd8f2"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{server_url}}/teacher/teacher-classes/1/files",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "teacher",
+                    "teacher-classes",
+                    "1",
+                    "files"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get all teacher class file",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{teacher_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": []
+                },
+                "url": {
+                  "raw": "{{server_url}}/teacher/teacher-classes/1/files",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "teacher",
+                    "teacher-classes",
+                    "1",
+                    "files"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get custom teacher class file info",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{teacher_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": []
+                },
+                "url": {
+                  "raw": "{{server_url}}/teacher/teacher-classes/1/files/1",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "teacher",
+                    "teacher-classes",
+                    "1",
+                    "files",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update teacher class file",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{teacher_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "name",
+                      "value": "version one updated",
+                      "type": "text",
+                      "uuid": "e29eef76-14e0-44b4-bf00-d8eb2cb733c7"
+                    },
+                    {
+                      "key": "description",
+                      "value": "description for file",
+                      "type": "text",
+                      "uuid": "cb9ab420-93ee-43ed-801e-525681f89b1d"
+                    },
+                    {
+                      "key": "order",
+                      "value": "12",
+                      "type": "text",
+                      "uuid": "fb2deda2-3adf-4883-8adf-ad89d07cd8f2"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{server_url}}/teacher/teacher-classes/1/files/2",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "teacher",
+                    "teacher-classes",
+                    "1",
+                    "files",
+                    "2"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete custom teacher class file",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{teacher_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": []
+                },
+                "url": {
+                  "raw": "{{server_url}}/teacher/teacher-classes/1/files/3",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "teacher",
+                    "teacher-classes",
+                    "1",
+                    "files",
+                    "3"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Answer reviews",
+          "item": [
+            {
+              "name": "Get student answers to review it ",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{server_url}}/admin/answer-reviews?reviewStatus=all&page=1&limit=1",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "answer-reviews"
+                  ],
+                  "query": [
+                    {
+                      "key": "studentId",
+                      "value": "11",
+                      "type": "text",
+                      "disabled": true
+                    },
+                    {
+                      "key": "assignmentId",
+                      "value": "2",
+                      "type": "text",
+                      "disabled": true
+                    },
+                    {
+                      "key": "reviewStatus",
+                      "value": "all",
+                      "description": "'pending' | 'reviewed' | 'all'",
+                      "type": "text"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1",
+                      "type": "text"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "1",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Review student answers",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{teacher_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"studentAnswerId\":30,\r\n    \"isCorrect\":true,\r\n    \"points\":14\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{server_url}}/teacher/answer-reviews/review",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "teacher",
+                    "answer-reviews",
+                    "review"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Teacher Student Progress",
+          "item": [
+            {
+              "name": "Get levels with lessons for custom student",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{teacher_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{server_url}}/teacher/student-progress/students/1/levels/1",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "teacher",
+                    "student-progress",
+                    "students",
+                    "1",
+                    "levels",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get student assignment  results by assignment id ",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{teacher_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{server_url}}/teacher/student-progress/students/1/assignments/1",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "teacher",
+                    "student-progress",
+                    "students",
+                    "1",
+                    "assignments",
+                    "1"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Levels & Lessons",
+          "item": [
+            {
+              "name": "Get Levels",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{teacher_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": []
+                },
+                "url": {
+                  "raw": "{{server_url}}/teacher/levels",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "teacher",
+                    "levels"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get Lessons",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{teacher_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": []
+                },
+                "url": {
+                  "raw": "{{server_url}}/teacher/lessons?level_id=2",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "teacher",
+                    "lessons"
+                  ],
+                  "query": [
+                    {
+                      "key": "level_id",
+                      "value": "2",
+                      "description": "optional"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Teacher Spaces",
+          "item": [
+            {
+              "name": "Get all teacher-spaces items or filter by type",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{teacher_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": []
+                },
+                "url": {
+                  "raw": "{{server_url}}/teacher/teacher-spaces?type=text",
+                  "host": [
+                    "{{server_url}}"
+                  ],
+                  "path": [
+                    "teacher",
+                    "teacher-spaces"
+                  ],
+                  "query": [
+                    {
+                      "key": "type",
+                      "value": "text",
+                      "description": "text,file,image optional",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "server_url",
+      "value": "127.0.0.1:3000"
+    },
+    {
+      "key": "admin_token",
+      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiaG9zc2llbjk5MUBnbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NzA1NDQ5NDksImV4cCI6MTc3MTQ0NDk0OX0.QkSBjz5GxqTyWbZMJANAqXaiXEsIUBV4XatY-3k9G_Y"
+    },
+    {
+      "key": "student_token",
+      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMxLCJlbWFpbCI6Imhvc3NpZW45OTFAZ21haWwuY29tIiwicm9sZSI6InN0dWRlbnQiLCJpYXQiOjE3Njc3NzQyNjgsImV4cCI6MTc2ODY3NDI2OH0.12Fa7YtBVx-nJHYQ1vMmsIUJUTmQQoUwkWVtAGucmRY"
+    },
+    {
+      "key": "server_url",
+      "value": "https://learnarabic.iwings-digital.com",
+      "disabled": true
+    },
+    {
+      "key": "teacher_token",
+      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjUsImVtYWlsIjoidGVhY2hlckBnbWFpbC5jb20iLCJyb2xlIjoidGVhY2hlciIsImlhdCI6MTc3MDU0NTAzNiwiZXhwIjoxNzcxNDQ1MDM2fQ.n9lOcND0LZyI-8AZ7VTio-SdsnWHwWeiHhaXUaYcW9E"
+    }
+  ]
+}

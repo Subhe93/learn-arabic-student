@@ -10,3 +10,10 @@ body, button, input, textarea, select, div, span, p, h1, h2, h3, h4, h5, h6 {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+/* Lesson Content Styles - for HTML from rich text editor */
+/* Display content exactly as from the editor without modifications */
+.lesson-content {
+  /* No styles - content displays as-is from editor */
+  width: 100%;
+}

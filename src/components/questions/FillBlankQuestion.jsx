@@ -3,16 +3,19 @@ import OptionButton from './OptionButton';
 import rightIcon from '../../assets/icons/right.svg';
 import falseIcon from '../../assets/icons/false.svg';
 
-const FillBlankQuestion = ({ questionText, options, correctAnswerId }) => {
-  const [selectedOptionId, setSelectedOptionId] = useState(null);
-  const [feedback, setFeedback] = useState(null); // null, 'correct', 'wrong'
-
+const FillBlankQuestion = ({ 
+  questionText, 
+  options, 
+  correctAnswerId,
+  selectedOptionId = null,
+  onOptionSelect,
+  isConfirmed = false,
+  showFeedback = false
+}) => {
   const handleOptionSelect = (id) => {
-    setSelectedOptionId(id);
-    if (id === correctAnswerId) {
-      setFeedback('correct');
-    } else {
-      setFeedback('wrong');
+    if (isConfirmed) return; // Don't allow changes after confirmation
+    if (onOptionSelect) {
+      onOptionSelect(id);
     }
   };
 
@@ -39,15 +42,26 @@ const FillBlankQuestion = ({ questionText, options, correctAnswerId }) => {
       {/* Options */}
       <div className="flex flex-wrap justify-start gap-4 mb-6" style={{ marginRight: 'auto' }}>
         {options.map((option) => {
-            const status = selectedOptionId === option.id 
-                ? (feedback === 'correct' ? 'correct' : 'wrong') 
-                : 'default';
+            const isSelected = selectedOptionId === option.id;
+            const isCorrectOption = option.id === correctAnswerId;
+            
+            let status = 'default';
+            if (!showFeedback) {
+              // Before confirmation: show blue if selected
+              status = isSelected ? 'blue' : 'default';
+            } else {
+              // After confirmation: show correct/wrong colors
+              if (isSelected) {
+                status = isCorrectOption ? 'correct' : 'wrong';
+              } else if (isCorrectOption) {
+                // Show correct answer even if not selected
+                status = 'correct';
+              }
+            }
 
             // Apply custom styles dynamically based on status
             const customStyles = {
                 width: '260px',
-                // Only apply custom blue color if status is default
-                // If status is correct/wrong, let OptionButton's default style (white) take over
                 color: status === 'default' ? '#4F67BD' : 'white'
             };
 
@@ -62,32 +76,6 @@ const FillBlankQuestion = ({ questionText, options, correctAnswerId }) => {
             );
         })}
       </div>
-
-      {/* Feedback Message */}
-      {feedback && (
-        <div 
-            className={`w-full p-3 rounded-[60px] mb-6 flex items-center justify-start border-2 transition-all duration-300`}
-            style={{
-                borderColor: feedback === 'correct' ? '#49BD8C' : '#B92828', 
-                backgroundColor: feedback === 'correct' ? '#E8F8F1' : '#FBEAEA', // Very light green/red
-                color: feedback === 'correct' ? '#0B5736' : '#B92828'
-            }}
-        >
-            <span className="font-bold flex items-center gap-2">
-                {feedback === 'correct' ? (
-                    <>
-                        <img src={rightIcon} alt="Correct" className="w-6 h-6" />
-                        جميل !! اجابة صحية
-                    </>
-                ) : (
-                    <>
-                        <img src={falseIcon} alt="Wrong" className="w-6 h-6" />
-                        اجابة خطأئة!! حاول مرة اخرى
-                    </>
-                )}
-            </span>
-        </div>
-      )}
     </div>
   );
 };

@@ -3,47 +3,92 @@ import OptionButton from './OptionButton';
 import rightIcon from '../../assets/icons/right.svg';
 import falseIcon from '../../assets/icons/false.svg';
 
-const LetterBuilderQuestion = ({ questionText, initialLetters, correctSentence }) => {
+const LetterBuilderQuestion = ({ 
+  questionText, 
+  initialLetters = [], 
+  correctSentence = '', 
+  onAnswerChange, 
+  value,
+  isConfirmed = false,
+  showFeedback = false
+}) => {
   const [availableLetters, setAvailableLetters] = useState([]);
   const [selectedLetters, setSelectedLetters] = useState([]);
-  const [feedback, setFeedback] = useState(null); // null, 'correct', 'wrong'
+  
+  const isWordCorrect = () => {
+    if (!correctSentence || !selectedLetters || selectedLetters.length === 0) return null;
+    const word = selectedLetters.map(l => l.text).join('');
+    return word === correctSentence;
+  };
 
-  // Reset state when initialLetters change
+  // Initialize from initialLetters and value
   useEffect(() => {
-    setAvailableLetters(initialLetters);
-    setSelectedLetters([]);
-    setFeedback(null);
+    if (!initialLetters || initialLetters.length === 0) {
+      setAvailableLetters([]);
+      setSelectedLetters([]);
+      return;
+    }
+
+    if (value) {
+      // Restore from saved answer
+      // value can be a string (word) or array of letters
+      if (typeof value === 'string' && value.length > 0) {
+        // Convert string to array of letter objects
+        const savedLetters = value.split('').map((char, idx) => {
+          const letter = initialLetters.find(l => l.text === char);
+          return letter || { id: `saved${idx}`, text: char };
+        });
+        setSelectedLetters(savedLetters);
+        setAvailableLetters(initialLetters.filter(l => !value.includes(l.text)));
+      } else if (Array.isArray(value) && value.length > 0) {
+        // Array of letters
+        const savedLetters = value.map((char, idx) => {
+          const letter = initialLetters.find(l => l.text === char);
+          return letter || { id: `saved${idx}`, text: char };
+        });
+        setSelectedLetters(savedLetters);
+        setAvailableLetters(initialLetters.filter(l => !value.includes(l.text)));
+      } else {
+        setAvailableLetters(initialLetters);
+        setSelectedLetters([]);
+      }
+    } else {
+      setAvailableLetters(initialLetters);
+      setSelectedLetters([]);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialLetters]);
 
+  const notifyAnswerChange = (newSelectedLetters) => {
+    if (onAnswerChange) {
+      const formedWord = newSelectedLetters.map(l => l.text).join('');
+      onAnswerChange(formedWord);
+    }
+  };
+
   const handleLetterClick = (letter) => {
+    if (isConfirmed) return; // Don't allow changes after confirmation
+    
     // Move from available to selected
     setAvailableLetters(prev => prev.filter(l => l.id !== letter.id));
-    setSelectedLetters(prev => [...prev, letter]);
-    setFeedback(null);
+    setSelectedLetters(prev => {
+      const newSelected = [...prev, letter];
+      notifyAnswerChange(newSelected);
+      return newSelected;
+    });
   };
 
   const handleSelectedLetterClick = (letter) => {
+    if (isConfirmed) return; // Don't allow changes after confirmation
+    
     // Move from selected to available
-    setSelectedLetters(prev => prev.filter(l => l.id !== letter.id));
+    setSelectedLetters(prev => {
+      const newSelected = prev.filter(l => l.id !== letter.id);
+      notifyAnswerChange(newSelected);
+      return newSelected;
+    });
     setAvailableLetters(prev => [...prev, letter]);
-    setFeedback(null);
   };
-
-  // Check answer logic (Simple check when all letters are used or specific length reached)
-  useEffect(() => {
-    if (selectedLetters.length === initialLetters.length) {
-      const formedWord = selectedLetters.map(l => l.text).join('');
-        
-        // Actual logic:
-        if (formedWord === correctSentence.replace(/\s/g, '')) {
-           setFeedback('correct');
-        } else {
-           setFeedback('wrong');
-        }
-    } else {
-      setFeedback(null);
-    }
-  }, [selectedLetters, initialLetters.length, correctSentence]);
 
   return (
     <div className="w-full mb-8" dir="rtl">
@@ -68,7 +113,11 @@ const LetterBuilderQuestion = ({ questionText, initialLetters, correctSentence }
       {/* Source Area (Letters Pool) */}
       <div className="flex flex-wrap gap-4 justify-start mb-6" style={{ marginRight: 'auto' }}>
         {availableLetters.map((letter) => (
-            <div key={letter.id} onClick={() => handleLetterClick(letter)} className="w-[calc(50%-0.5rem)] sm:w-auto">
+            <div 
+              key={letter.id} 
+              onClick={() => handleLetterClick(letter)} 
+              className={`w-[calc(50%-0.5rem)] sm:w-auto ${isConfirmed ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}`}
+            >
                 <OptionButton 
                     label={letter.text} 
                     status="default" // White background for available letters
@@ -81,8 +130,12 @@ const LetterBuilderQuestion = ({ questionText, initialLetters, correctSentence }
       <div 
         className="w-full min-h-[80px] border-2 rounded-[60px] flex items-center justify-start px-4 gap-4 mb-6 transition-colors bg-white shadow-[0px_4px_4px_0px_#00000040_inset]"
         style={{
-            borderColor: '#CECECE', // Always gray border for the container itself in image? 
-            // Actually in the image, the container seems white/gray always. The feedback is below.
+            borderColor: showFeedback 
+              ? (isWordCorrect() ? '#0B5736' : '#6C1C1C')
+              : '#CECECE',
+            backgroundColor: showFeedback
+              ? (isWordCorrect() ? '#F0FDF4' : '#FEF2F2')
+              : 'white'
         }}
       >
          {/* Placeholder if empty? */}
@@ -90,36 +143,42 @@ const LetterBuilderQuestion = ({ questionText, initialLetters, correctSentence }
             <span className="text-gray-300 mr-auto ml-4"></span> 
          )}
 
-         {selectedLetters.map((letter) => (
+         {selectedLetters.map((letter) => {
+           const letterStatus = showFeedback 
+             ? (isWordCorrect() ? 'correct' : 'wrong')
+             : 'blue';
+           
+           return (
             <OptionButton 
                 key={letter.id} 
                 label={letter.text} 
-                status={feedback === 'correct' ? 'correct' : feedback === 'wrong' ? 'wrong' : 'blue'} 
+                status={letterStatus} 
                 onClick={() => handleSelectedLetterClick(letter)}
             />
-         ))}
+           );
+         })}
       </div>
 
-      {/* Feedback Message */}
-      {feedback && (
+      {/* Feedback Message - Only show after confirmation */}
+      {showFeedback && selectedLetters.length > 0 && (
         <div 
             className={`w-full p-3 rounded-[60px] mb-6 flex items-center justify-start border-2 transition-all duration-300`}
             style={{
-                borderColor: feedback === 'correct' ? '#49BD8C' : '#B92828', 
-                backgroundColor: feedback === 'correct' ? '#E8F8F1' : '#FBEAEA', // Very light green/red
-                color: feedback === 'correct' ? '#0B5736' : '#B92828'
+                borderColor: isWordCorrect() ? '#49BD8C' : '#B92828', 
+                backgroundColor: isWordCorrect() ? '#E8F8F1' : '#FBEAEA',
+                color: isWordCorrect() ? '#0B5736' : '#B92828'
             }}
         >
             <span className="font-bold flex items-center gap-2">
-                {feedback === 'correct' ? (
+                {isWordCorrect() ? (
                     <>
                         <img src={rightIcon} alt="Correct" className="w-6 h-6" />
-                        رائع!! الجملة هي {correctSentence}
+                        رائع!! إجابتك صحيحة
                     </>
                 ) : (
                     <>
                         <img src={falseIcon} alt="Wrong" className="w-6 h-6" />
-                        خطاء في تركيب الجملة
+                        خطأ في تركيب الكلمة. الكلمة الصحيحة: {correctSentence}
                     </>
                 )}
             </span>

@@ -1,12 +1,23 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
+
+// Helper function to get user display name
+const getUserDisplayName = (user) => {
+  if (!user) return 'أحمد محمود'; // Fallback
+  if (user.firstName || user.lastName) {
+    return `${user.firstName || ''} ${user.lastName || ''}`.trim();
+  }
+  return user.name || 'أحمد محمود';
+};
 
 function TopNavBar({ 
   levelName = "المستوى الأول", 
   completedLessons = 1, 
   totalLessons = 5 
 }) {
-  
+  const { user } = useAuth();
+  const displayName = getUserDisplayName(user);
   const progressPercentage = Math.round((completedLessons / totalLessons) * 100);
 
   return (
@@ -29,7 +40,7 @@ function TopNavBar({
               <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-white shadow-sm">
                  <img src="https://i.pravatar.cc/150?img=12" alt="Avatar" className="w-full h-full object-cover" />
               </div>
-              <span className="font-bold text-gray-800 text-sm">أحمد محمود</span>
+              <span className="font-bold text-gray-800 text-sm">{displayName}</span>
            </div>
         </div>
 
@@ -108,7 +119,8 @@ function TopNavBarFinal({
   completedLessons = 0, // Image shows 0% so maybe 0 completed
   totalLessons = 5 
 }) {
-  
+  const { user } = useAuth();
+  const displayName = getUserDisplayName(user);
   const progressPercentage = totalLessons > 0 ? Math.round((completedLessons / totalLessons) * 100) : 0;
 
   return (
@@ -129,7 +141,7 @@ function TopNavBarFinal({
                 <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full overflow-hidden border-2 border-white flex-shrink-0">
                    <img src="https://i.pravatar.cc/150?img=12" alt="Avatar" className="w-full h-full object-cover" />
                 </div>
-                <span className="font-bold text-gray-800 text-xs sm:text-sm truncate hidden sm:inline">أحمد محمود</span>
+                <span className="font-bold text-gray-800 text-xs sm:text-sm truncate hidden sm:inline">{displayName}</span>
              </div>
         </Link>
 

@@ -1,12 +1,22 @@
 import React from 'react';
 import videoImg from '../../assets/images/video.png';
 
-const VideoPlayer = () => {
+const VideoPlayer = ({ videoUrl }) => {
     return (
         <div className="w-full max-w-4xl mx-auto bg-white rounded-[20px] overflow-hidden shadow-lg border border-gray-200 relative group">
-            {/* Video Image */}
+            {/* Video Player */}
             <div className="relative w-full aspect-video bg-gray-100 flex items-center justify-center overflow-hidden">
-                <img src={videoImg} alt="Video Thumbnail" className="w-full h-full object-cover" />
+                {videoUrl ? (
+                    <video 
+                        src={videoUrl} 
+                        controls 
+                        className="w-full h-full object-contain"
+                    >
+                        متصفحك لا يدعم تشغيل الفيديو.
+                    </video>
+                ) : (
+                    <img src={videoImg} alt="Video Thumbnail" className="w-full h-full object-cover" />
+                )}
             </div>
 
             {/* Video Controls Bar */}

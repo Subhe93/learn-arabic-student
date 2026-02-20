@@ -1,0 +1,1051 @@
+/student/levels
+
+[
+    {
+        "id": 1,
+        "name": "المستوى الاول",
+        "description": "مستوى مخصص للاطفال في عمر اربعة سنوات",
+        "image": "images/a15a71b9-2d21-4060-8201-033661c8edb7.png",
+        "sortOrder": 1,
+        "createdAt": "2025-12-04T23:12:35.882Z",
+        "updatedAt": "2025-12-31T01:12:56.532Z",
+        "studentLevel": {
+            "id": 4,
+            "studentId": 6,
+            "levelId": 1,
+            "status": "in_progress",
+            "enrollDate": "2025-12-28T23:18:02.930Z",
+            "endDate": null,
+            "completePercent": 0,
+            "createdAt": "2025-12-28T23:18:02.931Z",
+            "updatedAt": "2025-12-28T23:18:02.931Z"
+        }
+    },
+    {
+        "id": 2,
+        "name": "المستوى الثاني",
+        "description": "",
+        "image": "images/a4fb7f6d-1ca8-4324-a4cb-df756869cb31.jpg",
+        "sortOrder": 1,
+        "createdAt": "2025-12-29T22:06:39.082Z",
+        "updatedAt": "2025-12-29T22:06:39.082Z",
+        "studentLevel": null
+    }
+]
+
+-----------------
+
+/student/lessons?levelId=1
+
+[
+    {
+        "id": 4,
+        "levelId": 1,
+        "name": "حرف الباء",
+        "description": "<p style=\"text-align: right;\">درس خاص بتعليم التلميذ كيفية كتابة وقراءة حرف الباء<br><img src=\"https://learnarabic.iwings-digital.com/uploads/images/bc9b48bf-cfe8-42cf-9a46-c95b5e8b9302.webp\">&lt;audio controls&gt;&lt;source src=\"https://learnarabic.iwings-digital.com/uploads/audios/26b72bac-115d-4630-a405-a6f2435a8123.mp3\" type=\"audio/mpeg\"&gt;&lt;/audio&gt;<br><br></p>",
+        "sortOrder": 1,
+        "videoUrl": "videos/7e6a84e9-9a78-49c6-9d7d-ce39d4d8c682.mp4",
+        "imageUrl": "images/8582062b-7bab-4bb7-a874-2dc44d3caefe.png",
+        "pdfUrl": "files/1.pdf",
+        "game": "some embed code",
+        "createdAt": "2025-12-09T00:50:35.688Z",
+        "updatedAt": "2025-12-25T15:00:25.609Z",
+        "studentLesson": {
+            "id": 3,
+            "studentId": 6,
+            "lessonId": 4,
+            "status": "enrolled",
+            "enrollDate": "2025-12-28T00:00:00.000Z",
+            "endDate": null,
+            "createdAt": "2025-12-28T23:16:20.908Z",
+            "updatedAt": "2025-12-28T23:16:20.908Z"
+        }
+    }
+]
+
+----------------
+/student/affiliate/referrals
+
+{
+    "balance": "0",
+    "affiliateCode": "4GATZL14T",
+    "totalReferrals": 0,
+    "referrals": []
+}
+
+--------------
+
+/student/sessions/upcoming
+
+{
+    "enrolledClasses": 2,
+    "totalUpcomingSessions": 0,
+    "classes": [
+        {
+            "classId": 1,
+            "className": "الصف الاول - تحضيري",
+            "classDescription": "الصف الاول لعمر 7 سنوات",
+            "teacher": {
+                "id": 12,
+                "name": "معلم احمد"
+            },
+            "enrolledAt": "2025-12-28T23:16:59.327Z"
+        },
+        {
+            "classId": 2,
+            "className": "الصف الاول ابتدائي",
+            "classDescription": "الصف الاول ابتدائي",
+            "teacher": {
+                "id": 16,
+                "name": "manar sh"
+            },
+            "enrolledAt": "2025-12-29T21:53:53.865Z"
+        }
+    ],
+    "upcomingSessions": []
+}
+
+
+---------
+
+/subscription/plans
+
+[
+    {
+        "id": 1,
+        "name": "خطة 100 $",
+        "type": "yearly",
+        "sortOrder": 1,
+        "price": 100,
+        "description": "طلاب تحضيري",
+        "teacherFollowUp": true,
+        "active": true,
+        "createdAt": "2025-12-25T15:54:09.522Z",
+        "updatedAt": "2025-12-25T15:54:57.167Z"
+    }
+]
+
+------------------
+
+/subscription/current
+
+{
+    "id": 3,
+    "plan": {
+        "id": 1,
+        "name": "خطة 100 $",
+        "type": "yearly",
+        "sortOrder": 1,
+        "price": 100,
+        "description": "طلاب تحضيري",
+        "teacherFollowUp": true,
+        "active": true,
+        "createdAt": "2025-12-25T15:54:09.522Z",
+        "updatedAt": "2025-12-25T15:54:57.167Z"
+    },
+    "amount": "100",
+    "startDate": "2025-12-28T23:18:02.906Z",
+    "endDate": "2026-12-28T23:18:02.906Z",
+    "status": "PAID"
+}
+
+
+-------------
+
+/student/assignments/1/questions
+
+{
+    "id": 1,
+    "targetType": "Lesson",
+    "targetId": 4,
+    "title": "the title of quiz",
+    "description": "some description ",
+    "image": "images/183277bd-886f-438b-987a-d06681c9e75f.png",
+    "totalPoints": 3,
+    "successPoints": 3,
+    "date": "2025-12-31T23:59:59.999Z",
+    "blocks": [
+        {
+            "id": "2",
+            "textContentType": "image",
+            "textContent": {
+                "url": "images/1dbb399f-0b69-4f0f-9b85-584c4b0b6e77.webp",
+                "caption": "صورة"
+            },
+            "orderIndex": 1,
+            "questions": []
+        },
+        {
+            "id": "3",
+            "textContentType": "text",
+            "textContent": {
+                "text": "ماهو الحيوان الذي يحتوي اسمه على حرف الباء"
+            },
+            "orderIndex": 2,
+            "questions": [
+                {
+                    "id": 2,
+                    "type": "free_text",
+                    "content": {
+                        "text": "اكتب إجابتك هنا",
+                        "placeholder": "اكتب إجابتك..."
+                    },
+                    "points": 10,
+                    "requiresTeacherReview": true
+                },
+                {
+                    "id": 3,
+                    "type": "free_text_upload",
+                    "content": {
+                        "text": "اكتب النص على ورقة وتصويره وارفعها"
+                    },
+                    "points": 1,
+                    "requiresTeacherReview": false
+                },
+                {
+                    "id": 4,
+                    "type": "read_question",
+                    "content": {
+                        "text": "اقرأ النص التالي",
+                        "imageUrl": "images/390c4fd3-c5b5-44eb-a9e7-c7edf280ed6b.webp"
+                    },
+                    "points": 1,
+                    "requiresTeacherReview": false
+                },
+                {
+                    "id": 5,
+                    "type": "select_image_text",
+                    "content": {
+                        "text": "اختر النص المناسب لكل صورة",
+                        "items": [
+                            {
+                                "image": "images/8f4760ce-c8f0-40df-b282-50e15614f43d.webp",
+                                "correctText": "صحيح"
+                            }
+                        ],
+                        "options": [
+                            "صحيح",
+                            "غير صحيح"
+                        ]
+                    },
+                    "points": 1,
+                    "requiresTeacherReview": false
+                },
+                {
+                    "id": 6,
+                    "type": "order_words",
+                    "content": {
+                        "text": "رتب الكلمات لتصبح جملة مفيدة",
+                        "words": [
+                            "الطالب",
+                            "يذهب",
+                            "إلى",
+                            "المدرسة"
+                        ],
+                        "correctOrder": [
+                            "الطالب",
+                            "يذهب",
+                            "إلى",
+                            "المدرسة"
+                        ]
+                    },
+                    "points": 1,
+                    "requiresTeacherReview": false
+                },
+                {
+                    "id": 7,
+                    "type": "fill_sentence",
+                    "content": {
+                        "text": "يذهب الطالب إلى .... كل يوم",
+                        "options": [
+                            {
+                                "text": "المدرسة",
+                                "is_correct": true
+                            },
+                            {
+                                "text": "الجبل",
+                                "is_correct": false
+                            },
+                            {
+                                "text": "الحديقة",
+                                "is_correct": false
+                            }
+                        ]
+                    },
+                    "points": 1,
+                    "requiresTeacherReview": false
+                },
+                {
+                    "id": 8,
+                    "type": "write_words",
+                    "content": {
+                        "text": "انسخ هذه الكلمات على ورقة وصورها وارفعها",
+                        "words": [
+                            "كتاب",
+                            "قلم",
+                            "مدرسة"
+                        ]
+                    },
+                    "points": 1,
+                    "requiresTeacherReview": false
+                },
+                {
+                    "id": 9,
+                    "type": "compose_word",
+                    "content": {
+                        "text": "ركب الكلمة من هذه الأحرف",
+                        "letters": [
+                            "ك",
+                            "ت",
+                            "ا",
+                            "ب"
+                        ],
+                        "correctWord": "كتاب"
+                    },
+                    "points": 1,
+                    "requiresTeacherReview": false
+                },
+                {
+                    "id": 10,
+                    "type": "break_word",
+                    "content": {
+                        "text": "حلل الكلمة إلى أحرف",
+                        "word": "كتاب",
+                        "correctLetters": [
+                            "ك",
+                            "ت",
+                            "ا",
+                            "ب"
+                        ]
+                    },
+                    "points": 1,
+                    "requiresTeacherReview": false
+                },
+                {
+                    "id": 11,
+                    "type": "draw_circle_multiple",
+                    "content": {
+                        "text": "ارسم دائرة حول الإجابات الصحيحة",
+                        "options": [
+                            {
+                                "text": "أ",
+                                "is_correct": true
+                            },
+                            {
+                                "text": "ب",
+                                "is_correct": true
+                            },
+                            {
+                                "text": "ج",
+                                "is_correct": true
+                            }
+                        ]
+                    },
+                    "points": 1,
+                    "requiresTeacherReview": false
+                },
+                {
+                    "id": 12,
+                    "type": "draw_circle_single",
+                    "content": {
+                        "text": "ارسم دائرة حول الإجابة الصحيحة",
+                        "options": [
+                            {
+                                "text": "أ",
+                                "is_correct": true
+                            },
+                            {
+                                "text": "ب",
+                                "is_correct": false
+                            },
+                            {
+                                "text": "ج",
+                                "is_correct": false
+                            }
+                        ]
+                    },
+                    "points": 1,
+                    "requiresTeacherReview": false
+                },
+                {
+                    "id": 13,
+                    "type": "mcq_multiple",
+                    "content": {
+                        "text": "ما هو السؤال؟",
+                        "options": [
+                            {
+                                "text": "الخيار 1",
+                                "is_correct": false
+                            },
+                            {
+                                "text": "الخيار 2",
+                                "is_correct": true
+                            },
+                            {
+                                "text": "الخيار 3",
+                                "is_correct": true
+                            }
+                        ]
+                    },
+                    "points": 1,
+                    "requiresTeacherReview": false
+                },
+                {
+                    "id": 14,
+                    "type": "mcq_single",
+                    "content": {
+                        "text": "ما هو السؤال؟",
+                        "options": [
+                            {
+                                "text": "الخيار 1",
+                                "is_correct": false
+                            },
+                            {
+                                "text": "الخيار 2",
+                                "is_correct": true
+                            },
+                            {
+                                "text": "الخيار 3",
+                                "is_correct": false
+                            }
+                        ]
+                    },
+                    "points": 1,
+                    "requiresTeacherReview": false
+                },
+                {
+                    "id": 15,
+                    "type": "match_image_text",
+                    "content": {
+                        "text": "وصل كل صورة مع النص المناسب",
+                        "pairs": [
+                            {
+                                "image": "images/1c386805-617c-4171-97f4-fd4f830dc0ba.webp",
+                                "text": "yes"
+                            },
+                            {
+                                "image": "images/db8b0fd5-b2fa-429b-a126-2eedc96efb19.webp",
+                                "text": "no"
+                            }
+                        ]
+                    },
+                    "points": 1,
+                    "requiresTeacherReview": false
+                },
+                {
+                    "id": 16,
+                    "type": "listen_repeat",
+                    "content": {
+                        "text": "استمع إلى الكلمة وكررها",
+                        "audioUrl": "audios/f7bf92f7-2419-41d4-ba76-083851a568bf.mp3"
+                    },
+                    "points": 1,
+                    "requiresTeacherReview": false
+                }
+            ]
+        }
+    ]
+}
+
+--------
+
+/student/assignments/1/status
+
+{
+    "status": "pending_review",
+    "totalPoints": null,
+    "successPoints": 3,
+    "startDate": "2025-12-28T23:14:52.070Z",
+    "answers": [
+        {
+            "id": 1,
+            "questionId": 2,
+            "studentId": 6,
+            "answer": {
+                "selectedOptions": [
+                    "10"
+                ]
+            },
+            "isCorrect": false,
+            "points": 0,
+            "studentAssignmentId": 1,
+            "teacherNotes": null,
+            "reviewedById": null,
+            "createdAt": "2025-12-28T23:15:18.345Z",
+            "updatedAt": "2025-12-28T23:15:18.345Z",
+            "question": {
+                "id": 2,
+                "assignmentBlockId": "3",
+                "type": "free_text",
+                "content": {
+                    "text": "اكتب إجابتك هنا",
+                    "placeholder": "اكتب إجابتك..."
+                },
+                "points": 10,
+                "requiresTeacherReview": true,
+                "createdAt": "2025-12-25T13:57:20.155Z",
+                "updatedAt": "2025-12-25T16:19:20.324Z"
+            }
+        },
+        {
+            "id": 2,
+            "questionId": 3,
+            "studentId": 6,
+            "answer": {
+                "selectedOptions": [
+                    "12",
+                    "10"
+                ]
+            },
+            "isCorrect": false,
+            "points": 0,
+            "studentAssignmentId": 1,
+            "teacherNotes": null,
+            "reviewedById": null,
+            "createdAt": "2025-12-28T23:15:18.362Z",
+            "updatedAt": "2025-12-28T23:15:18.362Z",
+            "question": {
+                "id": 3,
+                "assignmentBlockId": "3",
+                "type": "free_text_upload",
+                "content": {
+                    "text": "اكتب النص على ورقة وتصويره وارفعها"
+                },
+                "points": 1,
+                "requiresTeacherReview": false,
+                "createdAt": "2025-12-25T13:57:44.984Z",
+                "updatedAt": "2025-12-25T13:57:44.984Z"
+            }
+        },
+        {
+            "id": 3,
+            "questionId": 4,
+            "studentId": 6,
+            "answer": {
+                "matches": [
+                    {
+                        "image": "/images/dog.jpg",
+                        "text": "dog"
+                    },
+                    {
+                        "image": "/images/cat.jpg",
+                        "text": "cat"
+                    },
+                    {
+                        "image": "/images/bird.jpg",
+                        "text": "bird"
+                    }
+                ]
+            },
+            "isCorrect": false,
+            "points": 0,
+            "studentAssignmentId": 1,
+            "teacherNotes": null,
+            "reviewedById": null,
+            "createdAt": "2025-12-28T23:15:18.372Z",
+            "updatedAt": "2025-12-28T23:15:18.372Z",
+            "question": {
+                "id": 4,
+                "assignmentBlockId": "3",
+                "type": "read_question",
+                "content": {
+                    "text": "اقرأ النص التالي",
+                    "imageUrl": "images/390c4fd3-c5b5-44eb-a9e7-c7edf280ed6b.webp"
+                },
+                "points": 1,
+                "requiresTeacherReview": false,
+                "createdAt": "2025-12-25T13:58:08.345Z",
+                "updatedAt": "2025-12-25T13:58:08.345Z"
+            }
+        },
+        {
+            "id": 4,
+            "questionId": 5,
+            "studentId": 6,
+            "answer": {
+                "selectedOptions": [
+                    "أ"
+                ]
+            },
+            "isCorrect": false,
+            "points": 0,
+            "studentAssignmentId": 1,
+            "teacherNotes": null,
+            "reviewedById": null,
+            "createdAt": "2025-12-28T23:15:18.378Z",
+            "updatedAt": "2025-12-28T23:15:18.378Z",
+            "question": {
+                "id": 5,
+                "assignmentBlockId": "3",
+                "type": "select_image_text",
+                "content": {
+                    "text": "اختر النص المناسب لكل صورة",
+                    "items": [
+                        {
+                            "image": "images/8f4760ce-c8f0-40df-b282-50e15614f43d.webp",
+                            "correctText": "صحيح"
+                        }
+                    ],
+                    "options": [
+                        "صحيح",
+                        "غير صحيح"
+                    ]
+                },
+                "points": 1,
+                "requiresTeacherReview": false,
+                "createdAt": "2025-12-25T13:58:37.138Z",
+                "updatedAt": "2025-12-25T13:58:37.138Z"
+            }
+        },
+        {
+            "id": 5,
+            "questionId": 6,
+            "studentId": 6,
+            "answer": {
+                "selectedOptions": [
+                    "أ"
+                ]
+            },
+            "isCorrect": false,
+            "points": 0,
+            "studentAssignmentId": 1,
+            "teacherNotes": null,
+            "reviewedById": null,
+            "createdAt": "2025-12-28T23:15:18.383Z",
+            "updatedAt": "2025-12-28T23:15:18.383Z",
+            "question": {
+                "id": 6,
+                "assignmentBlockId": "3",
+                "type": "order_words",
+                "content": {
+                    "text": "رتب الكلمات لتصبح جملة مفيدة",
+                    "words": [
+                        "الطالب",
+                        "يذهب",
+                        "إلى",
+                        "المدرسة"
+                    ],
+                    "correctOrder": [
+                        "الطالب",
+                        "يذهب",
+                        "إلى",
+                        "المدرسة"
+                    ]
+                },
+                "points": 1,
+                "requiresTeacherReview": false,
+                "createdAt": "2025-12-25T13:58:54.968Z",
+                "updatedAt": "2025-12-25T13:58:54.968Z"
+            }
+        },
+        {
+            "id": 6,
+            "questionId": 7,
+            "studentId": 6,
+            "answer": {
+                "selectedOptions": [
+                    "أ",
+                    "ب"
+                ]
+            },
+            "isCorrect": false,
+            "points": 0,
+            "studentAssignmentId": 1,
+            "teacherNotes": null,
+            "reviewedById": null,
+            "createdAt": "2025-12-28T23:15:18.390Z",
+            "updatedAt": "2025-12-28T23:15:18.390Z",
+            "question": {
+                "id": 7,
+                "assignmentBlockId": "3",
+                "type": "fill_sentence",
+                "content": {
+                    "text": "يذهب الطالب إلى .... كل يوم",
+                    "options": [
+                        {
+                            "text": "المدرسة",
+                            "is_correct": true
+                        },
+                        {
+                            "text": "الجبل",
+                            "is_correct": false
+                        },
+                        {
+                            "text": "الحديقة",
+                            "is_correct": false
+                        }
+                    ]
+                },
+                "points": 1,
+                "requiresTeacherReview": false,
+                "createdAt": "2025-12-25T13:59:04.477Z",
+                "updatedAt": "2025-12-25T13:59:04.477Z"
+            }
+        },
+        {
+            "id": 7,
+            "questionId": 8,
+            "studentId": 6,
+            "answer": {
+                "audioUrl": "string"
+            },
+            "isCorrect": false,
+            "points": 0,
+            "studentAssignmentId": 1,
+            "teacherNotes": null,
+            "reviewedById": null,
+            "createdAt": "2025-12-28T23:15:18.398Z",
+            "updatedAt": "2025-12-28T23:15:18.398Z",
+            "question": {
+                "id": 8,
+                "assignmentBlockId": "3",
+                "type": "write_words",
+                "content": {
+                    "text": "انسخ هذه الكلمات على ورقة وصورها وارفعها",
+                    "words": [
+                        "كتاب",
+                        "قلم",
+                        "مدرسة"
+                    ]
+                },
+                "points": 1,
+                "requiresTeacherReview": false,
+                "createdAt": "2025-12-25T13:59:16.912Z",
+                "updatedAt": "2025-12-25T13:59:16.912Z"
+            }
+        },
+        {
+            "id": 8,
+            "questionId": 9,
+            "studentId": 6,
+            "answer": {
+                "letters": [
+                    "ك",
+                    "ت",
+                    "ا",
+                    "ب"
+                ]
+            },
+            "isCorrect": false,
+            "points": 0,
+            "studentAssignmentId": 1,
+            "teacherNotes": null,
+            "reviewedById": null,
+            "createdAt": "2025-12-28T23:15:18.404Z",
+            "updatedAt": "2025-12-28T23:15:18.404Z",
+            "question": {
+                "id": 9,
+                "assignmentBlockId": "3",
+                "type": "compose_word",
+                "content": {
+                    "text": "ركب الكلمة من هذه الأحرف",
+                    "letters": [
+                        "ك",
+                        "ت",
+                        "ا",
+                        "ب"
+                    ],
+                    "correctWord": "كتاب"
+                },
+                "points": 1,
+                "requiresTeacherReview": false,
+                "createdAt": "2025-12-25T13:59:26.041Z",
+                "updatedAt": "2025-12-25T13:59:26.041Z"
+            }
+        },
+        {
+            "id": 9,
+            "questionId": 10,
+            "studentId": 6,
+            "answer": {
+                "word": "BIRD"
+            },
+            "isCorrect": false,
+            "points": 0,
+            "studentAssignmentId": 1,
+            "teacherNotes": null,
+            "reviewedById": null,
+            "createdAt": "2025-12-28T23:15:18.409Z",
+            "updatedAt": "2025-12-28T23:15:18.409Z",
+            "question": {
+                "id": 10,
+                "assignmentBlockId": "3",
+                "type": "break_word",
+                "content": {
+                    "text": "حلل الكلمة إلى أحرف",
+                    "word": "كتاب",
+                    "correctLetters": [
+                        "ك",
+                        "ت",
+                        "ا",
+                        "ب"
+                    ]
+                },
+                "points": 1,
+                "requiresTeacherReview": false,
+                "createdAt": "2025-12-25T13:59:31.812Z",
+                "updatedAt": "2025-12-25T13:59:31.812Z"
+            }
+        },
+        {
+            "id": 10,
+            "questionId": 11,
+            "studentId": 6,
+            "answer": {
+                "word": "BIRD"
+            },
+            "isCorrect": false,
+            "points": 0,
+            "studentAssignmentId": 1,
+            "teacherNotes": null,
+            "reviewedById": null,
+            "createdAt": "2025-12-28T23:15:18.415Z",
+            "updatedAt": "2025-12-28T23:15:18.415Z",
+            "question": {
+                "id": 11,
+                "assignmentBlockId": "3",
+                "type": "draw_circle_multiple",
+                "content": {
+                    "text": "ارسم دائرة حول الإجابات الصحيحة",
+                    "options": [
+                        {
+                            "text": "أ",
+                            "is_correct": true
+                        },
+                        {
+                            "text": "ب",
+                            "is_correct": true
+                        },
+                        {
+                            "text": "ج",
+                            "is_correct": true
+                        }
+                    ]
+                },
+                "points": 1,
+                "requiresTeacherReview": false,
+                "createdAt": "2025-12-25T14:00:34.876Z",
+                "updatedAt": "2025-12-25T16:19:28.446Z"
+            }
+        },
+        {
+            "id": 11,
+            "questionId": 12,
+            "studentId": 6,
+            "answer": {
+                "word": "BIRD"
+            },
+            "isCorrect": false,
+            "points": 0,
+            "studentAssignmentId": 1,
+            "teacherNotes": null,
+            "reviewedById": null,
+            "createdAt": "2025-12-28T23:15:18.421Z",
+            "updatedAt": "2025-12-28T23:15:18.421Z",
+            "question": {
+                "id": 12,
+                "assignmentBlockId": "3",
+                "type": "draw_circle_single",
+                "content": {
+                    "text": "ارسم دائرة حول الإجابة الصحيحة",
+                    "options": [
+                        {
+                            "text": "أ",
+                            "is_correct": true
+                        },
+                        {
+                            "text": "ب",
+                            "is_correct": false
+                        },
+                        {
+                            "text": "ج",
+                            "is_correct": false
+                        }
+                    ]
+                },
+                "points": 1,
+                "requiresTeacherReview": false,
+                "createdAt": "2025-12-25T14:00:39.885Z",
+                "updatedAt": "2025-12-25T14:00:39.885Z"
+            }
+        },
+        {
+            "id": 12,
+            "questionId": 13,
+            "studentId": 6,
+            "answer": {
+                "imageUrl": "dsfdsf"
+            },
+            "isCorrect": false,
+            "points": 0,
+            "studentAssignmentId": 1,
+            "teacherNotes": null,
+            "reviewedById": null,
+            "createdAt": "2025-12-28T23:15:18.426Z",
+            "updatedAt": "2025-12-28T23:15:18.426Z",
+            "question": {
+                "id": 13,
+                "assignmentBlockId": "3",
+                "type": "mcq_multiple",
+                "content": {
+                    "text": "ما هو السؤال؟",
+                    "options": [
+                        {
+                            "text": "الخيار 1",
+                            "is_correct": false
+                        },
+                        {
+                            "text": "الخيار 2",
+                            "is_correct": true
+                        },
+                        {
+                            "text": "الخيار 3",
+                            "is_correct": true
+                        }
+                    ]
+                },
+                "points": 1,
+                "requiresTeacherReview": false,
+                "createdAt": "2025-12-25T14:02:21.723Z",
+                "updatedAt": "2025-12-25T14:02:21.723Z"
+            }
+        },
+        {
+            "id": 13,
+            "questionId": 14,
+            "studentId": 6,
+            "answer": {
+                "selectedOptions": [
+                    "School"
+                ]
+            },
+            "isCorrect": false,
+            "points": 0,
+            "studentAssignmentId": 1,
+            "teacherNotes": null,
+            "reviewedById": null,
+            "createdAt": "2025-12-28T23:15:18.432Z",
+            "updatedAt": "2025-12-28T23:15:18.432Z",
+            "question": {
+                "id": 14,
+                "assignmentBlockId": "3",
+                "type": "mcq_single",
+                "content": {
+                    "text": "ما هو السؤال؟",
+                    "options": [
+                        {
+                            "text": "الخيار 1",
+                            "is_correct": false
+                        },
+                        {
+                            "text": "الخيار 2",
+                            "is_correct": true
+                        },
+                        {
+                            "text": "الخيار 3",
+                            "is_correct": false
+                        }
+                    ]
+                },
+                "points": 1,
+                "requiresTeacherReview": false,
+                "createdAt": "2025-12-25T14:02:26.341Z",
+                "updatedAt": "2025-12-25T14:02:26.341Z"
+            }
+        },
+        {
+            "id": 14,
+            "questionId": 15,
+            "studentId": 6,
+            "answer": {
+                "orderedWords": [
+                    "Students",
+                    "go",
+                    "to",
+                    "school"
+                ]
+            },
+            "isCorrect": false,
+            "points": 0,
+            "studentAssignmentId": 1,
+            "teacherNotes": null,
+            "reviewedById": null,
+            "createdAt": "2025-12-28T23:15:18.439Z",
+            "updatedAt": "2025-12-28T23:15:18.439Z",
+            "question": {
+                "id": 15,
+                "assignmentBlockId": "3",
+                "type": "match_image_text",
+                "content": {
+                    "text": "وصل كل صورة مع النص المناسب",
+                    "pairs": [
+                        {
+                            "image": "images/1c386805-617c-4171-97f4-fd4f830dc0ba.webp",
+                            "text": "yes"
+                        },
+                        {
+                            "image": "images/db8b0fd5-b2fa-429b-a126-2eedc96efb19.webp",
+                            "text": "no"
+                        }
+                    ]
+                },
+                "points": 1,
+                "requiresTeacherReview": false,
+                "createdAt": "2025-12-25T14:58:33.037Z",
+                "updatedAt": "2025-12-25T14:58:33.037Z"
+            }
+        },
+        {
+            "id": 15,
+            "questionId": 16,
+            "studentId": 6,
+            "answer": {
+                "selections": [
+                    "قطة",
+                    "كلب",
+                    "طائر"
+                ]
+            },
+            "isCorrect": false,
+            "points": 0,
+            "studentAssignmentId": 1,
+            "teacherNotes": null,
+            "reviewedById": null,
+            "createdAt": "2025-12-28T23:15:18.444Z",
+            "updatedAt": "2025-12-28T23:15:18.444Z",
+            "question": {
+                "id": 16,
+                "assignmentBlockId": "3",
+                "type": "listen_repeat",
+                "content": {
+                    "text": "استمع إلى الكلمة وكررها",
+                    "audioUrl": "audios/f7bf92f7-2419-41d4-ba76-083851a568bf.mp3"
+                },
+                "points": 1,
+                "requiresTeacherReview": false,
+                "createdAt": "2025-12-25T14:59:09.143Z",
+                "updatedAt": "2025-12-25T14:59:09.143Z"
+            }
+        }
+    ]
+}
+------------
+https://learnarabic.iwings-digital.com/student/sessions/upcoming
+
+{
+    "enrolledClasses": 1,
+    "totalUpcomingSessions": 0,
+    "classes": [
+        {
+            "classId": 1,
+            "className": "الصف الاول - تحضيري",
+            "classDescription": "الصف الاول لعمر 7 سنوات",
+            "teacher": {
+                "id": 12,
+                "name": "معلم احمد"
+            },
+            "enrolledAt": "2025-12-31T01:38:25.285Z"
+        }
+    ],
+    "upcomingSessions": []
+}

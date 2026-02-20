@@ -78,16 +78,20 @@ const CustomDropdown = ({ options, selectedOptionId, onSelect, placeholder }) =>
     );
 };
 
-const ImageDescriptionQuestion = ({ questionText, imageSrc, options, correctAnswerId }) => {
-    const [selectedOptionId, setSelectedOptionId] = useState(null);
-    const [feedback, setFeedback] = useState(null);
-
+const ImageDescriptionQuestion = ({ 
+  questionText, 
+  imageSrc, 
+  options, 
+  correctAnswerId, 
+  selectedOptionId = null,
+  onOptionSelect,
+  isConfirmed = false,
+  showFeedback = false
+}) => {
     const handleSelect = (id) => {
-        setSelectedOptionId(id);
-        if (id === correctAnswerId) {
-            setFeedback('correct');
-        } else {
-            setFeedback('wrong');
+        if (isConfirmed) return; // Don't allow changes after confirmation
+        if (onOptionSelect) {
+            onOptionSelect(id);
         }
     };
 
@@ -126,40 +130,27 @@ const ImageDescriptionQuestion = ({ questionText, imageSrc, options, correctAnsw
 
                 {/* Dropdown Container (Left Side in RTL) */}
                 <div className="flex-1 flex justify-center md:justify-end w-full md:w-auto">
-                   <CustomDropdown 
-                        options={options}
-                        selectedOptionId={selectedOptionId}
-                        onSelect={handleSelect}
-                        placeholder="اختر الاجابة الصحيحة"
-                   />
+                   {!showFeedback ? (
+                     <CustomDropdown 
+                          options={options}
+                          selectedOptionId={selectedOptionId}
+                          onSelect={handleSelect}
+                          placeholder="اختر الاجابة الصحيحة"
+                     />
+                   ) : (
+                     /* Show selected answer with color */
+                     <div className={`w-full max-w-[338px] p-4 rounded-[60px] border-2 ${
+                       selectedOptionId === correctAnswerId ? 'bg-green-50 border-green-500' : 'bg-red-50 border-red-500'
+                     }`}>
+                       <p className={`text-center font-bold text-lg ${
+                         selectedOptionId === correctAnswerId ? 'text-green-700' : 'text-red-700'
+                       }`}>
+                         {options.find(opt => opt.id === selectedOptionId)?.text || 'لم يتم الاختيار'}
+                       </p>
+                     </div>
+                   )}
                 </div>
             </div>
-
-            {/* Feedback Message */}
-            {feedback && (
-                <div
-                    className={`w-full p-3 rounded-[60px] mb-6 flex items-center justify-start border-2 transition-all duration-300`}
-                    style={{
-                        borderColor: feedback === 'correct' ? '#49BD8C' : '#B92828',
-                        backgroundColor: feedback === 'correct' ? '#E8F8F1' : '#FBEAEA',
-                        color: feedback === 'correct' ? '#0B5736' : '#B92828'
-                    }}
-                >
-                    <span className="font-bold flex items-center gap-2">
-                        {feedback === 'correct' ? (
-                            <>
-                                <img src={rightIcon} alt="Correct" className="w-6 h-6" />
-                                جميل !! اجابة صحية
-                            </>
-                        ) : (
-                            <>
-                                <img src={falseIcon} alt="Wrong" className="w-6 h-6" />
-                                اجابة خطأئة!! حاول مرة اخرى
-                            </>
-                        )}
-                    </span>
-                </div>
-            )}
         </div>
     );
 };

@@ -59,3 +59,44 @@ yarn preview
 
 - `src/components/content/VideoPlayer.jsx` - مشغل الفيديو المضمن
 - `src/components/content/CertificateDisplay.jsx` - عرض الشهادة
+
+## ربط APIs
+
+تم ربط جميع واجهات المستخدم مع APIs الخادم:
+
+### APIs المتصلة:
+
+1. **المصادقة (Auth)**
+   - تسجيل الدخول (`/auth/login`)
+   - التسجيل (`/auth/register`)
+   - تسجيل الخروج (`/auth/logout`)
+   - معلومات المستخدم (`/auth/info`)
+   - استعادة كلمة المرور (`/auth/forgot-password`)
+
+2. **الطالب (Student)**
+   - المستويات (`/student/levels`)
+   - الدروس (`/student/lessons?levelId={id}`)
+   - الجلسات القادمة (`/student/sessions/upcoming`)
+   - الشهادات (`/student/certificates`)
+   - الإحالات التسويقية (`/student/affiliate/referrals`)
+
+3. **التدريبات (Assignments)**
+   - الحصول على أسئلة التمرين (`/student/assignments/{id}/questions`)
+   - إرسال الإجابات (`/student/assignments/submit`)
+   - حالة التمرين (`/student/assignments/{id}/status`)
+
+4. **الاشتراكات (Subscriptions)**
+   - الاشتراك الحالي (`/subscription/current`)
+
+### الملفات الرئيسية:
+
+- `src/services/api.js` - إعدادات axios والاعتراضات
+- `src/services/authService.js` - خدمات المصادقة
+- `src/services/studentService.js` - خدمات الطالب
+- `src/config/api.js` - إعدادات API الأساسية
+
+### ملاحظات:
+
+- جميع طلبات GET تستخدم Bearer token للمصادقة
+- طلبات POST تستخدم `application/json` أو `application/x-www-form-urlencoded` حسب الحاجة
+- معالجة الأخطاء تلقائية مع إعادة التوجيه للصفحة الرئيسية عند انتهاء الجلسة

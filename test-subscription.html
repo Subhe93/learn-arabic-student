@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Test Subscription Payment</title>
+    <script src="https://js.stripe.com/v3/"></script>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 20px;
+      }
+      .plan {
+        border: 1px solid #ccc;
+        padding: 15px;
+        margin: 10px 0;
+        border-radius: 5px;
+      }
+      .plan.selected {
+        border-color: #0066cc;
+        background: #f0f8ff;
+      }
+      button {
+        background: #0066cc;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        margin: 10px 5px;
+      }
+      button:disabled {
+        background: #ccc;
+      }
+      #card-element {
+        border: 1px solid #ccc;
+        padding: 10px;
+        border-radius: 4px;
+        margin: 10px 0;
+      }
+      .error {
+        color: red;
+        margin: 10px 0;
+      }
+      .success {
+        color: green;
+        margin: 10px 0;
+      }
+      input {
+        width: 100%;
+        padding: 8px;
+        margin: 5px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Test Subscription Payment</h1>
+
+    <div id="login-section">
+      <h2>Step 1: Login (Get JWT Token)</h2>
+      <input
+        type="email"
+        id="email"
+        placeholder="Email"
+        value="student@test.com"
+      />
+      <input
+        type="password"
+        id="password"
+        placeholder="Password"
+        value="password123"
+      />
+      <button onclick="login()">Login</button>
+      <div id="login-message"></div>
+    </div>
+
+    <div id="plans-section" style="display: none">
+      <h2>Step 2: Choose a Plan</h2>
+      <button onclick="loadPlans()">Load Plans</button>
+      <div id="plans-list"></div>
+
+      <h3>Or Custom Amount:</h3>
+      <input
+        type="number"
+        id="customAmount"
+        placeholder="Enter custom amount"
+      />
+    </div>
+
+    <div id="payment-section" style="display: none">
+      <h2>Step 3: Enter Payment Details</h2>
+      <p>Selected Plan: <strong id="selected-plan-name"></strong></p>
+      <p>Amount: $<strong id="selected-amount"></strong></p>
+
+      <div id="card-element"></div>
+      <div id="card-errors" class="error"></div>
+
+      <button id="submit-button" onclick="subscribe()">Pay Now</button>
+      <div id="payment-message"></div>
+    </div>
+
+    <script>
+      // CONFIGURATION - Update these!
+      const API_BASE = 'http://localhost:3000';
+      const STRIPE_PUBLIC_KEY =
+        'pk_test_51Sckb9HuHxSe9yWl3pHpQrHMRfWFBZupSK5dRicZON7rSh7hzgRttLObfrelYXnmnqB1EDL3P4a7eIpOMK9fDRMX00omkapLXJ'; // Replace with your Stripe publishable key
+
+      let token = null;
+      let selectedPlan = null;
+      let stripe = null;
+      let cardElement = null;
+
+      // Initialize Stripe
+      if (
+        STRIPE_PUBLIC_KEY &&
+        STRIPE_PUBLIC_KEY !== 'YOUR_STRIPE_PUBLISHABLE_KEY'
+      ) {
+        stripe = Stripe(STRIPE_PUBLIC_KEY);
+        const elements = stripe.elements();
+        cardElement = elements.create('card');
+      }
+
+      async function login() {
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const messageDiv = document.getElementById('login-message');
+
+        try {
+          const response = await fetch(`${API_BASE}/auth/login`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password }),
+          });
+
+          const data = await response.json();
+          if (data.accessToken) {
+            token = data.accessToken;
+            messageDiv.innerHTML =
+              '<div class="success">✓ Logged in successfully!</div>';
+            document.getElementById('login-section').style.display = 'none';
+            document.getElementById('plans-section').style.display = 'block';
+          } else {
+            messageDiv.innerHTML =
+              '<div class="error">Login failed: ' +
+              JSON.stringify(data) +
+              '</div>';
+          }
+        } catch (error) {
+          messageDiv.innerHTML =
+            '<div class="error">Error: ' + error.message + '</div>';
+        }
+      }
+
+      async function loadPlans() {
+        try {
+          const response = await fetch(`${API_BASE}/subscription/plans`);
+          const plans = await response.json();
+
+          const plansDiv = document.getElementById('plans-list');
+          plansDiv.innerHTML = plans
+            .map(
+              (plan) => `
+                    <div class="plan" onclick="selectPlan(${plan.id}, '${plan.name}', ${plan.price})">
+                        <h3>${plan.name}</h3>
+                        <p>${plan.description || ''}</p>
+                        <p><strong>$${plan.price}</strong> - ${plan.type}</p>
+                    </div>
+                `,
+            )
+            .join('');
+        } catch (error) {
+          alert('Error loading plans: ' + error.message);
+        }
+      }
+
+      function selectPlan(planId, planName, price) {
+        selectedPlan = { planId, planName, price };
+        document
+          .querySelectorAll('.plan')
+          .forEach((p) => p.classList.remove('selected'));
+        event.target.closest('.plan').classList.add('selected');
+
+        document.getElementById('selected-plan-name').textContent = planName;
+        document.getElementById('selected-amount').textContent = price;
+        document.getElementById('customAmount').value = '';
+
+        showPaymentSection();
+      }
+
+      function showPaymentSection() {
+        document.getElementById('payment-section').style.display = 'block';
+        if (cardElement && !cardElement._mounted) {
+          cardElement.mount('#card-element');
+          cardElement._mounted = true;
+
+          cardElement.on('change', (event) => {
+            const displayError = document.getElementById('card-errors');
+            if (event.error) {
+              displayError.textContent = event.error.message;
+            } else {
+              displayError.textContent = '';
+            }
+          });
+        }
+      }
+
+      async function subscribe() {
+        if (!stripe) {
+          alert('Please set your STRIPE_PUBLIC_KEY in the HTML file');
+          return;
+        }
+
+        const button = document.getElementById('submit-button');
+        const messageDiv = document.getElementById('payment-message');
+        button.disabled = true;
+        messageDiv.innerHTML = 'Processing...';
+
+        try {
+          // Create payment method
+          const { error: pmError, paymentMethod } =
+            await stripe.createPaymentMethod({
+              type: 'card',
+              card: cardElement,
+            });
+
+          if (pmError) {
+            throw new Error(pmError.message);
+          }
+
+          // Get custom amount or use selected plan
+          const customAmount = document.getElementById('customAmount').value;
+          const body = {
+            paymentMethodId: paymentMethod.id,
+          };
+
+          if (customAmount) {
+            body.customAmount = parseFloat(customAmount);
+          } else if (selectedPlan) {
+            body.planId = selectedPlan.planId;
+          } else {
+            throw new Error('Please select a plan or enter a custom amount');
+          }
+
+          // Call your backend
+          const response = await fetch(`${API_BASE}/subscription/subscribe`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(body),
+          });
+
+          const data = await response.json();
+
+          if (!response.ok) {
+            throw new Error(data.message || 'Subscription failed');
+          }
+
+          // Confirm payment with client secret
+          const { error: confirmError, paymentIntent } =
+            await stripe.confirmCardPayment(data.clientSecret);
+
+          if (confirmError) {
+            throw new Error(confirmError.message);
+          }
+
+          if (paymentIntent.status === 'succeeded') {
+            messageDiv.innerHTML =
+              '<div class="success">✓ Payment succeeded! Order ID: ' +
+              data.orderId +
+              '<br>Check your webhook console for confirmation.</div>';
+          } else {
+            messageDiv.innerHTML =
+              '<div class="error">Payment status: ' +
+              paymentIntent.status +
+              '</div>';
+          }
+        } catch (error) {
+          messageDiv.innerHTML =
+            '<div class="error">Error: ' + error.message + '</div>';
+        } finally {
+          button.disabled = false;
+        }
+      }
+    </script>
+  </body>
+</html>

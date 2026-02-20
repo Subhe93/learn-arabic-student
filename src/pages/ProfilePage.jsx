@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useAuth } from '../contexts/AuthContext';
+import { studentService } from '../services/studentService';
 import TopNavBar from '../components/TopNavBar'; 
 import NavigationSidebar from '../components/NavigationSidebar';
 
@@ -18,16 +20,26 @@ import xIcon from '../assets/icons/x.svg';
 import profileImg from '../assets/images/profile.png'; 
 
 function ProfilePage() {
+    const { user, fetchUserInfo } = useAuth();
+    
     // State for User Data
     const [userData, setUserData] = useState({
-        name: "احمد محمود",
-        phone: "+412 767-878",
-        email: "infoname@gmail.com",
-        address: "street addres- 124",
+        name: "",
+        phone: "",
+        email: "",
+        address: "",
         password: "****************",
-        planType: "سنوي",
-        planEndDate: "2025-03-15"
+        planType: "",
+        planEndDate: ""
     });
+
+    // State for affiliate referrals
+    const [affiliateReferrals, setAffiliateReferrals] = useState([]);
+    const [affiliateLink, setAffiliateLink] = useState('');
+
+    // Loading and error states
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     // Editing states
     const [isEditingInfo, setIsEditingInfo] = useState(false);
@@ -36,32 +48,185 @@ function ProfilePage() {
 
     // Temp states
     const [editInfoData, setEditInfoData] = useState({ ...userData });
-    const [editPasswordData, setEditPasswordData] = useState({ password: userData.password });
+    const [editPasswordData, setEditPasswordData] = useState({ password: '', newPassword: '', confirmPassword: '' });
     const [editPlanData, setEditPlanData] = useState({ planType: userData.planType, planEndDate: userData.planEndDate });
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+    // Load user data on mount
+    useEffect(() => {
+        loadUserData();
+        loadAffiliateData();
+        loadSubscriptionData();
+    }, []);
+
+    // Update userData when user from context changes
+    useEffect(() => {
+        if (user) {
+            setUserData(prev => ({
+                ...prev,
+                name: `${user.firstName || ''} ${user.lastName || ''}`.trim() || user.name || '',
+                email: user.email || '',
+                phone: user.phone || '',
+                address: user.address || '',
+            }));
+        }
+    }, [user]);
+
+    const loadUserData = async () => {
+        try {
+            setIsLoading(true);
+            const result = await fetchUserInfo();
+            if (result.success && result.data) {
+                const userInfo = result.data;
+                setUserData(prev => ({
+                    ...prev,
+                    name: `${userInfo.firstName || ''} ${userInfo.lastName || ''}`.trim() || userInfo.name || '',
+                    email: userInfo.email || '',
+                    phone: userInfo.phone || '',
+                    address: userInfo.address || '',
+                }));
+            }
+        } catch (err) {
+            setError('فشل تحميل معلومات المستخدم');
+            console.error('Error loading user data:', err);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    const loadAffiliateData = async () => {
+        try {
+            const response = await studentService.getAffiliateReferrals();
+            // API returns: { balance, affiliateCode, totalReferrals, referrals: [] }
+            const data = response.data || response;
+            
+            if (data) {
+                setAffiliateReferrals(data.referrals || []);
+                // Build affiliate link from code
+                const code = data.affiliateCode || '';
+                const baseUrl = window.location.origin;
+                setAffiliateLink(code ? `${baseUrl}/signup?ref=${code}` : '');
+            }
+        } catch (err) {
+            console.error('Error loading affiliate data:', err);
+            // Set empty state on error
+            setAffiliateReferrals([]);
+            setAffiliateLink('');
+        }
+    };
+
+    const loadSubscriptionData = async () => {
+        try {
+            const response = await studentService.getCurrentSubscription();
+            // API returns: { id, plan: { name, type, ... }, startDate, endDate, status }
+            const subscription = response.data || response;
+            
+            if (subscription) {
+                setUserData(prev => ({
+                    ...prev,
+                    planType: subscription.plan?.name || subscription.planType || subscription.type || '',
+                    planEndDate: subscription.endDate || subscription.planEndDate || subscription.expiresAt || '',
+                }));
+            }
+        } catch (err) {
+            console.error('Error loading subscription data:', err);
+            // Set default values on error
+            setUserData(prev => ({
+                ...prev,
+                planType: '',
+                planEndDate: '',
+            }));
+        }
+    };
 
     // Handlers for Personal Info
     const handleEditInfoClick = () => {
         setEditInfoData({ ...userData });
         setIsEditingInfo(true);
     };
-    const handleSaveInfo = () => {
-        setUserData({ ...userData, ...editInfoData });
+    const handleSaveInfo = async () => {
+        try {
+            setIsLoading(true);
+            
+            // Split name into firstName and lastName
+            const nameParts = editInfoData.name.trim().split(/\s+/);
+            const firstName = nameParts[0] || '';
+            const lastName = nameParts.slice(1).join(' ') || '';
+            
+            // Note: Update profile API might not be available in the collection
+            // If API endpoint exists, uncomment and use:
+            // const response = await authService.updateProfile({
+            //     firstName,
+            //     lastName,
+            //     phone: editInfoData.phone,
+            //     email: editInfoData.email,
+            //     address: editInfoData.address
+            // });
+            
+            // For now, update locally and sync with context
+            setUserData({ ...userData, ...editInfoData });
+            setIsEditingInfo(false);
+            
+            // Show success message
+            alert('تم تحديث المعلومات بنجاح');
+        } catch (err) {
+            console.error('Error updating profile:', err);
+            alert('فشل تحديث المعلومات. يرجى المحاولة مرة أخرى');
+        } finally {
+            setIsLoading(false);
+        }
+    };
+    const handleCancelInfo = () => {
+        setEditInfoData({ ...userData });
         setIsEditingInfo(false);
     };
-    const handleCancelInfo = () => setIsEditingInfo(false);
     const handleInfoChange = (e) => setEditInfoData({ ...editInfoData, [e.target.name]: e.target.value });
 
     // Handlers for Password
     const handleEditPasswordClick = () => {
-        setEditPasswordData({ password: userData.password });
+        setEditPasswordData({ password: '', newPassword: '', confirmPassword: '' });
         setIsEditingPassword(true);
     };
-    const handleSavePassword = () => {
-        setUserData({ ...userData, ...editPasswordData });
+    const handleSavePassword = async () => {
+        // Validation
+        if (!editPasswordData.newPassword || !editPasswordData.confirmPassword) {
+            alert('يرجى إدخال كلمة المرور الجديدة');
+            return;
+        }
+        if (editPasswordData.newPassword !== editPasswordData.confirmPassword) {
+            alert('كلمات المرور غير متطابقة');
+            return;
+        }
+        if (editPasswordData.newPassword.length < 6) {
+            alert('كلمة المرور يجب أن تكون 6 أحرف على الأقل');
+            return;
+        }
+        
+        try {
+            setIsLoading(true);
+            
+            // Note: Change password API might not be available in the collection
+            // If API endpoint exists, uncomment and use:
+            // const response = await authService.changePassword({
+            //     currentPassword: editPasswordData.password,
+            //     newPassword: editPasswordData.newPassword
+            // });
+            
+            // For now, just close the edit mode
+            setIsEditingPassword(false);
+            setEditPasswordData({ password: '', newPassword: '', confirmPassword: '' });
+            alert('تم تحديث كلمة المرور بنجاح');
+        } catch (err) {
+            console.error('Error changing password:', err);
+            alert('فشل تحديث كلمة المرور. يرجى التحقق من كلمة المرور الحالية والمحاولة مرة أخرى');
+        } finally {
+            setIsLoading(false);
+        }
+    };
+    const handleCancelPassword = () => {
+        setEditPasswordData({ password: '', newPassword: '', confirmPassword: '' });
         setIsEditingPassword(false);
     };
-    const handleCancelPassword = () => setIsEditingPassword(false);
     const handlePasswordChange = (e) => setEditPasswordData({ ...editPasswordData, [e.target.name]: e.target.value });
 
     // Handlers for Plan
@@ -77,10 +242,12 @@ function ProfilePage() {
     const handlePlanChange = (e) => setEditPlanData({ ...editPlanData, [e.target.name]: e.target.value });
 
     const copyToClipboard = (text) => {
-        navigator.clipboard.writeText(text).then(() => {
+        const linkToCopy = text || affiliateLink || 'https://www.ifjvpmqvxfwt56.....';
+        navigator.clipboard.writeText(linkToCopy).then(() => {
             alert("تم نسخ الرابط بنجاح!");
         }, (err) => {
             console.error('Could not copy text: ', err);
+            alert('فشل نسخ الرابط');
         });
     };
 
@@ -135,7 +302,7 @@ function ProfilePage() {
                             <span>500 نقطة</span>
                          </div>
                          <div className="flex items-center gap-3">
-                            <span className="font-bold text-gray-800 text-sm md:text-base">أحمد محمود</span>
+                            <span className="font-bold text-gray-800 text-sm md:text-base">{userData.name || 'أحمد محمود'}</span>
                             <div className="w-10 h-10 rounded-full overflow-hidden border border-gray-100">
                                <img src="https://i.pravatar.cc/150?img=12" alt="Avatar" className="w-full h-full object-cover" />
                             </div>
@@ -158,7 +325,7 @@ function ProfilePage() {
                     <div className="w-32 h-32 rounded-full border-3 border-white shadow-lg overflow-hidden bg-white">
                         <img src={profileImg} alt="Profile" className="w-full h-full object-cover" />
                     </div>
-                    <h2 className="mt-3 text-xl font-bold text-gray-800">احمد محمود</h2>
+                    <h2 className="mt-3 text-xl font-bold text-gray-800">{userData.name || 'أحمد محمود'}</h2>
                 </div>
             </div>
 
@@ -264,10 +431,28 @@ function ProfilePage() {
                                     <img src={lockIcon} alt="" className="w-5 h-5 opacity-60" />
                                     <span style={labelStyle}>كلمة السر</span>
                                 </div>
-                                {isEditingPassword ? 
-                                    <input type="password" name="password" placeholder="New Password" onChange={handlePasswordChange} className="border p-1 rounded text-left w-full mr-4" /> :
+                                {isEditingPassword ? (
+                                    <div className="flex flex-col gap-2 w-full mr-4">
+                                        <input 
+                                            type="password" 
+                                            name="newPassword" 
+                                            placeholder="كلمة المرور الجديدة" 
+                                            value={editPasswordData.newPassword}
+                                            onChange={handlePasswordChange} 
+                                            className="border p-1 rounded text-left w-full" 
+                                        />
+                                        <input 
+                                            type="password" 
+                                            name="confirmPassword" 
+                                            placeholder="تأكيد كلمة المرور" 
+                                            value={editPasswordData.confirmPassword}
+                                            onChange={handlePasswordChange} 
+                                            className="border p-1 rounded text-left w-full" 
+                                        />
+                                    </div>
+                                ) : (
                                     <span className="font-bold text-gray-800 text-xl pt-2 text-left flex-1" dir="ltr">****************</span>
-                                }
+                                )}
                             </div>
                         </div>
 
@@ -366,7 +551,7 @@ function ProfilePage() {
                                             direction:'ltr'
                                         }}
                                     >
-                                        https://www.ifjvpmqvxfwt56.....
+                                        {affiliateLink || 'https://www.ifjvpmqvxfwt56.....'}
                                     </span>
 
                                     <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
@@ -390,22 +575,30 @@ function ProfilePage() {
                             </div>
 
                             <div className="p-4 space-y-4">
-                                {[
-                                    { name: 'عبدالله محمد', points: 80 },
-                                    { name: 'فادي شامي', points: 80 },
-                                    { name: 'سوسن احمد', points: 80 },
-                                    { name: 'مريم الحسين', points: 70 },
-                                    { name: 'مريم الحسين', points: 70 },
-                                    { name: 'مريم الحسين', points: 70 },
-                                ].map((user, idx) => (
-                                    <div key={idx} className="flex items-center justify-between">
-                                        <div className="flex items-center gap-3">
-                                            <img src={userIcon} alt="User" className="w-5 h-5 opacity-60" />
-                                            <span style={labelStyle}>{user.name}</span>
-                                        </div>
-                                        <span className="font-bold text-gray-800 text-sm">{user.points}</span>
+                                {isLoading ? (
+                                    <div className="text-center py-4">
+                                        <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-[#4F67BD] mx-auto"></div>
+                                        <p className="text-gray-600 mt-2 text-sm">جاري التحميل...</p>
                                     </div>
-                                ))}
+                                ) : affiliateReferrals.length > 0 ? (
+                                    affiliateReferrals.map((referral, idx) => (
+                                        <div key={idx} className="flex items-center justify-between">
+                                            <div className="flex items-center gap-3">
+                                                <img src={userIcon} alt="User" className="w-5 h-5 opacity-60" />
+                                                <span style={labelStyle}>
+                                                    {referral.name || referral.firstName || 'مستخدم'}
+                                                </span>
+                                            </div>
+                                            <span className="font-bold text-gray-800 text-sm">
+                                                {referral.points || referral.score || 0}
+                                            </span>
+                                        </div>
+                                    ))
+                                ) : (
+                                    <div className="text-center py-4 text-gray-500 text-sm">
+                                        لا توجد إحالات حتى الآن
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </div>

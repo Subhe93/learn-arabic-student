@@ -1,45 +1,23 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../contexts/AuthContext';
+
+// Helper function to get user display name
+const getUserDisplayName = (user) => {
+  if (!user) return 'أحمد محمود'; // Fallback
+  if (user.firstName || user.lastName) {
+    return `${user.firstName || ''} ${user.lastName || ''}`.trim();
+  }
+  return user.name || 'أحمد محمود';
+};
 import NavigationSidebar from '../NavigationSidebar';
-// Import animal images for the map
+// Import fallback animal image
 import animal1 from '../../assets/images/animal1.png';
-import animal2 from '../../assets/images/animal2.png';
-import animal3 from '../../assets/images/animal3.png';
-import animal4 from '../../assets/images/animal4.png';
-import animal5 from '../../assets/images/animal5.png';
-import animal6 from '../../assets/images/animal6.png';
-import animal7 from '../../assets/images/animal7.png';
-import animal8 from '../../assets/images/animal8.png';
-import animal9 from '../../assets/images/animal9.png';
 
-// Also keep gray animals if they are needed, or revert to pngs if user wants to fix the svg issue
-// The user said: "Now there is a problem with the file type... I downloaded them from Figma and selected svg"
-// And "problem with format".
-// If the SVGs are broken, maybe better to use the PNGs for now as placeholders or re-import them correctly?
-// But the user's manual edit SHOWS they changed imports to .svg. 
-// I will assume the user wants to USE the .svg files they added, but they are not working.
-// If they are "Chrome HTML Document", they are just .svg files associated with Chrome.
-// React should handle them fine if they are valid SVGs.
-// Maybe the issue is the imports were named `animal3` but used as `grayanimal3` in the user's manual edit?
-// I will fix the imports to match usage OR usage to match imports.
-// The user's manual edit showed:
-// + import animal3 from ...grayanimal3.svg
-// + { ... img: grayanimal3 }
-// This means `grayanimal3` is UNDEFINED because it was imported as `animal3`.
-// I will fix this by importing them AS `grayanimalX`.
-
-import grayanimal3 from '../../assets/images/grayanimal3.svg';
-import grayanimal4 from '../../assets/images/grayanimal4.svg';
-import grayanimal5 from '../../assets/images/grayanimal5.svg';
-import grayanimal6 from '../../assets/images/grayanimal6.svg';
-import grayanimal7 from '../../assets/images/grayanimal7.svg';
-import grayanimal8 from '../../assets/images/grayanimal8.svg';
-import grayanimal9 from '../../assets/images/grayanimal9.svg';
-
-const animals = [animal1, animal2, animal3, animal4, animal5, animal6, animal7, animal8, animal9];
-
-const MapSection = () => {
+const MapSection = ({ levels = [] }) => {
   const navigate = useNavigate();
+  const { user } = useAuth();
+  const displayName = getUserDisplayName(user);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
@@ -51,23 +29,38 @@ const MapSection = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const handleNodeClick = (index) => {
-    if (index === 0 || index === 1) {
-      navigate('/learn');
-    }
+  const handleNodeClick = (levelId) => {
+    navigate(`/learn/${levelId}`);
   };
 
-  const nodes = [
-    { x: 95, y: isMobile ? 45 : 45, img: animal1 }, 
-    { x: 81, y: isMobile ? 58 : 65, img: animal2 },
-    { x: 70, y: isMobile ? 40 : 40, img: grayanimal3 },
-    { x: 59, y: isMobile ? 58 : 65, img: grayanimal4 },
-    { x: 48, y: isMobile ? 40 : 40, img: grayanimal5 },
-    { x: 37, y: isMobile ? 58 : 65, img: grayanimal8 },
-    { x: 26, y: isMobile ? 40 : 40, img: grayanimal7 },
-    { x: 15, y: isMobile ? 58 : 65, img: grayanimal6 },
-    { x: 4,  y: isMobile ? 40 : 40, img: grayanimal9 },
-  ];
+  // Generate nodes dynamically based on levels
+  const nodes = React.useMemo(() => {
+    if (!levels || levels.length === 0) {
+      return [];
+    }
+
+    // Define positions for up to 9 levels (zigzag pattern)
+    const positions = [
+      { x: 95, y: isMobile ? 45 : 45 },
+      { x: 81, y: isMobile ? 58 : 65 },
+      { x: 70, y: isMobile ? 40 : 40 },
+      { x: 59, y: isMobile ? 58 : 65 },
+      { x: 48, y: isMobile ? 40 : 40 },
+      { x: 37, y: isMobile ? 58 : 65 },
+      { x: 26, y: isMobile ? 40 : 40 },
+      { x: 15, y: isMobile ? 58 : 65 },
+      { x: 4,  y: isMobile ? 40 : 40 },
+    ];
+
+    return levels.slice(0, positions.length).map((level, index) => ({
+      x: positions[index].x,
+      y: positions[index].y,
+      img: level.animal || animal1, // Use API image
+      levelId: level.id,
+      isUnlocked: level.isUnlocked,
+      completePercent: level.completePercent,
+    }));
+  }, [levels, isMobile]);
 
   const pathData = nodes.map((n, i) => `${i === 0 ? 'M' : 'L'} ${n.x} ${n.y}`).join(' ');
 
@@ -91,7 +84,7 @@ const MapSection = () => {
              </div>
 
              <div className="flex items-center gap-3">
-                <span className="font-bold text-gray-800 text-sm md:text-base">أحمد محمود</span>
+                <span className="font-bold text-gray-800 text-sm md:text-base">{displayName}</span>
                 <div className="w-10 h-10 rounded-full overflow-hidden border border-gray-100">
                    <img src="https://i.pravatar.cc/150?img=12" alt="Avatar" className="w-full h-full object-cover" />
                 </div>
@@ -137,25 +130,31 @@ const MapSection = () => {
               let shadowStyle = {};
               let imgClass = 'grayscale opacity-70';
 
-              // Animal 1: Green
-              if (index === 0) {
-                 bgClass = 'bg-[#5C8740] border-2 border-white ring-4 ring-[#5C8740]/30';
-                 shadowStyle = { boxShadow: 'inset 0 0 10px rgba(255, 255, 255, 0.5)' };
-                 imgClass = '';
-              } 
-              // Animal 2: Orange
-              else if (index === 1) {
-                 bgClass = 'bg-[#F6A523] border-2 border-white ring-4 ring-[#F6A523]/30';
-                 shadowStyle = { boxShadow: 'inset 0 0 10px rgba(255, 255, 255, 0.5)' };
-                 imgClass = '';
+              // Style based on level status
+              if (node.isUnlocked) {
+                 if (node.completePercent === 100) {
+                    // Completed level: Green
+                    bgClass = 'bg-[#5C8740] border-2 border-white ring-4 ring-[#5C8740]/30';
+                    shadowStyle = { boxShadow: 'inset 0 0 10px rgba(255, 255, 255, 0.5)' };
+                    imgClass = '';
+                 } else {
+                    // In progress level: Orange
+                    bgClass = 'bg-[#F6A523] border-2 border-white ring-4 ring-[#F6A523]/30';
+                    shadowStyle = { boxShadow: 'inset 0 0 10px rgba(255, 255, 255, 0.5)' };
+                    imgClass = '';
+                 }
+              } else {
+                 // Locked level: Gray
+                 bgClass = 'bg-[#D9D9D9] border-2 border-[#7A7A7A]';
+                 imgClass = 'grayscale opacity-70';
               }
 
               return (
               <div 
-                key={index}
+                key={node.levelId || index}
                 className="absolute z-20 transform -translate-x-1/2 -translate-y-1/2 pointer-events-auto"
                 style={{ left: `${node.x}%`, top: `${node.y}%` }}
-                onClick={() => handleNodeClick(index)}
+                onClick={() => handleNodeClick(node.levelId || index)}
               >
                 <div className="group relative">
                   <div 
@@ -170,7 +169,7 @@ const MapSection = () => {
                     <div className="w-10 h-10 p-1 md:w-14 md:h-14 rounded-full overflow-hidden flex items-center justify-center">
                         <img 
                           src={node.img} 
-                          alt={`Level ${index + 1}`} 
+                          alt={`المستوى ${index + 1}`} 
                           className={`w-full h-full object-contain ${imgClass}`} 
                         />
                     </div>

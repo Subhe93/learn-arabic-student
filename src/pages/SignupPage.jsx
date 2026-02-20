@@ -1,14 +1,77 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 import bgPattern from '../assets/images/bg.png';
 import animal3 from '../assets/images/animal3.svg';
 import animal4 from '../assets/images/animal4.svg';
 
 function SignupPage() {
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+  });
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
+  
   const navigate = useNavigate();
+  const { register } = useAuth();
 
-  const handleSignup = () => {
-    navigate('/courses');
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+    setError('');
+  };
+
+  const handleSignup = async (e) => {
+    e?.preventDefault();
+    
+    // Validation
+    if (!formData.firstName || !formData.lastName || !formData.email || !formData.password || !formData.confirmPassword) {
+      setError('يرجى ملء جميع الحقول');
+      return;
+    }
+
+    if (formData.password !== formData.confirmPassword) {
+      setError('كلمات المرور غير متطابقة');
+      return;
+    }
+
+    if (formData.password.length < 6) {
+      setError('كلمة المرور يجب أن تكون 6 أحرف على الأقل');
+      return;
+    }
+
+    setIsLoading(true);
+    setError('');
+    
+    const result = await register({
+      firstName: formData.firstName.trim(),
+      lastName: formData.lastName.trim(),
+      email: formData.email,
+      password: formData.password,
+    });
+    
+    setIsLoading(false);
+    
+    if (result.success) {
+      // If token is returned, navigate to courses, otherwise show success message
+      if (result.data?.token || result.data?.data?.token) {
+        navigate('/courses');
+      } else {
+        setError('تم إنشاء الحساب بنجاح. يرجى التحقق من بريدك الإلكتروني لتأكيد الحساب');
+        // Optionally navigate to login after a delay
+        setTimeout(() => {
+          navigate('/login');
+        }, 3000);
+      }
+    } else {
+      setError(result.error || 'فشل إنشاء الحساب');
+    }
   };
   return (
     <div 
@@ -51,25 +114,63 @@ function SignupPage() {
             
             <h1 className="text-3xl font-extrabold text-gray-800 mb-8">إنشاء حساب جديد</h1>
 
-            <form className="w-full flex flex-col gap-4" onSubmit={(e) => e.preventDefault()}>
+            {error && (
+              <div className={`w-full mb-4 p-3 border rounded-lg text-sm text-center ${
+                error.includes('نجاح') 
+                  ? 'bg-green-100 border-green-400 text-green-700' 
+                  : 'bg-red-100 border-red-400 text-red-700'
+              }`}>
+                {error}
+              </div>
+            )}
+
+            <form className="w-full flex flex-col gap-4" onSubmit={handleSignup}>
               
-              <div className="flex flex-col gap-2">
-                <label className="font-bold text-gray-700" htmlFor="name">الاسم الكامل</label>
-                <input 
-                  id="name"
-                  type="text" 
-                  placeholder="الاسم الكامل"
-                  className="w-full p-3 rounded-xl border-2 border-gray-200 focus:border-[#4F67BD] focus:outline-none transition-colors bg-gray-50"
-                />
+              {/* First Name and Last Name - Side by Side */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="flex flex-col gap-2">
+                  <label className="font-bold text-gray-700" htmlFor="firstName">الاسم الأول</label>
+                  <input 
+                    id="firstName"
+                    name="firstName"
+                    type="text" 
+                    value={formData.firstName}
+                    onChange={handleChange}
+                    placeholder="الاسم الأول"
+                    className="w-full p-3 rounded-xl border-2 border-gray-200 focus:border-[#4F67BD] focus:outline-none transition-colors bg-gray-50"
+                    required
+                    disabled={isLoading}
+                  />
+                </div>
+
+                <div className="flex flex-col gap-2">
+                  <label className="font-bold text-gray-700" htmlFor="lastName">الاسم الثاني</label>
+                  <input 
+                    id="lastName"
+                    name="lastName"
+                    type="text" 
+                    value={formData.lastName}
+                    onChange={handleChange}
+                    placeholder="الاسم الثاني"
+                    className="w-full p-3 rounded-xl border-2 border-gray-200 focus:border-[#4F67BD] focus:outline-none transition-colors bg-gray-50"
+                    required
+                    disabled={isLoading}
+                  />
+                </div>
               </div>
 
               <div className="flex flex-col gap-2">
                 <label className="font-bold text-gray-700" htmlFor="email">البريد الإلكتروني</label>
                 <input 
                   id="email"
+                  name="email"
                   type="email" 
+                  value={formData.email}
+                  onChange={handleChange}
                   placeholder="example@domain.com"
                   className="w-full p-3 rounded-xl border-2 border-gray-200 focus:border-[#4F67BD] focus:outline-none transition-colors bg-gray-50"
+                  required
+                  disabled={isLoading}
                 />
               </div>
 
@@ -77,9 +178,14 @@ function SignupPage() {
                 <label className="font-bold text-gray-700" htmlFor="password">كلمة المرور</label>
                 <input 
                   id="password"
+                  name="password"
                   type="password" 
+                  value={formData.password}
+                  onChange={handleChange}
                   placeholder="********"
                   className="w-full p-3 rounded-xl border-2 border-gray-200 focus:border-[#4F67BD] focus:outline-none transition-colors bg-gray-50"
+                  required
+                  disabled={isLoading}
                 />
               </div>
               
@@ -87,18 +193,30 @@ function SignupPage() {
                 <label className="font-bold text-gray-700" htmlFor="confirm-password">تأكيد كلمة المرور</label>
                 <input 
                   id="confirm-password"
+                  name="confirmPassword"
                   type="password" 
+                  value={formData.confirmPassword}
+                  onChange={handleChange}
                   placeholder="********"
                   className="w-full p-3 rounded-xl border-2 border-gray-200 focus:border-[#4F67BD] focus:outline-none transition-colors bg-gray-50"
+                  required
+                  disabled={isLoading}
                 />
               </div>
 
               <button 
                 type="submit"
-                onClick={handleSignup}
-                className="mt-4 w-full bg-[#4F67BD] text-white font-bold py-3 px-6 rounded-full shadow-md hover:bg-[#3e539a] transition-transform active:scale-95"
+                disabled={isLoading}
+                className="mt-4 w-full bg-[#4F67BD] text-white font-bold py-3 px-6 rounded-full shadow-md hover:bg-[#3e539a] transition-transform active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
-                تسجيل
+                {isLoading ? (
+                  <>
+                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                    <span>جاري إنشاء الحساب...</span>
+                  </>
+                ) : (
+                  'تسجيل'
+                )}
               </button>
 
             </form>

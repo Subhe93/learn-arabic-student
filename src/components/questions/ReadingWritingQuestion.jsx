@@ -1,12 +1,29 @@
 import React, { useState } from 'react';
 import penIcon from '../../assets/icons/pen-line.svg';
-import sendIcon from '../../assets/icons/send.svg';
 
-const ReadingWritingQuestion = ({ questionText, readingText, placeholder }) => {
-    const [text, setText] = useState('');
+const ReadingWritingQuestion = ({ 
+  questionText, 
+  readingText, 
+  placeholder, 
+  value, 
+  onAnswerChange,
+  isConfirmed = false
+}) => {
+    const [text, setText] = useState(value || '');
 
-    const handleSubmit = () => {
-        console.log('Submitted text:', text);
+    // Update local state when value prop changes
+    React.useEffect(() => {
+        if (value !== undefined) {
+            setText(value);
+        }
+    }, [value]);
+
+    const handleTextChange = (e) => {
+        const newText = e.target.value;
+        setText(newText);
+        if (onAnswerChange) {
+            onAnswerChange(newText);
+        }
     };
 
     return (
@@ -39,24 +56,18 @@ const ReadingWritingQuestion = ({ questionText, readingText, placeholder }) => {
                         color: '#000000'
                     }}
                 >
-                    {/* Use dangerouslySetInnerHTML or simple map if readingText contains <br> string, 
-                        but better to use a prop that accepts JSX or split by newlines. 
-                        User asked to add <br> in the text. 
-                        If I put <br> in the string prop in parent, it will show as text unless I parse it.
-                        Instead, I will assume the prop might contain newlines and use pre-wrap, 
-                        OR I will parse the <br> tags.
-                    */}
                     <span dangerouslySetInnerHTML={{ __html: readingText }} />
                 </div>
             </div>
 
             {/* Writing Text Area */}
-            <div className="w-full mb-6">
+            <div className="w-full">
                 <textarea
                     className="outline-none resize-none transition-colors focus:border-[#4F67BD]"
                     placeholder={placeholder}
                     value={text}
-                    onChange={(e) => setText(e.target.value)}
+                    onChange={handleTextChange}
+                    disabled={isConfirmed}
                     style={{
                         width: '100%',
                         height: '257px',
@@ -75,21 +86,6 @@ const ReadingWritingQuestion = ({ questionText, readingText, placeholder }) => {
                         color: '#939393',
                     }}
                 />
-            </div>
-
-            {/* Submit Button */}
-            <div className="w-full flex justify-start"> 
-                <button
-                    onClick={handleSubmit}
-                    className="flex items-center justify-center gap-2 bg-[#4F67BD] text-white rounded-[60px] px-8 py-3 hover:bg-[#3e54a3] transition-colors shadow-md"
-                    style={{
-                         boxShadow: '0px 4px 4px 0px #00000040 inset',
-                         minWidth: '180px'
-                    }}
-                >
-                     <span className="font-bold text-lg">ارسل للتحقق</span>
-                     <img src={sendIcon} alt="Send" className="w-5 h-5 brightness-0 invert" /> 
-                </button>
             </div>
         </div>
     );

@@ -2,8 +2,8 @@ import React from 'react';
 import levelFileImg from '../../assets/images/level-file.png';
 
 const LevelCard = ({ levelNumber, animalImage, completedLessons, totalLessons, title, color, onClick }) => {
-  const progress = (completedLessons / totalLessons) * 100;
-  const isLocked = completedLessons === 0 && levelNumber !== 1; // Assuming level 1 is always open, or logic based on previous level. 
+  const progress = totalLessons > 0 ? (completedLessons / totalLessons) * 100 : 0;
+  const isLocked = totalLessons === 0 && levelNumber !== 1; // Assuming level 1 is always open, or logic based on previous level. 
   // For now keeping strict `completedLessons === 0` logic from before but adding prop usage.
   // Actually the user prompt before said "locked if completedLessons is 0", I'll stick to that or just pass onClick.
   
