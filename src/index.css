@@ -17,3 +17,8 @@ body, button, input, textarea, select, div, span, p, h1, h2, h3, h4, h5, h6 {
   /* No styles - content displays as-is from editor */
   width: 100%;
 }
+@media (max-width:771px) {
+  .lesson-content {
+   padding: 0 10px; /* Add horizontal padding on smaller screens */
+  }
+}

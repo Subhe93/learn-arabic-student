@@ -40,12 +40,25 @@ const LevelCard = ({ levelNumber, animalImage, completedLessons, totalLessons, t
           </div>
 
           {/* Background Folder Image */}
-          <div className="relative z-0">
-             <img src={levelFileImg} alt="Level File Background" className="w-full h-auto drop-shadow-md" />
+          <div
+            className="relative z-0 drop-shadow-md"
+            style={{
+              backgroundColor: color,
+              maskImage: `url(${levelFileImg})`,
+              WebkitMaskImage: `url(${levelFileImg})`,
+              maskSize: '100% 100%',
+              WebkitMaskSize: '100% 100%',
+             
+            }}
+          >
+            <img src={levelFileImg} alt="" className="w-full h-auto opacity-0" />
           </div>
 
           {/* The Bottom Box (Progress Area) */}
-          <div className="absolute bottom-0 left-0 right-0 h-[45%] bg-[#FFD26E] rounded-b-3xl flex flex-col justify-center px-4 z-20">
+          <div 
+            className="absolute bottom-0 left-0 right-0 h-[45%] rounded-b-3xl flex flex-col justify-center px-4 z-20"
+            style={{ backgroundColor: color,     boxShadow: 'inset 0px 0 1px 0px rgba(0,0,0,1)' }}
+          >
               <div className="text-right text-[#8B5E3C] font-bold mb-1 text-sm">عدد الدروس</div>
               
               {/* Progress Bar & Numbers */}

@@ -154,7 +154,7 @@ const MapSection = ({ levels = [] }) => {
                 key={node.levelId || index}
                 className="absolute z-20 transform -translate-x-1/2 -translate-y-1/2 pointer-events-auto"
                 style={{ left: `${node.x}%`, top: `${node.y}%` }}
-                onClick={() => handleNodeClick(node.levelId || index)}
+                onClick={() => node.isUnlocked ? handleNodeClick(node.levelId || index) : null}
               >
                 <div className="group relative">
                   <div 
@@ -167,11 +167,12 @@ const MapSection = ({ levels = [] }) => {
                     style={shadowStyle}
                   >
                     <div className="w-10 h-10 p-1 md:w-14 md:h-14 rounded-full overflow-hidden flex items-center justify-center">
-                        <img 
+                        {/* <img 
                           src={node.img} 
                           alt={`المستوى ${index + 1}`} 
                           className={`w-full h-full object-contain ${imgClass}`} 
-                        />
+                        /> */}
+                      <p className="text-black text-center font-bold text-[2rem] "> {index + 1}</p> 
                     </div>
                   </div>
                 </div>

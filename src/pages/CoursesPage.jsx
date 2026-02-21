@@ -62,7 +62,7 @@ function CoursesPage() {
           animal: buildFullUrl(level.image), // Use API image with /uploads
           completed: 0, // Will be updated after fetching lessons
           total: 0, // Will be updated after fetching lessons
-          color: isEnrolled ? '#FBBF24' : '#E5E7EB',
+          color: isEnrolled ? (level.color ? level.color : '#F6A524')  : '#E5E7EB',
           isUnlocked: isEnrolled || level.id === 1, // First level is always unlocked
           image: level.image,
           description: level.description,
@@ -267,7 +267,7 @@ function CoursesPage() {
                       completedLessons={level.completed}
                       totalLessons={level.total}
                       color={level.color}
-                      onClick={() => handleLevelClick(level.id)}
+                      onClick={() => level.isUnlocked ? handleLevelClick(level.id) : null}
                     />
                   ))}
                 </div>

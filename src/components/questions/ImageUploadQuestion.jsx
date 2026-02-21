@@ -1,5 +1,6 @@
-import React, { useState, useRef } from 'react';
-import uploadIcon from '../../assets/icons/send.svg'; // Will use as upload icon
+import React, { useState, useRef, useMemo } from 'react';
+import { studentService } from '../../services/studentService';
+import { API_BASE_URL } from '../../config/api';
 
 const ImageUploadQuestion = ({ 
   questionText, 
@@ -20,40 +21,45 @@ const ImageUploadQuestion = ({
         }
     }, [value]);
 
-    const handleImageUpload = (file) => {
-        if (!file || isConfirmed) return; // Don't allow upload after confirmation
+    const buildFullUrl = (url) => {
+        if (!url) return null;
+        if (url.startsWith('http') || url.startsWith('blob:')) return url;
+        const cleanUrl = url.startsWith('/') ? url.slice(1) : url;
+        if (cleanUrl.startsWith('uploads/')) {
+            return `${API_BASE_URL}/${cleanUrl}`;
+        }
+        return `${API_BASE_URL}/uploads/${cleanUrl}`;
+    };
 
-        // Validate file type
+    const fullImageUrl = useMemo(() => buildFullUrl(imageUrl), [imageUrl]);
+
+    const handleImageUpload = async (file) => {
+        if (!file || isConfirmed) return;
+
         if (!file.type.startsWith('image/')) {
             alert('يرجى رفع صورة فقط');
             return;
         }
 
-        // Validate file size (max 5MB)
         if (file.size > 5 * 1024 * 1024) {
             alert('حجم الصورة كبير جداً. الحد الأقصى 5 ميجابايت');
             return;
         }
 
         setIsUploading(true);
-
-        // In production, you would upload to server and get URL
-        // For now, we'll use FileReader to create a data URL
-        const reader = new FileReader();
-        reader.onloadend = () => {
-            const imageDataUrl = reader.result;
-            setImageUrl(imageDataUrl);
-            setIsUploading(false);
-            
+        try {
+            const response = await studentService.uploadImage(file);
+            const serverUrl = response.url;
+            setImageUrl(serverUrl);
             if (onAnswerChange) {
-                onAnswerChange(imageDataUrl);
+                onAnswerChange(serverUrl);
             }
-        };
-        reader.onerror = () => {
-            setIsUploading(false);
+        } catch (error) {
+            console.error('Error uploading image:', error);
             alert('فشل رفع الصورة');
-        };
-        reader.readAsDataURL(file);
+        } finally {
+            setIsUploading(false);
+        }
     };
 
     const handleFileSelect = (e) => {
@@ -135,6 +141,7 @@ const ImageUploadQuestion = ({
                 accept="image/*"
                 onChange={handleFileSelect}
                 className="hidden"
+                disabled={isConfirmed}
             />
 
             {/* Upload Area */}
@@ -150,7 +157,7 @@ const ImageUploadQuestion = ({
                         borderRadius: '18px',
                         border: '2px dashed',
                         boxShadow: isDragging ? '0px 0px 20px 0px rgba(79, 103, 189, 0.2)' : 'none',
-                        cursor: 'pointer',
+                        cursor: isConfirmed ? 'not-allowed' : 'pointer',
                     }}
                     onDragEnter={handleDragEnter}
                     onDragOver={handleDragOver}
@@ -197,7 +204,8 @@ const ImageUploadQuestion = ({
                                         e.stopPropagation();
                                         handleButtonClick();
                                     }}
-                                    className="flex items-center justify-center gap-3 bg-[#4F67BD] text-white rounded-[60px] px-8 py-3 hover:bg-[#3e54a3] transition-all transform hover:scale-105 shadow-md"
+                                    disabled={isConfirmed}
+                                    className="flex items-center justify-center gap-3 bg-[#4F67BD] text-white rounded-[60px] px-8 py-3 hover:bg-[#3e54a3] transition-all transform hover:scale-105 shadow-md disabled:bg-gray-400 disabled:cursor-not-allowed"
                                     style={{
                                         boxShadow: '0px 4px 4px 0px #00000040 inset',
                                         minWidth: '200px'
@@ -246,38 +254,42 @@ const ImageUploadQuestion = ({
                             <span className="font-bold text-gray-800">تم رفع الصورة بنجاح</span>
                         </div>
                         
-                        <button
-                            onClick={handleRemoveImage}
-                            className="text-red-500 hover:text-red-700 transition-colors p-2 rounded-full hover:bg-red-50"
-                            title="حذف الصورة"
-                        >
-                            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                            </svg>
-                        </button>
+                        {!isConfirmed && (
+                            <button
+                                onClick={handleRemoveImage}
+                                className="text-red-500 hover:text-red-700 transition-colors p-2 rounded-full hover:bg-red-50"
+                                title="حذف الصورة"
+                            >
+                                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                </svg>
+                            </button>
+                        )}
                     </div>
 
                     {/* Image Display */}
                     <div className="flex justify-center">
                         <img 
-                            src={imageUrl} 
+                            src={fullImageUrl} 
                             alt="الصورة المرفوعة" 
                             className="max-w-full max-h-96 rounded-lg shadow-md object-contain"
                         />
                     </div>
 
                     {/* Change Image Button */}
-                    <div className="mt-4 flex justify-center">
-                        <button
-                            onClick={handleButtonClick}
-                            className="flex items-center gap-2 text-[#4F67BD] hover:text-[#3e54a3] font-bold transition-colors"
-                        >
-                            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                            </svg>
-                            <span>تغيير الصورة</span>
-                        </button>
-                    </div>
+                    {!isConfirmed && (
+                        <div className="mt-4 flex justify-center">
+                            <button
+                                onClick={handleButtonClick}
+                                className="flex items-center gap-2 text-[#4F67BD] hover:text-[#3e54a3] font-bold transition-colors"
+                            >
+                                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                                </svg>
+                                <span>تغيير الصورة</span>
+                            </button>
+                        </div>
+                    )}
                 </div>
             )}
         </div>

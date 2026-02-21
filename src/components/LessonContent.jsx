@@ -220,7 +220,7 @@ const LessonContent = ({ activeTab, currentLesson, levelInfo }) => {
         
         loadAssignments();
         checkAssignmentStatus();
-    }, [activeTab, levelInfo?.id]);
+    }, [activeTab, levelInfo?.id, lessonData?.id]);
     
     // Handle answer change
     const handleAnswerChange = (questionId, answer) => {
@@ -398,8 +398,19 @@ const LessonContent = ({ activeTab, currentLesson, levelInfo }) => {
 
     if (activeTab === 'book') {
         const fullPdfUrl = buildFullUrl(lessonData?.pdfUrl);
+        const fullAudioUrl = buildFullUrl(lessonData?.audioUrl);
+
         return (
             <div className="w-full h-full" style={{ minHeight: '80vh' }}>
+                {fullAudioUrl && (
+                    <div className="mb-4 p-5">
+                        <h2 className='text-center text-lg font-semibold mb-2'>يمكنك الاستماع إلى الصوت المرفق : </h2>
+                        <audio controls className="w-full">
+                            <source src={fullAudioUrl} type="audio/mpeg" />
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                )}
                 {fullPdfUrl ? (
                     <PDFViewer 
                         pdfUrl={fullPdfUrl}
@@ -1259,165 +1270,10 @@ const LessonContent = ({ activeTab, currentLesson, levelInfo }) => {
             );
         }
         
-        // Fallback to existing exercise content if no API assignments
-        // Exercise 1 Content
-        const renderExercise1 = () => {
-            const q1Options = [
-                { id: 'm', label: 'م', isCorrect: false },
-                { id: 't', label: 'ت', isCorrect: false },
-                { id: 'j', label: 'ج', isCorrect: true },
-                { id: 'kh', label: 'ح', isCorrect: false },
-            ];
-
-            const q2Options = [
-                { id: 'b', label: 'ب', isCorrect: true },
-                { id: 'm', label: 'م', isCorrect: false },
-                { id: 's', label: 'ص', isCorrect: false },
-                { id: 't', label: 'ت', isCorrect: false },
-            ];
-
-            return (
-                <div className="w-full">
-                    {/* Section Header for Multiple Choice */}
-                    <div className="flex justify-start mb-4 w-full">
-                        <div className="bg-[#5b72c4] text-white px-4 py-2 rounded-lg flex items-center gap-2 shadow-md">
-                            <img src={penIcon} alt="Question" className="w-5 h-5 brightness-0 invert" />
-                            <span className="font-bold">اختر الاجابة الصحيحة</span>
-                        </div>
-                    </div>
-
-                    {/* Question 1 */}
-                    <MultipleChoiceQuestion
-                        questionText="اين هوا حرف (الجيم) من بين الحروف التالية:"
-                        options={q1Options}
-                        selectedOptionId={q1Answer}
-                        onOptionSelect={setQ1Answer}
-                    />
-
-                    {/* Question 2 */}
-                    <MultipleChoiceQuestion
-                        questionText="اين هوا حرف (الباء) من بين الحروف التالية:"
-                        options={q2Options}
-                        selectedOptionId={q2Answer}
-                        onOptionSelect={setQ2Answer}
-                    />
-
-                    {/* Matching Section */}
-                    <div className="w-full">
-                        <DragMatchQuestion
-                            rightItems={rightItems}
-                            leftItems={leftItems}
-                            onUpdateLeftItems={setLeftItems}
-                            onUpdateRightItems={setRightItems}
-                        />
-                    </div>
-                </div>
-            );
-        };
-
-        // Exercise 2 Content
-        const renderExercise2 = () => {
-            return (
-                <div className="w-full">
-                    <div className="flex justify-start mb-4 w-full">
-                        <div className="bg-[#5b72c4] text-white px-4 py-2 rounded-lg flex items-center gap-2 shadow-md">
-                            <img src={penIcon} alt="Question" className="w-5 h-5 brightness-0 invert" />
-                            <span className="font-bold">ركب الكلمات</span>
-                        </div>
-                    </div>
-                    <div className="w-full">
-                        <SentenceBuilderQuestion
-                            questionText="اين هو حرف (الجيم) من بين الحروف التالية:"
-                            initialWords={sentenceWords}
-                        />
-                    </div>
-                    <div className="w-full">
-                        <SentenceBuilderQuestion
-                            questionText="اين هو حرف (الجيم) من بين الحروف التالية:"
-                            initialWords={sentenceWords}
-                        />
-                    </div>
-                    <div className="w-full">
-                        <SentenceBuilderQuestion
-                            questionText="اين هو حرف (الجيم) من بين الحروف التالية:"
-                            initialWords={sentenceWords}
-                        />
-                    </div>
-
-                </div>
-            );
-        };
-
-        // Exercise 3 Content
-        const renderExercise3 = () => {
-            return (
-                <div className="w-full">
-                    {/* Header for Exercise 3 */}
-                    <div className="flex justify-start mb-4 w-full">
-                        <div className="bg-[#5b72c4] text-white px-4 py-2 rounded-lg flex items-center gap-2 shadow-md">
-                            <img src={playIcon} alt="Listen" className="w-5 h-5 brightness-0 invert" />
-                            <span className="font-bold">استمع ثم اردد</span>
-                        </div>
-                    </div>
-
-                    <div className="w-full">
-                        {/* Q1: Text */}
-                        <ListenRepeatQuestion
-                            questionText="اسمع الى النص التالي ثم قم بترديد ما تسمعه"
-                            content="مرحبا انا اسمي ماجد، ما اسمك انت"
-                            contentType="text"
-                        />
-
-                        {/* Q2: Audio */}
-                        <ListenRepeatQuestion
-                            questionText="اسمع الي الصوت التالي ثم قم بترديد ما تسمعه"
-                            content="audio_placeholder"
-                            contentType="audio"
-                        />
-
-                        {/* Q3: Image */}
-                        <ListenRepeatQuestion
-                            questionText="اسمع الي الصوت التالي ثم قم بترديد ما تسمعه"
-                            content={img10}
-                            contentType="image"
-                        />
-                    </div>
-                </div>
-            );
-        };
-
-        // Navigation Buttons
-        const renderNavigation = () => (
-            <div className="flex justify-between w-full mt-8 border-t pt-4">
-                <button
-                    onClick={() => setCurrentExercise(prev => Math.max(prev - 1, 1))}
-                    disabled={currentExercise === 1}
-                    className={`px-6 py-2 rounded-full font-bold transition-colors ${currentExercise === 1 ? 'bg-gray-200 text-gray-400 cursor-not-allowed' : 'bg-[#5b72c4] text-white hover:bg-[#4a61b0]'}`}
-                >
-                    السابق
-                </button>
-
-                <span className="font-bold text-gray-600 flex items-center">
-                    تدريب {currentExercise} من 3
-                </span>
-
-                <button
-                    onClick={() => setCurrentExercise(prev => Math.min(prev + 1, 3))}
-                    disabled={currentExercise === 3}
-                    className={`px-6 py-2 rounded-full font-bold transition-colors ${currentExercise === 3 ? 'bg-gray-200 text-gray-400 cursor-not-allowed' : 'bg-[#5b72c4] text-white hover:bg-[#4a61b0]'}`}
-                >
-                    التالي
-                </button>
-            </div>
-        );
-
+        // If no assignment is loaded, show a message.
         return (
-            <div className="w-full px-4 pb-10 flex flex-col items-start" dir="rtl">
-                {currentExercise === 1 && renderExercise1()}
-                {currentExercise === 2 && renderExercise2()}
-                {currentExercise === 3 && renderExercise3()}
-
-                {renderNavigation()}
+            <div className="w-full px-4 pb-10 flex flex-col items-center justify-center" dir="rtl">
+                <p className="text-gray-600 text-lg">لا يوجد تدريبات حالياً</p>
             </div>
         );
     }
